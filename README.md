@@ -1,1 +1,1 @@
-# projeto-engenharia-software-cadastro
+# Ficha de Cadastro do SER - Sociedade Espírita Rafael Lírio
