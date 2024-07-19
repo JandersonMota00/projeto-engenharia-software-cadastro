@@ -17,7 +17,29 @@ body {
   width: 15%;
 }
 
+.apresentacao {
+  padding: 5% 15%;
+}
+
+.apresentacao__conteudo__texto {
+  padding-bottom: 2%;
+  border-bottom: 1.5px solid rgb(167, 228, 248);
+}
+
 section {
   margin-bottom: 1rem;
+  padding: 2% 3%;
   background-color: white;
+}
+
+div {
+  padding: 1% 0;
+}
+
+p {
+  text-align: justify;
+}
+
+button {
+  padding: 1% 3%;
 }
