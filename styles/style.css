@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=One&family=Montserrat:wght@600&display=swap');
+
+:root {
+  --fonte-primaria: 'Montserrat', sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -21,9 +27,15 @@ body {
   padding: 5% 15%;
 }
 
+.apresentacao__titulo,
 .apresentacao__conteudo__texto {
   padding-bottom: 2%;
   border-bottom: 1.5px solid rgb(167, 228, 248);
+  font-family: var(--fonte-primaria);
+}
+
+.apresentacao__texto {
+  padding-top: 2%;
 }
 
 section {
@@ -42,4 +54,14 @@ p {
 
 button {
   padding: 1% 3%;
+}
+
+input {
+  margin-top: 1%;
+  padding: 0.4% 0 0.4% 1%;
+  border-radius: 1rem;
+}
+
+.apresentacao__conteudo__div {
+  /*display: flex;*/
 }
