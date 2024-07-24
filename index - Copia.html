@@ -8,11 +8,7 @@
     <link rel="stylesheet" href="./styles/style.css" />
     <style>
       /* Inicialmente oculta o campo de texto */
-      #campoTexto,
-      #campoTratamentoMedico,
-      #campoMedicamento,
-      #campoAlergia,
-      #campoTratamentoPsiquiatrico {
+      #campoTexto {
         display: none;
       }
     </style>
@@ -41,14 +37,14 @@
 
       <section class="apresentacao__conteudo">
         <div>
-          <h3 class="apresentacao__conteudo__texto">Dados pessoais</h3>
+          <h3 class="apresentacao__conteudo__texto">Dado pessoal</h3>
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa"
             >Nome completo:</label
           >
-          <input type="text" id="nome" name="nome" class="" />
+          <input type="text" id="nome" name="text" class="" />
         </div>
 
         <div class="apresentacao__conteudo__div">
@@ -60,50 +56,34 @@
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Sexo:</label>
-          <input type="checkbox" id="masculino" name="sexo" value="masculino" />
-          <label class="primeiroCampo" for="masculino">Masculino</label>
-          <input type="checkbox" id="feminino" name="sexo" value="feminino" />
-          <label for="feminino">Feminino</label>
+          <input type="checkbox" name="masculino" />
+          <label>Masculino</label>
+          <input type="checkbox" name="feminino" />
+          <label>Feminino</label>
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Telefone:</label>
           <input type="tel" name="contato" class="" />
           <br />
-          <input
-            type="checkbox"
-            id="whatsapp"
-            name="comunicacao"
-            value="whatsapp"
-          />
-          <label class="primeiroCampo" for="whatsapp">WhatsApp</label>
-          <input
-            type="checkbox"
-            id="telegram"
-            name="comunicacao"
-            value="telegram"
-          />
-          <label for="telegram">Telegram</label>
+          <input type="checkbox" name="whatsapp" />
+          <label>WhatsApp</label>
+          <input type="checkbox" name="telegram" />
+          <label>Telegram</label>
+          <input type="checkbox" name="nenhuma-das-opcoes" />
+          <label>Nenhum</label>
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Telefone:</label>
           <input type="tel" name="contato" class="" />
           <br />
-          <input
-            type="checkbox"
-            id="whatsapp1"
-            name="comunicacao"
-            value="whatsapp"
-          />
-          <label class="primeiroCampo" for="whatsapp1">WhatsApp</label>
-          <input
-            type="checkbox"
-            id="telegram1"
-            name="comunicacao"
-            value="telegram"
-          />
-          <label for="telegram1">Telegram</label>
+          <input type="checkbox" name="whatsapp" />
+          <label>WhatsApp</label>
+          <input type="checkbox" name="telegram" />
+          <label>Telegram</label>
+          <input type="checkbox" name="nenhuma-das-opcoes" />
+          <label>Nenhum</label>
         </div>
       </section>
 
@@ -114,34 +94,34 @@
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Estado:</label>
-          <input type="text" />
+          <input tybe="text" />
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Cidade:</label>
-          <input type="text" />
+          <input tybe="text" />
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Bairro:</label>
-          <input type="text" />
+          <input tybe="text" />
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Endereço:</label>
-          <input type="text" />
+          <input tybe="text" />
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Número:</label>
-          <input type="number" />
+          <input tybe="number" />
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa"
             >Complemento:</label
           >
-          <input type="text" />
+          <input tybe="text" />
         </div>
       </section>
 
@@ -154,123 +134,66 @@
           <label class="apresentacao__conteudo3__div__separa">
             Qual o principal motivo da solicitação para o Atendimento Fraterno?
           </label>
-          <input type="text" name="motivo" class="" />
+          <input type="text" name="text" class="" />
         </div>
 
         <div class="apresentacao__conteudo3__div">
           <label>Possui religião?</label>
           <input
             type="checkbox"
-            id="religiao_sim"
-            class="primeiroCampoSim"
-            name="religiao"
-            value="sim"
+            id="sim"
+            name="opcao"
             onchange="toggleCampoTexto()"
           />
-          <label class="primeiroCampo" for="religiao_sim">Sim</label>
-          <input
-            type="checkbox"
-            id="religiao_nao"
-            name="religiao"
-            value="nao"
-          />
-          <label for="religiao_nao">Não</label>
+          <label>Sim</label>
+          <input type="checkbox" name="não" />
+          <label>Não</label>
 
-          <div id="campoTexto">
+          <div id="apresentacao__conteudo3__div__campoOculto">
             <label class="apresentacao__conteudo3__div__campoOculto__separa">
-              Qual a sua religião?
+              Caso tenha respondido SIM à questão anterior, qual a sua religião?
             </label>
             <input
               type="text"
-              name="religiao_texto"
+              name="text"
               class="apresentacao__conteudo3__div__campoOculto__input"
             />
           </div>
         </div>
-      </section>
 
-      <section class="apresentacao__conteudo3">
-        <div>
-          <h3 class="apresentacao__conteudo3__texto">Tratamentos e Sintomas</h3>
-        </div>
+        <script src="scripts/script.js"></script>
 
         <div class="apresentacao__conteudo3__div">
           <label>Está fazendo algum tratamento médico?</label>
-          <input
-            type="checkbox"
-            id="tratamento_medico_sim"
-            class="primeiroCampoSim"
-            name="tratamento_medico"
-            value="sim"
-            onchange="toggleCampoTramentoMedico()"
-          />
-          <label class="primeiroCampo" for="tratamento_medico_sim">Sim</label>
-          <input
-            type="checkbox"
-            id="tratamento_medico_nao"
-            name="tratamento_medico"
-            value="nao"
-          />
-          <label for="tratamento_medico_nao">Não</label>
-
-          <div id="campoTratamentoMedico">
-            <label
-              class="apresentacao__conteudo3__div__campoTratamentoMedico__separa"
-            >
-              Que tratamento está fazendo?
-            </label>
-            <input
-              type="text"
-              name="tratamento_medico_texto"
-              class="apresentacao__conteudo3__div__campoTratamentoMedico__input"
-            />
-          </div>
+          <input type="checkbox" name="sim" />
+          <label>Sim</label>
+          <input type="checkbox" name="não" />
+          <label>Não</label>
+          <label class="apresentacao__conteudo3__div__separa">
+            Caso tenha respondido SIM à questão anterior, qual tratamento está
+            fazendo?
+          </label>
+          <input type="text" name="text" class="" />
         </div>
 
         <div class="apresentacao__conteudo3__div">
           <label>Faz uso de algum medicamento?</label>
-          <input
-            type="checkbox"
-            id="medicamento_sim"
-            class="primeiroCampoSim"
-            name="medicamento"
-            value="sim"
-            onchange="toggleCampoMedicamento()"
-          />
-          <label class="primeiroCampo" for="medicamento_sim">Sim</label>
-          <input
-            type="checkbox"
-            id="medicamento_nao"
-            name="medicamento"
-            value="nao"
-          />
-          <label for="medicamento_nao">Não</label>
-
-          <div id="campoMedicamento">
-            <label
-              class="apresentacao__conteudo3__div__campoMedicamento__separa"
-            >
-              Qual o nome do medicamento?
-            </label>
-            <input
-              type="text"
-              name="medicamento_texto"
-              class="apresentacao__conteudo3__div__campoMedicamento__input"
-            />
-          </div>
+          <input type="checkbox" name="sim" />
+          <label>Sim</label>
+          <input type="checkbox" name="não" />
+          <label>Não</label>
+          <label class="apresentacao__conteudo3__div__separa">
+            Se respondeu SIM à questão anterior, favor escrever os nomes dos
+            medicamentos
+          </label>
+          <input type="text" name="text" class="" />
         </div>
 
         <div class="apresentacao__conteudo3__div">
           <label>Tem desmaios sem causa aparente?</label>
 
-          <input
-            type="checkbox"
-            id=""
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-          />
-          <label class="primeiroCampo" for="desmaios_sim">Sim</label>
+          <input type="checkbox" id="" name="sim" value="sin" onchange="" />
+          <label for="desmaios_sim">Sim</label>
           <input type="checkbox" id="" name="não" value="nao" />
           <label for="desmaios_nao">Não</label>
         </div>
@@ -278,29 +201,17 @@
         <div class="apresentacao__conteudo3__div">
           <label>Vê vultos?</label>
 
-          <input
-            type="checkbox"
-            id=""
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-          />
-          <label class="primeiroCampo" for="vultos_sim">Sim</label>
-          <input type="checkbox" id="" name="nao" value="nao" />
+          <input type="checkbox" id="" name="sim" value="sim" />
+          <label for="vultos_sim">Sim</label>
+          <input type="checkbox" id="" name="não" value="nao" />
           <label for="vultos_nao">Não</label>
         </div>
 
         <div class="apresentacao__conteudo3__div">
           <label>Escuta vozes?</label>
 
-          <input
-            type="checkbox"
-            id=""
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-          />
-          <label class="primeiroCampo" for="vozes_sim">Sim</label>
+          <input type="checkbox" id="" name="sim" value="sim" />
+          <label for="vozes_sim">Sim</label>
           <input type="checkbox" id="" name="não" value="nao" />
           <label for="vozes_nao">Não</label>
         </div>
@@ -308,14 +219,8 @@
         <div class="apresentacao__conteudo3__div">
           <label>Tem pensamentos negativos e/ou ideias suicidas?</label>
 
-          <input
-            type="checkbox"
-            id=""
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-          />
-          <label class="primeiroCampo" for="pensamentos_sim">Sim</label>
+          <input type="checkbox" id="" name="sim" value="sim" />
+          <label for="pensamentos_sim">Sim</label>
           <input type="checkbox" id="" name="não" value="nao" />
           <label for="pensamentos_nao">Não</label>
         </div>
@@ -323,14 +228,8 @@
         <div class="apresentacao__conteudo3__div">
           <label>Houve algum desencarne na família no último ano?</label>
 
-          <input
-            type="checkbox"
-            id=""
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-          />
-          <label class="primeiroCampo" for="desencarne_familia_sim">Sim</label>
+          <input type="checkbox" id="" name="sim" value="sim" />
+          <label for="desencarne_familia_sim">Sim</label>
           <input type="checkbox" id="" name="não" value="nao" />
           <label for="desencarne_familia_nao">Não</label>
         </div>
@@ -338,21 +237,15 @@
         <div class="apresentacao__conteudo3__div">
           <label>Tem alergia?</label>
 
-          <input
-            type="checkbox"
-            id="alergia_sim"
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-            onchange="toggleCampoAlergia()"
-          />
-          <label class="primeiroCampo" for="alergia_sim">Sim</label>
-          <input type="checkbox" id="alergia_nao" name="não" value="nao" />
+          <input type="checkbox" id="" name="sim" value="sim" onchange="" />
+          <label for="alergia_sim">Sim</label>
+          <input type="checkbox" id="" name="não" value="nao" />
           <label for="alergia_nao">Não</label>
 
           <div id="campoAlergia">
             <label class="apresentacao__conteudo3__div__separa">
-              Qual o tipo de alergia?
+              Caso tenha respondido SIM à questão anterior, especifique qual o
+              tipo de alergia.
             </label>
             <input
               type="text"
@@ -365,14 +258,8 @@
         <div class="apresentacao__conteudo3__div">
           <label>Faz psicoterapia?</label>
 
-          <input
-            type="checkbox"
-            id="psicoterapia_sim"
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-          />
-          <label class="primeiroCampo" for="psicoterapia_sim">Sim</label>
+          <input type="checkbox" id="psicoterapia_sim" name="sim" value="sim" />
+          <label for="psicoterapia_sim">Sim</label>
           <input type="checkbox" id="psicoterapia_nao" name="não" value="nao" />
           <label for="psicoterapia_nao">Não</label>
         </div>
@@ -383,14 +270,11 @@
           <input
             type="checkbox"
             id="tratamento_psiquiatrico_sim"
-            class="primeiroCampoSim"
             name="sim"
             value="sim"
-            onchange="toggleCampoTratamentoPsiquiatrico()"
+            onchange=""
           />
-          <label class="primeiroCampo" for="tratamento_psiquiatrico_sim"
-            >Sim</label
-          >
+          <label for="tratamento_psiquiatrico_sim">Sim</label>
           <input
             type="checkbox"
             id="tratamento_psiquiatrico_nao"
@@ -399,15 +283,15 @@
           />
           <label for="tratamento_psiquiatrico_nao">Não</label>
 
-          <div id="campoTratamentoPsiquiatrico">
+          <div class="campoPsiquiatrico">
             <label class="apresentacao__conteudo3__div__separa">
-              Qual o motivo que levou você a procurar acompanhamento
-              psiquiátrico?
+              Caso tenha respondido SIM à questão anterior, qual o motivo que
+              levou você a procurar acompanhamento psiquiátrico?
             </label>
             <input
               type="text"
               name="text"
-              class="apresentacao__conteudo3__div__campoTratamentoPsiquiatrico__input"
+              class="apresentacao__conteudo3__div__campoPsiquiatrico__input"
             />
           </div>
         </div>
@@ -415,27 +299,14 @@
         <div class="apresentacao__conteudo3__div">
           <label>Já fez algum tratamento espiritual em centro espírita?</label>
 
-          <input
-            type="checkbox"
-            id="tratamento_espiritual_sim"
-            class="primeiroCampoSim"
-            name="sim"
-            value="sim"
-          />
-          <label class="primeiroCampo" for="tratamento_espiritual_sim"
-            >Sim</label
-          >
-          <input
-            type="checkbox"
-            id="tratamento_espiritual_nao"
-            name="não"
-            value="nao"
-          />
+          <input type="checkbox" id="tratamento_espiritual_sim" name="sim" value="sim" />
+          <label for="tratamento_espiritual_sim">Sim</label>
+          <input type="checkbox" id="tratamento_espiritual_nao" name="não" value="nao" />
           <label for="tratamento_espiritual_nao">Não</label>
         </div>
       </section>
 
-      <section class="apresentacao__conteudo__botao">
+      <section>
         <div>
           <h3 class="apresentacao__conteudo3__texto">Termo</h3>
           <br />
@@ -450,9 +321,11 @@
           <label>Ciente</label>
         </div>
 
-        <button type="submit" id="enviar">Enviar</button>
+        <div>
+          <button tybe="button">Enviar</button>
+        </div>
       </section>
     </main>
-    <script src="./scripts/script.js"></script>
+    <footer class="rodape"></footer>
   </body>
 </html>

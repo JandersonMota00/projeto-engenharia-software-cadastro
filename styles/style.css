@@ -15,7 +15,9 @@ body {
 }
 
 .cabecalho {
-  padding: 2% 0 0 15%;
+  padding-top: 2%;
+  display: flex;
+  justify-content: center;
 }
 
 .cabecalho__imagem {
@@ -25,10 +27,28 @@ body {
 
 .apresentacao {
   padding: 5% 15%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.apresentacao__conteudo,
+.apresentacao__conteudo2 {
+  width: 49%;
+  box-sizing: border-box; /* Garante que padding e border não aumentem a largura */
+}
+
+.apresentacao__conteudo {
+  margin-right: 2%;
+}
+
+.apresentacao__conteudo3 {
+  grid-column: span 2;
+  width: 100%;
 }
 
 .apresentacao__titulo,
-.apresentacao__conteudo__texto {
+.apresentacao__conteudo__texto,
+.apresentacao__conteudo3__texto {
   padding-bottom: 2%;
   border-bottom: 1.5px solid rgb(167, 228, 248);
   font-family: var(--fonte-primaria);
@@ -59,9 +79,33 @@ button {
 input {
   margin-top: 1%;
   padding: 0.4% 0 0.4% 1%;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
+}
+
+#nome {
+  width: 100%;
 }
 
 .apresentacao__conteudo__div {
-  /*display: flex;*/
+  margin-top: 3%;
+}
+
+.primeiroCampo {
+  margin-right: 2%;
+}
+
+.primeiroCampoSim {
+  margin-left: 2%;
+}
+
+.apresentacao__conteudo__div__separa {
+  display: block;
+}
+
+.apresentacao__conteudo3__div__separa {
+  display: block;
+}
+
+.apresentacao__conteudo3__div__campoOculto__separa {
+  display: block;
 }
