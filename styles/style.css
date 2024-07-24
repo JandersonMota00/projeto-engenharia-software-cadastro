@@ -82,6 +82,11 @@ input {
   border-radius: 0.5rem;
 }
 
+textarea {
+  margin-top: 1%;
+  padding: 1%;
+}
+
 #nome {
   width: 100%;
 }
@@ -96,6 +101,10 @@ input {
 
 .primeiroCampoSim {
   margin-left: 2%;
+}
+
+.textarea {
+  width: 100%;
 }
 
 .apresentacao__conteudo__div__separa {
