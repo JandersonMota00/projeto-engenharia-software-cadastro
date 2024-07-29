@@ -6,16 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SER - SOCIEDADE ESPÍRITA RAFAEL LÍRIO</title>
     <link rel="stylesheet" href="./styles/style.css" />
-    <style>
-      /* Inicialmente oculta o campo de texto */
-      #campoTexto,
-      #campoTratamentoMedico,
-      #campoMedicamento,
-      #campoAlergia,
-      #campoTratamentoPsiquiatrico {
-        display: none;
-      }
-    </style>
   </head>
   <body>
     <header class="cabecalho">
@@ -53,9 +43,9 @@
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa"
-            >Data de nascimento:</label
+            >Data de nascimento:*</label
           >
-          <input type="date" name="nascimento" class="" />
+          <input type="date" name="nascimento" class="" required />
         </div>
 
         <div class="apresentacao__conteudo__div">

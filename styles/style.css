@@ -9,6 +9,15 @@
   padding: 0;
 }
 
+/* Inicialmente oculta o campo de texto */
+#campoTexto,
+#campoTratamentoMedico,
+#campoMedicamento,
+#campoAlergia,
+#campoTratamentoPsiquiatrico {
+  display: none;
+}
+
 body {
   box-sizing: border-box;
   background-color: rgb(167, 228, 248);
@@ -117,4 +126,28 @@ textarea {
 
 .apresentacao__conteudo3__div__campoOculto__separa {
   display: block;
+}
+
+@media (max-width: 1200px) {
+  .cabecalho__imagem {
+    height: 8rem;
+    width: auto;
+  }
+
+  .apresentacao {
+    padding: 5%;
+  }
+
+  .apresentacao__conteudo {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .apresentacao__conteudo2 {
+    width: 100%;
+  }
+
+  .apresentacao__conteudo3__div {
+    margin-top: 9%;
+  }
 }
