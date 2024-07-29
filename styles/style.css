@@ -150,4 +150,9 @@ textarea {
   .apresentacao__conteudo3__div {
     margin-top: 9%;
   }
+
+  #enviar {
+    margin-top: 15%;
+    padding: 0.7rem 5rem;
+  }
 }
