@@ -135,7 +135,8 @@ textarea {
   }
 
   .apresentacao {
-    padding: 5%;
+    margin: 0;
+    padding: 0%;
   }
 
   .apresentacao__conteudo {
