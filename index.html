@@ -36,9 +36,14 @@
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa"
-            >Nome completo:*</label
-          >
-          <input type="text" id="nome" name="nome" class="" required />
+            >Nome completo:*</label>
+          <input type="text" id="nome" name="nome"  required />
+        </div>
+
+        <div class="apresentacao__conteudo__div">
+          <label class="apresentacao__conteudo__div__separa"
+            >Nome Social:*</label>
+          <input type="text" id="nome-social" name="nome=social"  required />
         </div>
 
         <div class="apresentacao__conteudo__div">
@@ -48,23 +53,37 @@
           <input type="date" name="nascimento" class="" required />
         </div>
 
-        <div class="apresentacao__conteudo__div">
+        
+        <div class="apresentacao__conteudo__div" id="campo__sexo">
           <label class="apresentacao__conteudo__div__separa">Sexo:</label>
 
-          <input type="checkbox" id="masculino" name="sexo" value="masculino" />
-          <label class="primeiroCampo" for="masculino">Masculino</label>
-          <input type="checkbox" id="feminino" name="sexo" value="feminino" />
-          <label for="feminino">Feminino</label>
+      
+          <div class="checkbox-group">
+            <input type="checkbox" id="masculino" name="sexo" value="masculino" />
+            <label class="primeiroCampo" for="masculino">Masculino</label>
+          </div>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="feminino" name="sexo" value="feminino" />
+            <label for="feminino">Feminino</label>
+          </div>
+
+          <div class="checkbox-group">  
+            <input type="checkbox" name="sexo" id="outrosgeneros">
+            <label for="outrosgeneros">Outros Gêneros</label>
+          </div>
+
+        
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">E-mail:*</label>
+          <label class="apresentacao__conteudo__div__separa">E-mail: *</label>
           <input type="text" id="mail" name="mail" class="" required />
         </div>
 
         <div class="apresentacao__conteudo__div">
           <label class="apresentacao__conteudo__div__separa">Telefone:*</label>
-          <input type="tel" name="contato" class="" required />
+          <input type="tel" name="contato" class="" id="input-cel" required />
           <br />
           <input
             type="checkbox"

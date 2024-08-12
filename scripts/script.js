@@ -52,3 +52,27 @@ function toggleCampoTratamentoPsiquiatrico() {
     ? 'block'
     : 'none';
 }
+
+// Função para verificar e corrigir o campo telefone
+
+document.addEventListener('DOMContentLoaded', () => {
+  const inputTel = document.getElementById('input-cel');
+
+  inputTel.addEventListener('input',formatarTelefone);
+
+  function formatarTelefone(event) {
+    let value = event.target.value;
+
+    value = value.replace(/\D/g, '');
+
+    if (value.length > 11) {
+        value = value.slice(0, 11);
+    }
+    const formattedValue = value
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d)/, '$1-$2');
+
+    event.target.value = formattedValue;
+}
+});
+
