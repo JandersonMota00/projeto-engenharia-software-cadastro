@@ -54,11 +54,11 @@ function toggleCampoTratamentoPsiquiatrico() {
 }
 
 // Função para verificar e corrigir o campo telefone
-
 document.addEventListener('DOMContentLoaded', () => {
-  const inputTel = document.getElementById('input-cel');
-
-  inputTel.addEventListener('input',formatarTelefone);
+  const inputsTel = document.getElementsByClassName('inputs-cel');
+  for (const inputTel of inputsTel) {
+    inputTel.addEventListener('input', formatarTelefone);
+  }
 
   function formatarTelefone(event) {
     let value = event.target.value;
@@ -73,6 +73,5 @@ document.addEventListener('DOMContentLoaded', () => {
         .replace(/(\d{5})(\d)/, '$1-$2');
 
     event.target.value = formattedValue;
-}
+  }
 });
-
