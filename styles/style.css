@@ -173,6 +173,9 @@ textarea {
 
 
 
-input {
-  border-radius: 50px;
+.input-text {
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%;
 }
