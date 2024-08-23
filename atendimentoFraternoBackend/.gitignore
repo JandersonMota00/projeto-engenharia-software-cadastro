@@ -1,0 +1,28 @@
+# Ignorar ambiente virtual
+venv/
+
+# Ignorar arquivos de configuração do PyCharm/IntelliJ (.idea)
+.idea/
+
+# Ignorar arquivos de configuração do VSCode
+.vscode/
+
+# Ignorar o banco de dados SQLite
+db.sqlite3
+
+# Ignorar arquivos de migrações do Django
+mainApp/migrations/*.py
+!mainApp/migrations/__init__.py
+
+# Ignorar caches compilados do Python
+**/__pycache__/
+**/*.py[cod]
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos temporários do sistema operacional
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
