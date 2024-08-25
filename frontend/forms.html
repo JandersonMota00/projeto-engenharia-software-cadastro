@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SER ▸ Sociedade Espírita</title>
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/fonts/Inter/inter.css" />
+		<link rel="stylesheet" href="assets/fonts/Outfit/outfit.css" />
+		<link rel="stylesheet" href="style.css" />
+		<script defer src="assets/js/jquery.min.js"></script>
+		<script defer src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/js/feather.min.js"></script>
+		<script defer src="main.js"></script>
+	</head>
+	<body>
+		<!--Structure-->
+		<div class="body-card d-flex flex-column">
+			<div class="header d-flex align-items-center">
+				<a href="login.html" class="button d-flex align-items-center">
+					<h4 class="me-3">Voltar</h4>
+					<i data-feather="chevron-left"></i>
+				</a>
+			</div>
+			<div class="header d-flex align-items-center justify-content-center">
+				<div class="step-circle" id="step0" onclick="buildForms(0)"></div>
+				<div class="step-line"></div>
+				<div class="step-circle" id="step1" onclick="buildForms(1)"></div>
+				<div class="step-line"></div>
+				<div class="step-circle" id="step2" onclick="buildForms(2)"></div>
+				<div class="step-line"></div>
+				<div class="step-circle" id="step3" onclick="buildForms(3)"></div>
+				<div class="step-line"></div>
+				<div class="step-circle" id="step4" onclick="buildForms(4)"></div>
+			</div>
+			<div class="body overflow d-flex flex-column mt-5">
+				<div id="forms" class="d-flex mx-auto flex-column"></div>
+			</div>
+		</div>
+		<!--End-->
+
+		<!--Feather Icons-->
+		<script>
+			feather.replace();
+		</script>
+		<!--End-->
+	</body>
+</html>
