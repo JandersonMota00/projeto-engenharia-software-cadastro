@@ -1,73 +1,69 @@
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.http import HttpRequest, JsonResponse
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from mainApp.models import Paciente, SelectValue
+from mainApp.forms import PacienteForm
+import json
 
 from mainApp import models
 
 # Create your views here.
 
 
-def getOptions(request: HttpRequest, selectname: str, searchterm: str):
+class SearchSelectValueView(View):
+    def get(self, request):
+        # Obtém os parâmetros GET
+        select_type = request.GET.get('select_type')
+        search_value = request.GET.get('search_value')
 
-    match selectname:
-        case 'religiao':
-            # Código específico para religiao
-            return JsonResponse(models.ReligiaoOptions.objects.filter())
-        case 'genero':
-            # Código específico para genero
-            pass
-        case 'orientacao':
-            # Código específico para orientacao
-            pass
-        case 'tratamento':
-            # Código específico para tratamento
-            pass
-        case 'sintoma':
-            # Código específico para sintoma
-            pass
-        case 'doenca':
-            # Código específico para doenca
-            pass
-        case 'alergia':
-            # Código específico para alergia
-            pass
-        case 'medicamento':
-            # Código específico para medicamento
-            pass
-        case _:
-            # Código para o caso default, se nenhum dos acima corresponder
-            pass
+        # Verifica se os parâmetros estão presentes
+        if not select_type or not search_value:
+            return JsonResponse({'error': 'Parâmetros `select_name` e `search_value` são obrigatórios.'}, status=400)
 
-    return HttpResponse()
+        # Filtra os registros no modelo SelectValue com base no select_name
+        results = models.SelectValue.objects.filter(
+            select_type__exact=select_type,
+
+            normalized_value__icontains=models.SelectValue.normalize(
+                search_value)
+        ).order_by('value')[:10]  # Limita os resultados a 10
+
+        # Converte os resultados em uma lista de dicionários para o JSON
+        results_list = [{'id': result.id, 'value': result.value}
+                        for result in results]
+
+        # Retorna os resultados como JSON
+        return JsonResponse(results_list, safe=False)
 
 
-def home(r: HttpRequest):
-    return HttpResponse(render(r, ''))
+# TODO achar uma maneira melhor em vez de desbalitar csrf
+@method_decorator(csrf_exempt, name='dispatch')
+class PacienteCreateView(View):
+    def post(self, request):
+        import json
+
+        # Converte o corpo da requisição JSON para um dicionário
+        data = json.loads(request.body)
 
 
-def createPaciente(r: HttpRequest):
-
-    pass
+        # Prepara os dados para o formulário
 
 
-def seed(request: HttpRequest):
+        form = PacienteForm(data)
 
-    # religiao
-    # genero
-    # orientacao
-    # tratamento
-    # sintoma
-    # doenca
-    # alergia
-    # medicamento
+        if form.is_valid():
+            paciente = form.save()
 
-    models.ReligiaoOptions(value='test').save()
-
-    models.GeneroOptions(value='test').save()
-    models.OrientacaoOptions(value='test').save()
-    models.TratamentoOptions(value='test').save()
-    models.SintomaOptions(value='test').save()
-    models.DoencaOptions(value='test').save()
-    models.AlergiaOptions(value='test').save()
-    models.MedicamentoOptions(value='test').save()
-
-    return HttpResponse('seeded')
+            response_data = {
+                'id': paciente.id,
+                'nome': paciente.nome,
+                'pseudonimo': paciente.pseudonimo,
+                'data_nascimento': paciente.data_nascimento.isoformat(),
+            }
+                           
+            # Retorna uma resposta JSON com status 201 (Created)
+            return JsonResponse(response_data, status=201)
+        else:
+            # Retorna erros de validação com status 400 (Bad Request)
+            return JsonResponse(form.errors, status=400)

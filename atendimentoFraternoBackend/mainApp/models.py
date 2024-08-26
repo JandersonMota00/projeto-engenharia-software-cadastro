@@ -1,22 +1,6 @@
-from pyexpat import model
+import unicodedata
 from django.db import models
 from django.core.validators import MinLengthValidator
-
-class Options(models.Model):
-
-    value = models.CharField(max_length=256, unique=True)
-    normalized_value = models.CharField(max_length=256, unique=True)
-    
-    STATE_CHOICES = [
-        ('enable', 'enable'),
-        ('disable', 'disable'),
-        ('tocheck', 'tocheck')
-    ]
-
-    state = models.CharField(choices=STATE_CHOICES, max_length=8, default='tocheck')
-
-    class Meta:
-        abstract = True
 
 # religiao
 # genero
@@ -27,37 +11,66 @@ class Options(models.Model):
 # alergia
 # medicamento
 
-class ReligiaoOptions(Options):
-    pass
 
+class SelectValue(models.Model):
 
-class GeneroOptions(Options):
-    pass
+    _SELECT_TYPE_CHOICES = [
+        ('RELIG', 'Religião'),
+        ('GENER', 'Gênero'),
+        ('ORIEN', 'Orientação Sexual'),
+        ('TRATA', 'Tratamento'),
+        ('SINTO', 'Sintoma'),
+        ('DOENC', 'Doença'),
+        ('ALERG', 'Alergia'),
+        ('MEDIC', 'Medicamento'),
+    ]
 
+    # Select type armazena de qual select é um registro
+    # Por exemplo, um registro para alergia leite seria:
+    # select_type = 'ALERG'
+    # value = 'Leite'
 
-class OrientacaoOptions(Options):
-    pass
+    select_type = models.CharField(max_length=5, choices=_SELECT_TYPE_CHOICES)
+    value = models.CharField(max_length=256)
+    normalized_value = models.CharField(max_length=256, editable=False)
 
+    _STATE_CHOICES = [
+        ('ENA', 'enable'),
+        ('DIS', 'disable'),
+        ('TCK', 'tocheck')
+    ]
 
-class TratamentoOptions(Options):
-    pass
+    state = models.CharField(choices=_STATE_CHOICES,
+                             max_length=3, default='TCK')
 
+    def __str__(self) -> str:
+        return self.state + " # " + self.select_type + " ### " + self.value
 
-class SintomaOptions(Options):
-    pass
+    def save(self, *args, **kwargs):
+        if self.value:
+            self.normalized_value = SelectValue.normalize(self.value)
+        super().save(*args, **kwargs)
 
+    @staticmethod
+    def normalize(value: str) -> str:
+        value = value.lower()
+        value = unicodedata.normalize('NFKD', value).encode(
+            'ASCII', 'ignore').decode('ASCII')
+        return value
 
-class DoencaOptions(Options):
-    pass
+    @staticmethod
+    def get_or_create_by_value_many(select_type: str, select_values: list[str]):
 
+        return_array: list[tuple[SelectValue, bool]] = []
 
-class AlergiaOptions(Options):
-    pass
+        for value in select_values:
 
+            model, created = SelectValue.objects.get_or_create(
+                select_type=select_type,
+                value=value)
+            return_array.append((model, created))
 
-class MedicamentoOptions(Options):
-    pass
-
+        return return_array
 
 
 class Paciente(models.Model):
@@ -68,14 +81,18 @@ class Paciente(models.Model):
 
     data_nascimento = models.DateField()
 
-    genero = models.ManyToManyField(GeneroOptions)
-    orientacao_sexual = models.ManyToManyField(OrientacaoOptions)
-    religiao = models.ManyToManyField(ReligiaoOptions)
-    alegias = models.ManyToManyField(AlergiaOptions)
+    genero = models.ManyToManyField(
+        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'GENER'})
+    orientacao_sexual = models.ManyToManyField(
+        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'ORIEN'})
+    religiao = models.ManyToManyField(
+        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'RELIG'})
+    alergias = models.ManyToManyField(
+        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'ALERG'})
 
-    fez_psicoterapia = models.BooleanField()
-    fez_psiquiatrico = models.BooleanField()
-    fez_tratamento_espirita = models.BooleanField()
+    ja_fez_psicoterapia = models.BooleanField()
+    ja_fez_psiquiatrico = models.BooleanField()
+    ja_fez_tratamento_espirita = models.BooleanField()
 
     def __str__(self) -> str:
         return self.nome
@@ -115,7 +132,8 @@ class Endereco(models.Model):
         ('PQ', 'Parque'),
     ]
 
-    tipo_logradouro = models.CharField(max_length=4, choices=TIPOS_LOGRADOURO, default='NDA')
+    tipo_logradouro = models.CharField(
+        max_length=4, choices=TIPOS_LOGRADOURO, default='NDA')
 
     logradouro = models.CharField(max_length=100)
 
@@ -153,16 +171,17 @@ class Email(models.Model):
 
 class SolicitacaoAtendimento(models.Model):
 
-    sintomas = models.ManyToManyField(SintomaOptions)
+    descricao = models.TextField()
 
-    # TODO transformar o bloco abaixo em sintomas tambem?    
-    desmaio = models.BooleanField()
-    vulto = models.BooleanField()
-    vozes = models.BooleanField()
-    pensamentos_suicidas = models.BooleanField()
-    desencarne_ultimo_ano = models.BooleanField()
+    sintomas = models.ManyToManyField(
+        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'SINTO'})
 
-        
-    tratamentos_em_andamento = models.ManyToManyField(TratamentoOptions)
+    tratamentos_em_andamento = models.ManyToManyField(
+        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'GENRO'})
 
-
+    # TODO transformar o bloco abaixo em sintomas tambem?
+    # desmaio = models.BooleanField()
+    # vulto = models.BooleanField()
+    # vozes = models.BooleanField()
+    # pensamentos_suicidas = models.BooleanField()
+    # desencarne_ultimo_ano = models.BooleanField()

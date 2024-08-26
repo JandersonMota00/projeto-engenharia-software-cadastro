@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mainApp.models import AlergiaOptions, DoencaOptions, Email, Endereco, GeneroOptions, MedicamentoOptions, NumeroDeTelefone, OrientacaoOptions, Paciente, ReligiaoOptions, SintomaOptions, TratamentoOptions
+from mainApp.models import Email, Endereco, NumeroDeTelefone, Paciente, SelectValue, SolicitacaoAtendimento
 # Register your models here.
 
 
@@ -8,6 +8,8 @@ admin.site.register(Paciente)
 admin.site.register(Endereco)
 admin.site.register(NumeroDeTelefone)
 admin.site.register(Email)
+admin.site.register(SolicitacaoAtendimento)
+admin.site.register(SelectValue)
 
 # religiao
 # genero
@@ -17,12 +19,3 @@ admin.site.register(Email)
 # doenca
 # alergia
 # medicamento
-
-admin.site.register(ReligiaoOptions)
-admin.site.register(GeneroOptions)
-admin.site.register(OrientacaoOptions)
-admin.site.register(TratamentoOptions)
-admin.site.register(SintomaOptions)
-admin.site.register(DoencaOptions)
-admin.site.register(AlergiaOptions)
-admin.site.register(MedicamentoOptions)
