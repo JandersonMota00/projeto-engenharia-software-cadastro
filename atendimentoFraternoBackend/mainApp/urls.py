@@ -5,6 +5,6 @@ from mainApp import views
 
 
 urls = [
-    path('selectvalues/', views.SearchSelectValueView.as_view()),
+    path('selectvalues/', views.SelectValueView.as_view()),
     path('pacientes/', views.PacienteCreateView.as_view())
 ]

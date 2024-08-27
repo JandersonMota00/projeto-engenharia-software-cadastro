@@ -1,6 +1,7 @@
 import unicodedata
 from django.db import models
 from django.core.validators import MinLengthValidator
+import uuid
 
 # religiao
 # genero
@@ -24,6 +25,11 @@ class SelectValue(models.Model):
         ('ALERG', 'Alergia'),
         ('MEDIC', 'Medicamento'),
     ]
+    _STATE_CHOICES = [
+        ('ENA', 'enable'),
+        ('DIS', 'disable'),
+        ('TCK', 'tocheck')
+    ]
 
     # Select type armazena de qual select é um registro
     # Por exemplo, um registro para alergia leite seria:
@@ -34,17 +40,10 @@ class SelectValue(models.Model):
     value = models.CharField(max_length=256)
     normalized_value = models.CharField(max_length=256, editable=False)
 
-    _STATE_CHOICES = [
-        ('ENA', 'enable'),
-        ('DIS', 'disable'),
-        ('TCK', 'tocheck')
-    ]
-
-    state = models.CharField(choices=_STATE_CHOICES,
-                             max_length=3, default='TCK')
+    state = models.CharField(choices=_STATE_CHOICES, max_length=3, default='TCK')
 
     def __str__(self) -> str:
-        return self.state + " # " + self.select_type + " ### " + self.value
+        return self.state + " # " + self.select_type + " ### " + self.value + ' # ' + str(self.id)
 
     def save(self, *args, **kwargs):
         if self.value:
@@ -75,9 +74,16 @@ class SelectValue(models.Model):
 
 class Paciente(models.Model):
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     nome = models.CharField(max_length=128)
 
     pseudonimo = models.CharField(max_length=128)
+
+    # TODO get_name deve seceber o user e verificar as permissões
+    def get_safe_nome(self):
+        
+        return self.pseudonimo if self.pseudonimo else self.nome
 
     data_nascimento = models.DateField()
 
@@ -95,7 +101,7 @@ class Paciente(models.Model):
     ja_fez_tratamento_espirita = models.BooleanField()
 
     def __str__(self) -> str:
-        return self.nome
+        return self.get_safe_nome()
 
 
 class Endereco(models.Model):
@@ -151,7 +157,7 @@ class NumeroDeTelefone(models.Model):
 
     rotulo = models.CharField(max_length=16)
 
-    ddd = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
+    ddd = models.CharField(max_length=15)
     telefone = models.CharField(max_length=16)
 
     whatsapp = models.BooleanField()
@@ -166,7 +172,7 @@ class Email(models.Model):
 
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
 
-    email = models.CharField(max_length=128)
+    email = models.CharField(max_length=256)
 
 
 class SolicitacaoAtendimento(models.Model):
