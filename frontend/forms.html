@@ -11,7 +11,7 @@
 		<script defer src="assets/js/jquery.min.js"></script>
 		<script defer src="assets/js/bootstrap.min.js"></script>
 		<script src="assets/js/feather.min.js"></script>
-		<script defer src="main.js"></script>
+		<script defer src="assets/js/forms.js"></script>
 	</head>
 	<body>
 		<!--Structure-->
@@ -23,15 +23,17 @@
 				</a>
 			</div>
 			<div class="header d-flex align-items-center justify-content-center">
-				<div class="step-circle" id="step0" onclick="buildForms(0)"></div>
+				<div class="step-circle d-flex align-items-center justify-content-center" id="step_0" onclick="buildForms(0)"><i data-feather="user"></i></div>
 				<div class="step-line"></div>
-				<div class="step-circle" id="step1" onclick="buildForms(1)"></div>
+				<div class="step-circle d-flex align-items-center justify-content-center" id="step_1" onclick="buildForms(1)"><i data-feather="mail"></i></div>
 				<div class="step-line"></div>
-				<div class="step-circle" id="step2" onclick="buildForms(2)"></div>
+				<div class="step-circle d-flex align-items-center justify-content-center" id="step_2" onclick="buildForms(2)"><i data-feather="map-pin"></i></div>
 				<div class="step-line"></div>
-				<div class="step-circle" id="step3" onclick="buildForms(3)"></div>
+				<div class="step-circle d-flex align-items-center justify-content-center" id="step_3" onclick="buildForms(3)"><i data-feather="layers"></i></div>
 				<div class="step-line"></div>
-				<div class="step-circle" id="step4" onclick="buildForms(4)"></div>
+				<div class="step-circle d-flex align-items-center justify-content-center" id="step_4" onclick="buildForms(4)"><i data-feather="smile"></i></div>
+				<div class="step-line"></div>
+				<div class="step-circle d-flex align-items-center justify-content-center" id="step_5" onclick="buildForms(5)"><i data-feather="clipboard"></i></div>
 			</div>
 			<div class="body overflow d-flex flex-column mt-5">
 				<div id="forms" class="d-flex mx-auto flex-column"></div>

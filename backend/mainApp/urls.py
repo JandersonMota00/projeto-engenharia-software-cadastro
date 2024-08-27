@@ -5,7 +5,6 @@ from mainApp import views
 
 
 urls = [
-    path('/dynamicselect/<str:optionname>/<str:searchterm>', views.getOptions),
-    path('seed', views.seed),
-    path('', views.home)
+    path('selectvalues/', views.SearchSelectValueView.as_view()),
+    path('pacientes/', views.PacienteCreateView.as_view())
 ]

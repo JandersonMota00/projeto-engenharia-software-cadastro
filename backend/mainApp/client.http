@@ -1,0 +1,16 @@
+### Requisição para criar um novo paciente
+POST http://localhost:8000/api/pacientes/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "nome": "João da Silva",
+  "pseudonimo": "joaosilva",
+  "data_nascimento": "1990-05-15",
+  "genero": ["Masculino"],
+  "orientacao_sexual": ["Heterossexual"],
+  "religiao": ["Catolicismo"],
+  "alergias": ["Amendoim"],
+  "ja_fez_psicoterapia": true,
+  "ja_fez_psiquiatrico": false,
+  "ja_fez_tratamento_espirita": true
+}
