@@ -1,8 +1,8 @@
 let forms = [
-	[["Dados pessoais"], ["text", "user", "Nome completo", ""], ["text", "user", "Nome social", ""], ["date", "calendar", "Data de Nascimento", ""], ["dropdown", "user", "Sexo", ""]],
-	[["Meios de Contato"], ["email", "at-sign", "E-mail", ""], ["text", "phone", "Telefone", ""], ["checkbox", "phone", "Whatsapp", false], ["checkbox", "phone", "Telegram", false], ["text", "phone", "Telefone Emergencial", ""], ["checkbox", "phone", "Whatsapp", false], ["checkbox", "phone", "Telegram", false]],
-	[["Endereço"], ["text", "map", "Estado", ""], ["text", "map", "Cidade", ""], ["text", "map", "Bairro", ""], ["text", "map-pin", "Endereço", ""], ["text", "map-pin", "Número", ""], ["text", "map-pin", "Complemento", ""]],
-	[["Dados Extras"], ["text", "smile", "Qual é o motivo da solicitação?", ""], ["checkbox", "tablet", "Possuo religião", ""]],
+	[["Dados pessoais"], ["text", "user", "Nome completo", "", 0], ["text", "user", "Nome social", "", 0], ["date", "calendar", "Data de Nascimento", "", new Date()], ["dropdown", "user", "Sexo", "", 0]],
+	[["Meios de Contato"], ["email", "at-sign", "E-mail", "", 0], ["text", "phone", "Telefone", "", 0], ["checkbox", "phone", "Whatsapp", false], ["checkbox", "phone", "Telegram", false], ["text", "phone", "Telefone Emergencial", "", 0], ["checkbox", "phone", "Whatsapp", false], ["checkbox", "phone", "Telegram", false]],
+	[["Endereço"], ["text", "map", "Estado", "", 0], ["text", "map", "Cidade", "", 0], ["text", "map", "Bairro", "", 0], ["text", "map-pin", "Endereço", "", 0], ["text", "map-pin", "Número", "", 0], ["text", "map-pin", "Complemento", "", 0]],
+	[["Dados Extras"], ["text", "smile", "Qual é o motivo da solicitação?", "", 0], ["checkbox", "tablet", "Possuo religião", "", 0]],
 	[
 		["Tratamentos"],
 		["checkbox", "tablet", "Estou fazendo algum tratamento médico", false],
@@ -11,13 +11,13 @@ let forms = [
 		["checkbox", "tablet", "Eu vejo vultos", false],
 		["checkbox", "tablet", "Eu escuto vozes", false],
 		["checkbox", "tablet", "Tenho pensamentos negativos / suicidas", false],
-		["checkbox", "tablet", "Houve desencarne em minha família recentemente", false],
+		["checkbox", "tablet", "Perdi um membro da família recentemente", false],
 		["checkbox", "tablet", "Eu tenho alergias", false],
 		["checkbox", "tablet", "Faço psicoterapia", false],
 		["checkbox", "tablet", "Fiz / Faço tratamento psiquiátrico", false],
 		["checkbox", "tablet", "Eu já fiz tratamento espiritual", false],
 	],
-	[["Termos"],["checkbox", "smile", "Ciente", false]]
+	[["Termos"], ["checkbox", "smile", "Ciente", false]],
 ];
 
 let pageIndex = 0;
@@ -26,19 +26,57 @@ document.addEventListener("DOMContentLoaded", () => {
 	buildForms(pageIndex);
 });
 
+function changeValue(index, value, type) {
+	forms[pageIndex][index][3] = value;
+	let passed = false;
+
+	switch (type) {
+		case "email":
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			passed = emailRegex.test(value);
+			break;
+		case "text":
+			passed = value.length > 3 ? true : false;
+			break;
+		case "date":
+			const currentDate = new Date();
+			const inputDate = new Date(value);
+			const minDate = new Date();
+			minDate.setFullYear(currentDate.getFullYear() - 150);
+			if (inputDate < currentDate && inputDate > minDate) passed = true;
+			break;
+		case "dropdown":
+			passed = value == "" ? false : true;
+			break;
+	}
+
+	const element = document.getElementById(`${type}-${index}`);
+	if (!element) return;
+
+	if (passed == true) {
+		element.classList.add("success");
+		element.classList.remove("error");
+		forms[pageIndex][index][4] = 2;
+	} else {
+		element.classList.add("error");
+		element.classList.remove("success");
+		forms[pageIndex][index][4] = 1;
+	}
+}
+
 function buildInput(inputType, icon, placeholder, value, index) {
 	let html = "";
 	switch (inputType) {
 		case "dropdown":
-			html += `<div class="form-area d-flex align-items-center mb-3 px-3"><i data-feather="${icon}" class="me-3"></i><select class="form-area stretch-x" onchange="changeValue(${index})"><option value="">Gênero</option><option value="opcao1">Masculino</option><option value="opcao2">Feminino</option><option value="opcao3">Outro</option></select></div>`;
+			html += `<div id="${inputType}-${index}" class="form-area d-flex align-items-center mb-3 px-3"><i data-feather="${icon}" class="me-3"></i><select class="form-area stretch-x" onchange="changeValue(${index}, this.value, '${inputType}')"><option value="", 0>Gênero</option><option value="option1">Masculino</option><option value="option2">Feminino</option><option value="option3">Outro</option></select></div>`;
 			break;
 		case "checkbox":
 			if (pageIndex == 1 && (index == 3 || index == 6)) html += `<div class="d-flex checkboxes">`;
-			html += `<div class="form-area d-flex align-items-center mb-3 px-3"><i data-feather="${icon}" class="me-3"></i><input type="checkbox" id="checkbox-${index}" onchange="changeValue(${index})" /><label for="checkbox-${index}" class="ms-2">${placeholder}</label></div>`;
+			html += `<div id="${inputType}-${index}" class="form-area d-flex align-items-center mb-3 px-3"><i data-feather="${icon}" class="me-3"></i><input type="checkbox" id="checkbox-${index}" onchange="changeValue(${index}, this.value, '${inputType}')" /><label for="checkbox-${index}" class="ms-2">${placeholder}</label></div>`;
 			if (pageIndex == 1 && (index == 4 || index == 7)) html += `</div>`;
 			break;
 		default:
-			html += `<div class="form-area d-flex align-items-center mb-3 px-3"><i data-feather="${icon}" class="me-3"></i><input class="text-input ${inputType != "checkbox" ? "stretch-x" : ""}" type="${inputType}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${index})"/></div>`;
+			html += `<div id="${inputType}-${index}" class="form-area d-flex align-items-center mb-3 px-3"><i data-feather="${icon}" class="me-3"></i><input class="text-input" type="${inputType}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${index}, this.value, '${inputType}')"/></div>`;
 			break;
 	}
 

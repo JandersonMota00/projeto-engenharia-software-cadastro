@@ -173,6 +173,14 @@ a:active {
 	outline: none;
 }
 
+.form-area.success {
+	border: 2px solid var(--blue);
+}
+
+.form-area.error {
+	border: 2px solid var(--orange);
+}
+
 .checkboxes .form-area {
 	width: 19rem;
 	margin-right: 2rem;
