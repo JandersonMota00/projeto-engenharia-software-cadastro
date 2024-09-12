@@ -1,39 +1,27 @@
-# Usar uma imagem base do Ubuntu
-FROM ubuntu:22.04
+# Usar uma imagem base do Python
+FROM python:3.12
 
-# Instalar dependências básicas
+# Instalar Nginx e outras dependências
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    build-essential \
-    curl \
-    wget \
-    vim \
-    git \
     nginx \
     sqlite3 \
-    && add-apt-repository ppa:deadsnakes/ppa \
-    && apt-get update
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Instalar Python 3.12
-RUN apt-get install -y python3.12 python3.12-venv python3.12-dev
-
-# Definir o Python 3.12 como padrão
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
-
-# Instalar pip e as dependências do projeto
-RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.12
-COPY requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-# Copiar o código da aplicação
-COPY . /app
-WORKDIR /app
-
-# Configurar Nginx
+# Copiar o código-fonte e arquivos de configuração
+COPY atendimentoFraternoBackend /app/atendimentoFraternoBackend/
+COPY frontend /var/www/html/
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expor portas para Nginx e Django
+# Instalar dependências do Python
+RUN pip install --no-cache-dir -r /app/atendimentoFraternoBackend/requirements.txt
+
+# Expor as portas para o Nginx e o Django
 EXPOSE 80 8000
 
+# Copiar o script de inicialização e garantir permissões
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 # Comando para iniciar Nginx e Django
-CMD service nginx start && python3.12 manage.py runserver 0.0.0.0:8000
+CMD ["/start.sh"]

@@ -1,0 +1,18 @@
+{
+  "name": "Atendimento Fraterno",
+  "dockerFile": "Dockerfile",
+  "context": ".",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "humao.rest-client",
+  ],
+  "postCreateCommand": "pip install -r requirements.txt",
+  "runArgs": [
+    "--gpus", "all"
+  ],
+  "forwardPorts": [
+    8000
+  ]
+}

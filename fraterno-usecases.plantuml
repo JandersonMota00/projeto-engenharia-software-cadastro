@@ -1,0 +1,182 @@
+@startuml Casos de uso Atendimento Fraternos
+title Usecase Sistema-AtendimentoFraterno
+skinparam actorStyle awesome
+left to right direction
+
+actor :Visitante:
+
+usecase tela_login as "Login
+---
+Permite o usuario fazer login na sua respectiva conta, ou se cadastrar como paciente
+"
+Visitante --- tela_login
+
+
+
+actor :Paciente:
+Visitante <|-- Paciente
+
+usecase solicitar_atendimento as "Solicitar atendimento
+---
+Permite o paciente solitar atendimento ao preencher o formulario de solicitação"
+Paciente --- solicitar_atendimento
+
+usecase gerenciar_conta_paciente as "Gerenciar minha conta
+---
+Permite o usuario: registrar, modificar e excluir sua propia conta" 
+Paciente --- gerenciar_conta_paciente
+
+usecase verificar_suas_solicitacoes as "Verificar minhas solicitações de atendimento
+---
+Permite ao paciente verificar a situação de suas solicitações de atendimento"
+Paciente --- verificar_suas_solicitacoes
+
+actor :Atendente:
+Visitante <|-- Atendente
+
+usecase ver_solicitacoes as "Ver solicitacoes de atendimento
+---
+Permite ver a lista das solicitacoes de atendimento"
+Atendente --- ver_solicitacoes
+
+actor :Diretor:
+Atendente <|-- Diretor
+
+usecase gerenciar_atendentes as "Gerenciar Atendentes
+---
+Permite cadastrar, modificar, excluir e suspender contas de atendentes do centro"
+Diretor --- gerenciar_atendentes
+
+
+
+
+
+
+
+' actor :Administrador:
+
+' usecase matricular_Aluno_em_Turma as "Matricular Aluno em Turma
+' ---
+' Matricula um aluno em uma turma"
+' usecase  designar_Professor_a_Turma as "Designar Professor para Turma
+' ---
+' Designa um professor para uma turma
+' "
+
+' Administrador -- matricular_Aluno_em_Turma
+' Administrador -- designar_Professor_a_Turma
+
+
+
+
+' actor :Professor:
+
+' usecase enviar_Atividade as "Enviar Atividade
+' ---
+' Permite enviar atividade para uma turma
+' "
+
+' usecase enviar_MaterialdeEstudo as "Enviar Material
+' ---
+' Permite enviar material de estudo para uma turma
+' "
+
+' usecase corrigir_Atividade as "Corrigir Atividades
+' ---
+' Permite o professor corrigir as atividades,\n atribuindo notas a elas"
+
+' Professor -- enviar_Atividade
+' Professor -- enviar_MaterialdeEstudo
+' Professor -- corrigir_Atividade
+
+' actor :Aluno:
+
+' usecase responder_Atividades as "Responder Atividades
+' ---
+' Permite o aluno responder atividades enviadas por professores
+' "
+' usecase ver_MaterialdeEstudo as "Acessar Material de Estudo
+' ---
+' Permite acessar materiais de estudos anexados por um professor a uma turma
+' "
+' usecase ver_Notificações as "Consultar Notificações
+' ---
+' Permite o aluno verificar notificações geradas pelo sistema,\n como novos materiais, atividades dentre outras coisas.
+' "
+' usecase ver_Notas as "Verificar Notas
+' ---
+' Permite ao aluno consultar seu boletim
+' "
+' usecase ver_Desempenho as "Verificar Desenpenho
+' ---
+' Permite o aluno verificar seu desempenho geral
+' "
+
+' Aluno -- responder_Atividades
+' Aluno -- ver_MaterialdeEstudo
+' Aluno -- ver_Notificações
+' Aluno -- ver_Notas
+' Aluno -- ver_Desempenho
+
+' actor :Responsavel:
+
+' Responsavel -- ver_Notas
+' Responsavel -- ver_Desempenho
+
+' actor :Usuario:
+
+' Usuario <|-- Aluno
+' Usuario <|-- Responsavel
+' Usuario <|-- Professor
+' Usuario <|-- Administrador
+
+' rectangle GerenciamentoDeContas {
+
+'     usecase gerenciar_Contas as "Gerenciar Contas
+'     ---
+'     Lida com todas operações relacionadas a conta de usuario do sistema
+'     "
+
+'     usecase registrar_Conta as "Registrar Conta
+'     ---
+'     Permite a criação de novas contas de usuario
+'     ..Contas Autorizadas..
+'     Visitante -registra-> Aluno
+'     Administrador -registra-> Administrador, Professor
+'     "
+
+'     usecase desabilitar_Conta as "
+'     Desabilitar Conta
+'     ---
+'     Desabilita uma conta, bloqueando login más mantendo ela no banco de dados
+'     ..Contas Autorizadas..
+'     Administrador
+'     "
+    
+'     usecase alterar_PermissoesDeConta as "
+'     Alterar Permissões de Conta
+'     ---
+'     Permite alterar quais funcionalidades do sistema uma conta tem permissão de acessar
+'     ..Contas Autorizadas..
+'     Administrador
+'     "
+
+    
+'     usecase alterar_DadosDeConta as "Alterar Dados de Conta
+'     ---
+'     Permite alterações arbritarias nos dados de uma conta
+'     ..Contas Autorizadas..
+'     Administrador -altera-> Qualquer Conta
+'     Qualquer Conta -Altera-> Sua propia conta
+'     "
+
+
+'     Usuario -- gerenciar_Contas
+'     gerenciar_Contas -- registrar_Conta
+'     gerenciar_Contas -- desabilitar_Conta
+'     gerenciar_Contas -- alterar_PermissoesDeConta
+'     gerenciar_Contas -- alterar_DadosDeConta
+
+
+
+@enduml
