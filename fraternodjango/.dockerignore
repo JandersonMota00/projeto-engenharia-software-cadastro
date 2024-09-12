@@ -1,0 +1,5 @@
+# Ignorar a pasta do ambiente virtual
+venv/
+
+# Ignorar todas as pastas __pycache__ em qualquer nível
+__pycache__/
