@@ -20,15 +20,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie o restante do código da aplicação para o contêiner
 COPY . /app/
 
-# Execute as migrações do Django
-RUN python manage.py migrate
-RUN python manage.py devseed
-
-RUN python manage.py collectstatic --noinput
-
 # Exponha a porta que o Django usará
 EXPOSE 8000
 
 # Comando para iniciar o servidor Gunicorn
-CMD ["gunicorn", "fraternodjango.wsgi:application", "--bind", "0.0.0.0:8000"]
-# CMD ["bash", "fraterno_init.sh"]
+CMD ["/app/entrypoint.sh"]
+# CMD ["gunicorn", "fraternodjango.wsgi:application", "--bind", "0.0.0.0:8000"]

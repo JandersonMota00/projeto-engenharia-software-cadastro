@@ -26,3 +26,5 @@ mainApp/migrations/*.py
 *.swo
 .DS_Store
 Thumbs.db
+
+staticfiles/

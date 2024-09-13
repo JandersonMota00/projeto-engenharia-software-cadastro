@@ -3,3 +3,9 @@ venv/
 
 # Ignorar todas as pastas __pycache__ em qualquer nível
 __pycache__/
+
+logical_diagram.png
+
+api/migrations/
+
+staticfiles/*
