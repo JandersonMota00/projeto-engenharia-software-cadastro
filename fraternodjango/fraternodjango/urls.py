@@ -16,9 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-
-
+from django.conf import settings
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 
 urlpatterns = [
@@ -26,3 +25,10 @@ urlpatterns = [
     path('auth/', include('rest_framework.urls')),  # Inclui rotas para login e logout padrão do DRF
     path('', include('api.urls')),  # Incluindo as rotas do app
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('schema/', SpectacularAPIView.as_view(), name='schema'),
+        path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+        path('schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    ]
