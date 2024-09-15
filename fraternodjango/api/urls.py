@@ -2,18 +2,18 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    SelectValueViewSet, PacienteViewSet, EnderecoViewSet,
-    NumeroDeTelefoneViewSet, EmailViewSet, SolicitacaoAtendimentoViewSet, RegisterView, LoginView
+    SolicitacaoAtendimentoViewSet, RegisterView, LoginView, SelectValueViewSet, PacienteViewSet, 
+    # EnderecoViewSet, NumeroDeTelefoneViewSet, EmailViewSet
 )
 
 # Criando um roteador padrão
 router = DefaultRouter()
-router.register(r'select-values', SelectValueViewSet)
+router.register(r'select-values', SelectValueViewSet, 'select-values')
 router.register(r'pacientes', PacienteViewSet)
-router.register(r'enderecos', EnderecoViewSet)
-router.register(r'numeros-telefone', NumeroDeTelefoneViewSet)
-router.register(r'emails', EmailViewSet)
 router.register(r'solicitacoes-atendimento', SolicitacaoAtendimentoViewSet)
+# router.register(r'enderecos', EnderecoViewSet)
+# router.register(r'numeros-telefone', NumeroDeTelefoneViewSet)
+# router.register(r'emails', EmailViewSet)
 
 # urlpatterns = [
 #     # YOUR PATTERNS
