@@ -14,37 +14,71 @@ import uuid
 # medicamento
 
 
-class SelectValue(models.Model):
+# class SelectValue(models.Model):
 
-    _SELECT_TYPE_CHOICES = [
-        ('RELIG', 'Religião'),
-        ('GENER', 'Gênero'),
-        ('ORIEN', 'Orientação Sexual'),
-        ('TRATA', 'Tratamento'),
-        ('SINTO', 'Sintoma'),
-        ('DOENC', 'Doença'),
-        ('ALERG', 'Alergia'),
-        ('MEDIC', 'Medicamento'),
-    ]
-    _STATE_CHOICES = [
+#     _SELECT_TYPE_CHOICES = [
+#         ('RELIG', 'Religião'),
+#         ('GENER', 'Gênero'),
+#         ('ORIEN', 'Orientação Sexual'),
+#         ('TRATA', 'Tratamento'),
+#         ('SINTO', 'Sintoma'),
+#         ('DOENC', 'Doença'),
+#         ('ALERG', 'Alergia'),
+#         ('MEDIC', 'Medicamento'),
+#     ]
+#     _STATE_CHOICES = [
+#         ('ENA', 'enable'),
+#         ('DIS', 'disable'),
+#         ('TCK', 'tocheck')
+#     ]
+
+#     # Select type armazena de qual select é um registro
+#     # Por exemplo, um registro para alergia leite seria:
+#     # select_type = 'ALERG'
+#     # value = 'Leite'
+
+#     select_type = models.CharField(max_length=5, choices=_SELECT_TYPE_CHOICES)
+#     value = models.CharField(max_length=256)
+#     normalized_value = models.CharField(max_length=256, editable=False)
+
+#     state = models.CharField(choices=_STATE_CHOICES,
+#                              max_length=3, default='TCK')
+
+#     class Meta:
+#         permissions = [
+#             ('can_create_with_any_state', 'Pode criar values com qualquer state'),
+#             ('can_create_only_with_tocheck_state', 'Pode criar somente values tocheck'),
+#             ('can_view_only_enableds_state', 'Pode visualizar apenas os valores validados'),
+#             ('can_view_all_states', 'Pode visualizar values com qualquer valor de state')
+#         ]
+
+
+#     def __str__(self) -> str:
+#         return self.state + " # " + self.select_type + " ### " + self.value + ' # ' + str(self.id)
+
+#     def save(self, *args, **kwargs):
+#         if self.value:
+#             self.normalized_value = SelectValue.normalize(self.value)
+#         super().save(*args, **kwargs)
+
+#     @staticmethod
+#     def normalize(value: str) -> str:
+#         value = value.lower()
+#         value = unicodedata.normalize('NFKD', value).encode(
+#             'ASCII', 'ignore').decode('ASCII')
+#         return value
+
+class BaseSelectValue(models.Model):
+    value = models.CharField(max_length=256)
+    normalized_value = models.CharField(max_length=256, editable=False)
+    state = models.CharField(choices=[
         ('ENA', 'enable'),
         ('DIS', 'disable'),
         ('TCK', 'tocheck')
-    ]
-
-    # Select type armazena de qual select é um registro
-    # Por exemplo, um registro para alergia leite seria:
-    # select_type = 'ALERG'
-    # value = 'Leite'
-
-    select_type = models.CharField(max_length=5, choices=_SELECT_TYPE_CHOICES)
-    value = models.CharField(max_length=256)
-    normalized_value = models.CharField(max_length=256, editable=False)
-
-    state = models.CharField(choices=_STATE_CHOICES,
-                             max_length=3, default='TCK')
+    ], max_length=3, default='TCK')
 
     class Meta:
+        abstract = True
         permissions = [
             ('can_create_with_any_state', 'Pode criar values com qualquer state'),
             ('can_create_only_with_tocheck_state', 'Pode criar somente values tocheck'),
@@ -52,13 +86,12 @@ class SelectValue(models.Model):
             ('can_view_all_states', 'Pode visualizar values com qualquer valor de state')
         ]
 
-
-    def __str__(self) -> str:
-        return self.state + " # " + self.select_type + " ### " + self.value + ' # ' + str(self.id)
+    def __str__(self):
+        return f"{self.state} ### {self.value} # {self.id}"
 
     def save(self, *args, **kwargs):
         if self.value:
-            self.normalized_value = SelectValue.normalize(self.value)
+            self.normalized_value = self.normalize(self.value)
         super().save(*args, **kwargs)
 
     @staticmethod
@@ -68,6 +101,30 @@ class SelectValue(models.Model):
             'ASCII', 'ignore').decode('ASCII')
         return value
 
+
+class Religiao(BaseSelectValue):
+    pass
+
+class Genero(BaseSelectValue):
+    pass
+
+class OrientacaoSexual(BaseSelectValue):
+    pass
+
+class Tratamento(BaseSelectValue):
+    pass
+
+class Sintoma(BaseSelectValue):
+    pass
+
+class Doenca(BaseSelectValue):
+    pass
+
+class Alergia(BaseSelectValue):
+    pass
+
+class Medicamento(BaseSelectValue):
+    pass
 
 
 
@@ -179,6 +236,8 @@ class Email(models.Model):
 
 
 class SolicitacaoAtendimento(models.Model):
+    
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
 
     descricao = models.TextField()
 
@@ -187,6 +246,12 @@ class SolicitacaoAtendimento(models.Model):
 
     tratamentos_em_andamento = models.ManyToManyField(
         SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'GENRO'})
+
+    class Meta:
+        permissions = [
+            ('can_view_all', 'Pode ver todas as solicitações de atendimento'),
+            ('can_view_only_owns', 'Pode ver apenas suas próprias solicitações de atendimento'),
+        ]
 
     # TODO transformar o bloco abaixo em sintomas tambem?
     # desmaio = models.BooleanField()

@@ -122,12 +122,23 @@ class EmailSerializer(serializers.ModelSerializer):
         model = apiModels.Email
         fields = ['id', 'paciente', 'email']
 
-class SolicitacaoAtendimentoSerializer(serializers.ModelSerializer):
-    sintomas = SelectValueSerializer(many=True)
-    tratamentos_em_andamento = SelectValueSerializer(many=True)
 
+class SolicitacaoAtendimentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = apiModels.SolicitacaoAtendimento
-        fields = ['id', 'descricao', 'sintomas', 'tratamentos_em_andamento']
+        fields = '__all__'
+    
+    def validate(self, attrs):
+        # Verifica se o paciente na solicitação é o próprio usuário autenticado
+        user = self.context['request'].user
+        
+        if hasattr(user, 'paciente') and attrs.get('paciente') != user.paciente:
+            raise serializers.ValidationError("Você só pode criar solicitações para você mesmo.")
+        
+        return attrs
 
-
+    def create(self, validated_data):
+        # Garante que o paciente seja sempre o próprio usuário autenticado
+        user = self.context['request'].user
+        validated_data['paciente'] = user.paciente
+        return super().create(validated_data)

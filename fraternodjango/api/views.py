@@ -29,6 +29,8 @@ class LoginView(generics.GenericAPIView):
         }, status=status.HTTP_200_OK)
 
 
+def PrimeiroAtendimento():
+    pass
 
 class SelectValueViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin):
     permission_classes = [permissions.IsAuthenticated]
@@ -68,5 +70,18 @@ class PacienteViewSet(viewsets.ModelViewSet):
 
 class SolicitacaoAtendimentoViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin):
     permission_classes = [permissions.IsAuthenticated]
-    queryset = apiModels.SolicitacaoAtendimento.objects.all()
     serializer_class = apiSerializers.SolicitacaoAtendimentoSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        
+        # Atendentes e diretores podem visualizar todas as solicitações
+        if user.has_perm('api.can_view_all'):
+            return apiModels.SolicitacaoAtendimento.objects.all()
+        
+        # Pacientes só podem visualizar suas próprias solicitações
+        if user.has_perm('api.can_view_only_owns'):
+            return apiModels.SolicitacaoAtendimento.objects.filter(paciente=user.paciente)
+        
+        # Se não tiver permissão, retorna uma queryset vazia
+        return apiModels.SolicitacaoAtendimento.objects.none()
