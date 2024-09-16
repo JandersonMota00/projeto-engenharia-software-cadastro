@@ -11,6 +11,34 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
+        # Executa comandos de reinicialização e configuração
+        
+        self.stdout.write(f'=============================================================================================')
+        call_command('flush', interactive=False)
+        self.stdout.write(self.style.SUCCESS(f'Banco de dados apagado'))
+        
+        
+        self.stdout.write(f'=============================================================================================')
+        call_command('removemigrations')
+        
+        self.stdout.write(f'=============================================================================================')
+
+        self.stdout.write('Criando novas migrações...')
+
+        call_command('makemigrations', 'api')
+
+        self.stdout.write(f'=============================================================================================')
+
+        self.stdout.write('Aplicando migrações...')
+
+        call_command('migrate')
+
+        self.stdout.write(f'=============================================================================================')
+
+        call_command('configpermissions')
+
+        self.stdout.write(f'=============================================================================================')
+
         call_command('seed')
 
         User.objects.create_superuser(
@@ -22,7 +50,4 @@ class Command(BaseCommand):
             password='adminpassword'
 
         )
-        a = models.SelectValue._meta.permissions
-        print(a)
-        content_type = ContentType.objects.get_for_model(models.SelectValue)
-        print(Permission.objects.filter(content_type=content_type))
+

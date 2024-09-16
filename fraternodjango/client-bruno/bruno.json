@@ -9,5 +9,8 @@
   "presets": {
     "requestType": "http",
     "requestUrl": "{{host}}"
+  },
+  "scripts": {
+    "moduleWhitelist": ["node:buffer"]
   }
 }

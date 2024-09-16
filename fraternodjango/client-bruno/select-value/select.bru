@@ -1,0 +1,15 @@
+meta {
+  name: select
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/select-values/religiao/?selecttype=religiao
+  body: none
+  auth: none
+}
+
+params:query {
+  selecttype: religiao
+}

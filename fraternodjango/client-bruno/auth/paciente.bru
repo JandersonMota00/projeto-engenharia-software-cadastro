@@ -1,0 +1,65 @@
+meta {
+  name: paciente
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/pacientes/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "nome": "João da Silva",
+      "pseudonimo": "Joãozinho",
+      "data_nascimento": "1980-05-15",
+      "generos": [
+          {
+              "value": "Masculino"
+          }
+      ],
+      "orientacoes_sexuais": [
+          {
+              "value": "Heterossexual"
+          }
+      ],
+      "religioes": [
+          {
+              "value": "Católica"
+          }
+      ],
+      "alergias": [
+          {
+              "value": "Penicilina"
+          }
+      ],
+      "endereco": {
+          "logradouro": "Rua das Flores",
+          "numero": "123",
+          "bairro": "Jardim das Acácias",
+          "cidade": "São Paulo",
+          "estado": "SP",
+          "cep": "01234567"
+      },
+      "emails": [
+          {
+              "email": "joao.silva@example.com"
+          }
+      ],
+      "telefones": [
+          {
+              "rotulo": "Celular",
+              "ddd": "015",
+              "telefone": "912345678",
+              "whatssap": true
+          }
+      ],
+      "ja_fez_psicoterapia": true,
+      "ja_fez_psiquiatrico": false,
+      "ja_fez_tratamento_espirita": true,
+      "user_id": 1
+  }
+  
+}

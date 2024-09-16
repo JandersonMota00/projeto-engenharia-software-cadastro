@@ -1,0 +1,26 @@
+meta {
+  name: reset env vars
+  type: http
+  seq: 1
+}
+
+get {
+  url: google.com
+  body: none
+  auth: none
+}
+
+script:pre-request {
+  const { faker } = require('@faker-js/faker');
+  
+  const prandom = faker.string.alphanumeric(5);
+  const arandom = faker.string.alphanumeric(5);
+  const drandom = faker.string.alphanumeric(5);
+  
+  
+  bru.setEnvVar('prandom', prandom);
+  bru.setEnvVar('arandom', arandom);
+  bru.setEnvVar('drandom', drandom);
+  bru.setEnvVar('auth-token', undefined);
+  
+}

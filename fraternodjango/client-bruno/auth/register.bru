@@ -1,20 +1,47 @@
 meta {
   name: register
   type: http
-  seq: 1
+  seq: 2
 }
 
 post {
-  url: {{host}}/register/
+  url: {{host}}/users/
   body: json
   auth: none
 }
 
 body:json {
   {
-    "username": "useruser",
-    "password": "userpassword",
-    "email": "novo_user@email.com",
+    "username": ,
+    "password": "paciente{{prandom}}",
+    "email": "paciente{{prandom}}@email.com",
     "user_type": "Paciente"
   }
+}
+
+body:text {
+  {
+    "username": {{prandom}},
+    "password": "paciente{{prandom}}",
+    "email": "paciente{{prandom}}@email.com",
+    "user_type": "Paciente"
+  }
+}
+
+script:pre-request {
+  // {
+  //   "username": ,
+  //   "password": "paciente{{prandom}}",
+  //   "email": "paciente{{prandom}}@email.com",
+  //   "user_type": "Paciente"
+  // }
+  
+  data = {
+    username: 'paciente' + bru.getEnvVar('prandom'),
+    password: 'paciente',
+    email: 'paciente' + bru.getEnvVar('prandom') + '@email.com',
+    user_type: 'Paciente'
+  }
+  
+  req.setBody(data)
 }

@@ -1,31 +1,77 @@
 meta {
   name: solitacaoAtendimento
   type: http
-  seq: 3
+  seq: 6
 }
 
 post {
-  url: {{host}}/solicitacoes-atendimento/
+  url: {{host}}/solicitacoes/
   body: json
   auth: none
 }
 
+headers {
+  : 
+}
+
 body:json {
-  {
-    "descricao": "Estou me sentindo muito mal ultimamente",
-    "sintomas": [
+  { 
+    "id": "uuid-para-o-paciente",
+    "nome": "Nome do Paciente",
+    "pseudonimo": "Pseudônimo do Paciente",
+    "data_nascimento": "2003-11-05",
+    "descricao": "dawfdawfwa",
+    "generos": [
       {
-        "select_type": "RELIG",
-        "value": "string",
-        "state": "ENA"
+        "id": "id-do-genero", 
+        "name": "Nome do Gênero"
       }
     ],
-    "tratamentos_em_andamento": [
+    "orientacoes_sexuais": [
       {
-        "select_type": "RELIG",
-        "value": "string",
-        "state": "ENA"
+        "id": "id-da-orientacao",
+        "name": "Nome da Orientação Sexual"
       }
-    ]
+    ],
+    "religioes": [
+      {
+        "id": "id-da-religiao",
+        "name": "Nome da Religião"
+      }
+    ],
+    "alergias": [
+      {
+        "id": "id-da-alergia",
+        "name": "Nome da Alergia"
+      }
+    ],
+    "endereco": {
+      "cep": "00000-000",
+      "estado": "Estado",
+      "cidade": "Cidade",
+      "bairro": "Bairro",
+      "tipo_logradouro": "Tipo de Logradouro",
+      "logradouro": "Logradouro",
+      "numero": "Número",
+      "complemento": "Complemento"
+    },
+    "emails": [
+      {
+        "email": "exemplo@dominio.com"
+      }
+    ],
+    "telefones": [
+      {
+        "rotulo": "Rotulo",
+        "ddd": "DDD",
+        "telefone": "Telefone",
+        "whatsapp": true,
+        "telegram": false,
+        "ligacao": true
+      }
+    ],
+    "ja_fez_psicoterapia": true,
+    "ja_fez_psiquiatrico": false,
+    "ja_fez_tratamento_espirita": true
   }
 }

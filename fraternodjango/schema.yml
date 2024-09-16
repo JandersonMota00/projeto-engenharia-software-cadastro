@@ -22,8 +22,7 @@ paths:
               $ref: '#/components/schemas/Login'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -37,8 +36,8 @@ paths:
       tags:
       - pacientes
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -65,8 +64,8 @@ paths:
               $ref: '#/components/schemas/Paciente'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -88,8 +87,8 @@ paths:
       tags:
       - pacientes
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -122,8 +121,8 @@ paths:
               $ref: '#/components/schemas/Paciente'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -155,8 +154,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedPaciente'
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -177,46 +176,37 @@ paths:
       tags:
       - pacientes
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '204':
           description: No response body
-  /register/:
-    post:
-      operationId: register_create
-      tags:
-      - register
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Register'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Register'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Register'
-        required: true
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Register'
-          description: ''
-  /select-values/:
+  /select-values/{selecttype}/:
     get:
-      operationId: select_values_list
+      operationId: select_values_retrieve
+      parameters:
+      - in: path
+        name: selecttype
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
       tags:
       - select-values
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /select/pacientes/:
+    get:
+      operationId: select_pacientes_list
+      tags:
+      - select
+      security:
+      - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -224,42 +214,167 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SelectValue'
+                  $ref: '#/components/schemas/Paciente'
           description: ''
     post:
-      operationId: select_values_create
+      operationId: select_pacientes_create
       tags:
-      - select-values
+      - select
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SelectValue'
+              $ref: '#/components/schemas/Paciente'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SelectValue'
+              $ref: '#/components/schemas/Paciente'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SelectValue'
+              $ref: '#/components/schemas/Paciente'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SelectValue'
+                $ref: '#/components/schemas/Paciente'
           description: ''
-  /solicitacoes-atendimento/:
+  /select/pacientes/{id}/:
     get:
-      operationId: solicitacoes_atendimento_list
+      operationId: select_pacientes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this paciente.
+        required: true
       tags:
-      - solicitacoes-atendimento
+      - select
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paciente'
+          description: ''
+    put:
+      operationId: select_pacientes_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this paciente.
+        required: true
+      tags:
+      - select
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paciente'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Paciente'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Paciente'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paciente'
+          description: ''
+    patch:
+      operationId: select_pacientes_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this paciente.
+        required: true
+      tags:
+      - select
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPaciente'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPaciente'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPaciente'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paciente'
+          description: ''
+    delete:
+      operationId: select_pacientes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this paciente.
+        required: true
+      tags:
+      - select
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /select/select-values/{selecttype}/:
+    get:
+      operationId: select_select_values_retrieve
+      parameters:
+      - in: path
+        name: selecttype
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
+      tags:
+      - select
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /select/solicitacoes/:
+    get:
+      operationId: select_solicitacoes_list
+      tags:
+      - select
+      security:
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -270,9 +385,9 @@ paths:
                   $ref: '#/components/schemas/SolicitacaoAtendimento'
           description: ''
     post:
-      operationId: solicitacoes_atendimento_create
+      operationId: select_solicitacoes_create
       tags:
-      - solicitacoes-atendimento
+      - select
       requestBody:
         content:
           application/json:
@@ -286,8 +401,7 @@ paths:
               $ref: '#/components/schemas/SolicitacaoAtendimento'
         required: true
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -295,9 +409,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/SolicitacaoAtendimento'
           description: ''
-  /solicitacoes-atendimento/{id}/:
+  /select/solicitacoes/{id}/:
     get:
-      operationId: solicitacoes_atendimento_retrieve
+      operationId: select_solicitacoes_retrieve
       parameters:
       - in: path
         name: id
@@ -306,10 +420,71 @@ paths:
         description: A unique integer value identifying this solicitacao atendimento.
         required: true
       tags:
-      - solicitacoes-atendimento
+      - select
       security:
-      - cookieAuth: []
-      - basicAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolicitacaoAtendimento'
+          description: ''
+  /solicitacoes/:
+    get:
+      operationId: solicitacoes_list
+      tags:
+      - solicitacoes
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SolicitacaoAtendimento'
+          description: ''
+    post:
+      operationId: solicitacoes_create
+      tags:
+      - solicitacoes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolicitacaoAtendimento'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SolicitacaoAtendimento'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SolicitacaoAtendimento'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolicitacaoAtendimento'
+          description: ''
+  /solicitacoes/{id}/:
+    get:
+      operationId: solicitacoes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this solicitacao atendimento.
+        required: true
+      tags:
+      - solicitacoes
+      security:
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -319,6 +494,69 @@ paths:
           description: ''
 components:
   schemas:
+    AlergiaValue:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          maxLength: 256
+      required:
+      - name
+    Email:
+      type: object
+      properties:
+        email:
+          type: string
+          maxLength: 256
+      required:
+      - email
+    Endereco:
+      type: object
+      properties:
+        cep:
+          type: string
+          maxLength: 8
+          minLength: 8
+        estado:
+          type: string
+          maxLength: 100
+        cidade:
+          type: string
+          maxLength: 64
+        bairro:
+          type: string
+          maxLength: 100
+        tipo_logradouro:
+          $ref: '#/components/schemas/TipoLogradouroEnum'
+        logradouro:
+          type: string
+          maxLength: 100
+        numero:
+          type: string
+          maxLength: 5
+        complemento:
+          type: string
+          maxLength: 100
+      required:
+      - bairro
+      - cep
+      - cidade
+      - complemento
+      - estado
+      - logradouro
+      - numero
+    GeneroValue:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          maxLength: 256
+      required:
+      - name
     Login:
       type: object
       properties:
@@ -330,6 +568,41 @@ components:
       required:
       - password
       - username
+    NumeroDeTelefone:
+      type: object
+      properties:
+        rotulo:
+          type: string
+          maxLength: 16
+        ddd:
+          type: string
+          maxLength: 15
+        telefone:
+          type: string
+          maxLength: 16
+        whatsapp:
+          type: boolean
+        telegram:
+          type: boolean
+        ligacao:
+          type: boolean
+      required:
+      - ddd
+      - ligacao
+      - rotulo
+      - telefone
+      - telegram
+      - whatsapp
+    OrientacaoSexualValue:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          maxLength: 256
+      required:
+      - name
     Paciente:
       type: object
       properties:
@@ -346,22 +619,40 @@ components:
         data_nascimento:
           type: string
           format: date
-        genero:
+        generos:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
-        orientacao_sexual:
+            $ref: '#/components/schemas/GeneroValue'
+          writeOnly: true
+        emails:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
-        religiao:
+            $ref: '#/components/schemas/Email'
+          writeOnly: true
+        orientacoes_sexuais:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
+            $ref: '#/components/schemas/OrientacaoSexualValue'
+          writeOnly: true
+        religioes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReligiaoValue'
+          writeOnly: true
         alergias:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
+            $ref: '#/components/schemas/AlergiaValue'
+          writeOnly: true
+        endereco:
+          allOf:
+          - $ref: '#/components/schemas/Endereco'
+          writeOnly: true
+        telefones:
+          type: array
+          items:
+            $ref: '#/components/schemas/NumeroDeTelefone'
+          writeOnly: true
         ja_fez_psicoterapia:
           type: boolean
         ja_fez_psiquiatrico:
@@ -371,15 +662,15 @@ components:
       required:
       - alergias
       - data_nascimento
-      - genero
+      - generos
       - id
       - ja_fez_psicoterapia
       - ja_fez_psiquiatrico
       - ja_fez_tratamento_espirita
       - nome
-      - orientacao_sexual
+      - orientacoes_sexuais
       - pseudonimo
-      - religiao
+      - religioes
     PatchedPaciente:
       type: object
       properties:
@@ -396,97 +687,56 @@ components:
         data_nascimento:
           type: string
           format: date
-        genero:
+        generos:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
-        orientacao_sexual:
+            $ref: '#/components/schemas/GeneroValue'
+          writeOnly: true
+        emails:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
-        religiao:
+            $ref: '#/components/schemas/Email'
+          writeOnly: true
+        orientacoes_sexuais:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
+            $ref: '#/components/schemas/OrientacaoSexualValue'
+          writeOnly: true
+        religioes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReligiaoValue'
+          writeOnly: true
         alergias:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
+            $ref: '#/components/schemas/AlergiaValue'
+          writeOnly: true
+        endereco:
+          allOf:
+          - $ref: '#/components/schemas/Endereco'
+          writeOnly: true
+        telefones:
+          type: array
+          items:
+            $ref: '#/components/schemas/NumeroDeTelefone'
+          writeOnly: true
         ja_fez_psicoterapia:
           type: boolean
         ja_fez_psiquiatrico:
           type: boolean
         ja_fez_tratamento_espirita:
           type: boolean
-    Register:
-      type: object
-      properties:
-        username:
-          type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
-          pattern: ^[\w.@+-]+$
-          maxLength: 150
-        password:
-          type: string
-          writeOnly: true
-        email:
-          type: string
-          format: email
-        first_name:
-          type: string
-          maxLength: 150
-        last_name:
-          type: string
-          maxLength: 150
-        user_type:
-          $ref: '#/components/schemas/UserTypeEnum'
-      required:
-      - email
-      - password
-      - user_type
-      - username
-    SelectTypeEnum:
-      enum:
-      - RELIG
-      - GENER
-      - ORIEN
-      - TRATA
-      - SINTO
-      - DOENC
-      - ALERG
-      - MEDIC
-      type: string
-      description: |-
-        * `RELIG` - Religião
-        * `GENER` - Gênero
-        * `ORIEN` - Orientação Sexual
-        * `TRATA` - Tratamento
-        * `SINTO` - Sintoma
-        * `DOENC` - Doença
-        * `ALERG` - Alergia
-        * `MEDIC` - Medicamento
-    SelectValue:
+    ReligiaoValue:
       type: object
       properties:
         id:
           type: integer
-          readOnly: true
-        select_type:
-          $ref: '#/components/schemas/SelectTypeEnum'
-        value:
+        name:
           type: string
           maxLength: 256
-        normalized_value:
-          type: string
-          readOnly: true
-        state:
-          $ref: '#/components/schemas/StateEnum'
       required:
-      - id
-      - normalized_value
-      - select_type
-      - value
+      - name
     SolicitacaoAtendimento:
       type: object
       properties:
@@ -495,44 +745,64 @@ components:
           readOnly: true
         descricao:
           type: string
+        paciente:
+          type: string
+          format: uuid
         sintomas:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
+            type: integer
         tratamentos_em_andamento:
           type: array
           items:
-            $ref: '#/components/schemas/SelectValue'
+            type: integer
       required:
       - descricao
       - id
-      - sintomas
-      - tratamentos_em_andamento
-    StateEnum:
+      - paciente
+    TipoLogradouroEnum:
       enum:
-      - ENA
-      - DIS
-      - TCK
+      - NDA
+      - OUT
+      - RUA
+      - AV
+      - TRA
+      - ROD
+      - AL
+      - PRA
+      - EST
+      - VL
+      - LRG
+      - BC
+      - QD
+      - CON
+      - ST
+      - FZ
+      - LT
+      - PQ
       type: string
       description: |-
-        * `ENA` - enable
-        * `DIS` - disable
-        * `TCK` - tocheck
-    UserTypeEnum:
-      enum:
-      - PAC
-      - ATD
-      - DIR
-      type: string
-      description: |-
-        * `PAC` - Paciente
-        * `ATD` - Atendente
-        * `DIR` - Diretor
+        * `NDA` - Não se aplica
+        * `OUT` - Outro
+        * `RUA` - Rua
+        * `AV` - Avenida
+        * `TRA` - Travessa
+        * `ROD` - Rodovia
+        * `AL` - Alameda
+        * `PRA` - Praça
+        * `EST` - Estrada
+        * `VL` - Viela
+        * `LRG` - Largo
+        * `BC` - Beco
+        * `QD` - Quadra
+        * `CON` - Condomínio
+        * `ST` - Sítio
+        * `FZ` - Fazenda
+        * `LT` - Loteamento
+        * `PQ` - Parque
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
-    cookieAuth:
+    tokenAuth:
       type: apiKey
-      in: cookie
-      name: sessionid
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

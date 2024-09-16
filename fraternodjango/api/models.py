@@ -72,19 +72,13 @@ class BaseSelectValue(models.Model):
     value = models.CharField(max_length=256)
     normalized_value = models.CharField(max_length=256, editable=False)
     state = models.CharField(choices=[
-        ('ENA', 'enable'),
-        ('DIS', 'disable'),
-        ('TCK', 'tocheck')
-    ], max_length=3, default='TCK')
+        ('enable', 'enable'),
+        ('disable', 'disable'),
+        ('tocheck', 'tocheck')
+    ], max_length=8, default='tocheck')
 
     class Meta:
         abstract = True
-        permissions = [
-            ('can_create_with_any_state', 'Pode criar values com qualquer state'),
-            ('can_create_only_with_tocheck_state', 'Pode criar somente values tocheck'),
-            ('can_view_only_enableds_state', 'Pode visualizar apenas os valores validados'),
-            ('can_view_all_states', 'Pode visualizar values com qualquer valor de state')
-        ]
 
     def __str__(self):
         return f"{self.state} ### {self.value} # {self.id}"
@@ -101,54 +95,65 @@ class BaseSelectValue(models.Model):
             'ASCII', 'ignore').decode('ASCII')
         return value
 
+# Modelos especializados para cada tipo de SelectValue
 
-class Religiao(BaseSelectValue):
-    pass
+class ReligiaoValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Religião'
+        verbose_name_plural = 'Religiões'
 
-class Genero(BaseSelectValue):
-    pass
+class GeneroValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Gênero'
+        verbose_name_plural = 'Gêneros'
 
-class OrientacaoSexual(BaseSelectValue):
-    pass
+class OrientacaoSexualValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Orientação Sexual'
+        verbose_name_plural = 'Orientações Sexuais'
 
-class Tratamento(BaseSelectValue):
-    pass
+class TratamentoValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Tratamento'
+        verbose_name_plural = 'Tratamentos'
 
-class Sintoma(BaseSelectValue):
-    pass
+class SintomaValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Sintoma'
+        verbose_name_plural = 'Sintomas'
 
-class Doenca(BaseSelectValue):
-    pass
+class DoencaValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Doença'
+        verbose_name_plural = 'Doenças'
 
-class Alergia(BaseSelectValue):
-    pass
+class AlergiaValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Alergia'
+        verbose_name_plural = 'Alergias'
 
-class Medicamento(BaseSelectValue):
-    pass
+class MedicamentoValue(BaseSelectValue):
+    class Meta(BaseSelectValue.Meta):
+        verbose_name = 'Medicamento'
+        verbose_name_plural = 'Medicamentos'
 
 
 
+
+
+# Modelo Paciente atualizado
 class Paciente(models.Model):
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    # TODO Verificar se o ondelete cascade é o mais apropiado
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    # TODO Revisar como fica a sinergia entre nome, pseudonimo e user.username,firstname,lastname
     nome = models.CharField(max_length=128)
     pseudonimo = models.CharField(max_length=128)
-
     data_nascimento = models.DateField()
 
-    genero = models.ManyToManyField(
-        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'GENER'})
-    orientacao_sexual = models.ManyToManyField(
-        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'ORIEN'})
-    religiao = models.ManyToManyField(
-        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'RELIG'})
-    alergias = models.ManyToManyField(
-        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'ALERG'})
+    # Relacionando com os novos modelos específicos
+    genero = models.ManyToManyField(GeneroValue, blank=True, related_name='pacientes')
+    orientacao_sexual = models.ManyToManyField(OrientacaoSexualValue, blank=True, related_name='pacientes')
+    religiao = models.ManyToManyField(ReligiaoValue, blank=True, related_name='pacientes')
+    alergias = models.ManyToManyField(AlergiaValue, blank=True, related_name='pacientes')
 
     ja_fez_psicoterapia = models.BooleanField()
     ja_fez_psiquiatrico = models.BooleanField()
@@ -156,13 +161,12 @@ class Paciente(models.Model):
 
     class Meta:
         permissions = [
-            ('can_view_realname_and_pseudonym', 'Permite ver ')
+            ('can_view_realname_and_pseudonym', 'Permite ver nome real e pseudônimo'),
+            ('can_view_only_pseudonym', 'Permite ver apenas o pseudonimo'),
         ]
 
     def __str__(self) -> str:
-        return self.get_safe_nome()
-
-
+        return self.nome
 
 class Endereco(models.Model):
 
@@ -205,11 +209,10 @@ class Endereco(models.Model):
 
     numero = models.CharField(max_length=5)
 
-    complemento = models.CharField(max_length=100)
+    complemento = models.CharField(max_length=100, null=True)
 
     def __str__(self) -> str:
         return self.cidade + self.bairro
-
 
 class NumeroDeTelefone(models.Model):
 
@@ -220,13 +223,12 @@ class NumeroDeTelefone(models.Model):
     ddd = models.CharField(max_length=15)
     telefone = models.CharField(max_length=16)
 
-    whatsapp = models.BooleanField()
-    telegram = models.BooleanField()
-    ligacao = models.BooleanField()
+    whatsapp = models.BooleanField(default=False, blank=True)
+    telegram = models.BooleanField(default=False, blank=True)
+    ligacao = models.BooleanField(default=False, blank=True)
 
     def __str__(self) -> str:
         return self.paciente.__str__() + '#'+self.ddd+self.telefone
-
 
 class Email(models.Model):
 
@@ -234,24 +236,23 @@ class Email(models.Model):
 
     email = models.CharField(max_length=256)
 
-
+# Modelo SolicitacaoAtendimento atualizado
 class SolicitacaoAtendimento(models.Model):
-    
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-
     descricao = models.TextField()
 
-    sintomas = models.ManyToManyField(
-        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'SINTO'})
-
-    tratamentos_em_andamento = models.ManyToManyField(
-        SelectValue, blank=True, related_name='none+', limit_choices_to={'select_type': 'GENRO'})
+    # Relacionando com SintomaValue e TratamentoValue
+    sintomas = models.ManyToManyField(SintomaValue, blank=True, related_name='solicitacoes')
+    tratamentos_em_andamento = models.ManyToManyField(TratamentoValue, blank=True, related_name='solicitacoes')
 
     class Meta:
         permissions = [
             ('can_view_all', 'Pode ver todas as solicitações de atendimento'),
-            ('can_view_only_owns', 'Pode ver apenas suas próprias solicitações de atendimento'),
+            ('can_view_only_owns', 'Pode ver apenas suas próprias solicitações de atendimento')
         ]
+
+    def __str__(self) -> str:
+        return f"Solicitação de {self.paciente.nome} - {self.id}"
 
     # TODO transformar o bloco abaixo em sintomas tambem?
     # desmaio = models.BooleanField()

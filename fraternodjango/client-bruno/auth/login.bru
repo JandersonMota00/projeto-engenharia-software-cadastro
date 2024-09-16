@@ -10,13 +10,23 @@ post {
   auth: none
 }
 
-body:json {
-  {
-    "username": "useruser",
-    "password": "userpassword"
+script:pre-request {
+  // {
+  //   "username": "pacienteuser",
+  //   "password": "pacientepw"
+  // }
+  
+  data = {
+    username: 'paciente' + bru.getEnvVar('prandom'),
+    password: 'paciente',
   }
+  req.setBody(data)
+    
 }
 
 script:post-response {
   bru.setEnvVar("auth-token",res.body.token)
+  
+  
+  console.log(res.body)
 }
