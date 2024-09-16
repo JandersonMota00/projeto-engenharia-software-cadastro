@@ -1,0 +1,71 @@
+/*body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}*/
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.religion-select {
+  width: 60%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.selected-religions {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.religion-tag {
+  /*background-color: #007bff;*/
+  background-color: rgb(92 177 205);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  font-size: 14px;
+}
+
+.religion-tag .remove-btn {
+  margin-left: 10px;
+  background-color: rgb(92 177 205);
+  color: white;
+  border: none;
+  /*border-radius: 50%;*/
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/*.apresentacao__formulario label {
+  display: inline-block;
+  width: 60%;*/ /* Mesmo valor do width do select */
+/*padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}*/

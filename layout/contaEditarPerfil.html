@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="contaStyle.css" />
+    <link rel="stylesheet" href="../styles/lista.css" />
+  </head>
+  <body>
+    <div class="menu">
+      <nav class="barraLateral">
+        <h1><a href="conta.html">SER</a></h1>
+        <ul>
+          <li class="submenu">
+            <a href="#">Conta</a>
+            <ul>
+              <li><a href="#">Mensagens</a></li>
+              <li><a href="contaEditarPerfil.html">Editar perfil</a></li>
+              <li><a href="#">Alterar senha</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Admin</a></li>
+          <li><a href="login.html">Logoff</a></li>
+        </ul>
+      </nav>
+      <main class="apresentacao">
+        <section>
+          <div class="apresentacao__titulo">
+            <h1>Editar Perfil</h1>
+
+            <div class="grid"></div>
+          </div>
+          <div
+            class="apresentacao__pagina apresentacao__titulo apresentacao--pagina"
+          >
+            <div class="apresentacao__pagina__dadoPessoal">
+              <div class="apresentacao__pagina__dadoPessoal__bloco vertical">
+                <label for="nome_completo">Nome Completo</label>
+                <input
+                  type="text"
+                  id="nome_completo"
+                  class="input-text"
+                  name="nome_completo"
+                  value=""
+                  title=""
+                  placeholder=""
+                  pattern="[A-Za-zÀ-ÿ\s]{2,}"
+                />
+              </div>
+              <div class="horizontal">
+                <div
+                  id="blocoNomeSocial"
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical"
+                >
+                  <label for="nome_social">Nome Social</label>
+                  <input
+                    type="text"
+                    id="nome_social"
+                    class="input-text"
+                    name="nome_social"
+                    value=""
+                    placeholder=""
+                    pattern="[A-Za-zÀ-ÿ\s]{2,}"
+                  />
+                </div>
+                <div
+                  id="blocoSexo"
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical"
+                >
+                  <label for="sexo">Sexo</label>
+                  <select id="sexo" class="input-text" name="sexo" required>
+                    <option value="" disabled selected>
+                      Selecione uma opção
+                    </option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Não informar">Não informar</option>
+                  </select>
+                </div>
+                <div
+                  id="blocoGenero"
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical"
+                >
+                  <label for="genero">Gênero</label>
+                  <select id="genero" class="input-text" name="genero">
+                    <option value="" disabled selected>
+                      Selecione uma opção
+                    </option>
+                    <!-- Gêneros Binários -->
+                    <optgroup label="Gêneros Binários">
+                      <option value="Masculino">Masculino</option>
+                      <option value="Feminino">Feminino</option>
+                    </optgroup>
+                    <!-- Gêneros Não Binários -->
+                    <optgroup label="Gêneros Não Binários">
+                      <option value="Não-binário">Não-binário</option>
+                      <option value="Gênero Fluido">Gênero Fluido</option>
+                      <option value="Agênero">Agênero</option>
+                      <option value="Bigênero">Bigênero</option>
+                      <option value="Demigênero">Demigênero</option>
+                      <option value="Demimenino">Demimenino</option>
+                      <option value="Demimenina">Demimenina</option>
+                      <option value="Pangênero">Pangênero</option>
+                      <option value="Andrógino">Andrógino</option>
+                      <option value="Neutrois">Neutrois</option>
+                      <option value="Intergênero">Intergênero</option>
+                      <option value="Gênero Queer">Gênero Queer</option>
+                      <option value="Poligênero">Poligênero</option>
+                      <option value="Gênero Vago">Gênero Vago</option>
+                      <option value="Gênero Inconformista">
+                        Gênero Inconformista
+                      </option>
+                      <option value="Gênero Expandido">Gênero Expandido</option>
+                      <option value="Maverique">Maverique</option>
+                      <option value="Apôrêne">Apôrêne</option>
+                    </optgroup>
+                    <!-- Identidades Transgêneras -->
+                    <optgroup label="Identidades Transgêneras">
+                      <option value="Transgênero">Transgênero</option>
+                      <option value="Homem Trans">Homem Trans</option>
+                      <option value="Mulher Trans">Mulher Trans</option>
+                      <option value="Transexual">Transexual</option>
+                      <option value="Travesti">Travesti</option>
+                    </optgroup>
+                    <!-- Identidades Sem Gênero -->
+                    <optgroup label="Identidades Sem Gênero">
+                      <option value="Agênero">Agênero</option>
+                      <option value="Neutrois">Neutrois</option>
+                      <option value="Gênero Nulo">Gênero Nulo</option>
+                      <option value="Apogênero">Apogênero</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="horizontal">
+                <div
+                  id="blocoNascimento"
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical"
+                >
+                  <label for="nascimento">Nascimento</label>
+                  <input
+                    type="date"
+                    id="nascimento"
+                    class=""
+                    name="nascimento"
+                    value=""
+                  />
+                </div>
+                <div
+                  id="blocoEmail"
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical"
+                >
+                  <label for="mail">E-mail</label>
+                  <input
+                    type="email"
+                    id="mail"
+                    class="input-text"
+                    name=""
+                    placeholder="Digite um e-mail"
+                  />
+                </div>
+              </div>
+              <div class="horizontal">
+                <div
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical contato"
+                >
+                  <label for="telefone_principal">Telefone</label>
+                  <input
+                    type="tel"
+                    id="telefone_principal"
+                    class="inputs-cel input-text"
+                    name="telefone_principal"
+                    placeholder="Insira o número pra contato"
+                    pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+                    title="Formato esperado: (xx) xxxxx-xxxx ou (xx) xxxx-xxxx"
+                  />
+                  <div class="redeSocial">
+                    <input
+                      type="checkbox"
+                      id="whatsapp"
+                      class="redeSocialBox"
+                    /><label for="whatsapp">WhatsApp</label>
+                    <input
+                      type="checkbox"
+                      id="telegram"
+                      class="redeSocialBox"
+                    /><label for="telegram">Telegram</label>
+                  </div>
+                </div>
+                <div
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical contato"
+                >
+                  <label for="telefone_emergencia">Contato de emergência</label>
+                  <input
+                    type="tel"
+                    id="telefone_emergencia"
+                    class="inputs-cel input-text"
+                    name="telefone_emergencia"
+                    placeholder="Insira o número pra contato"
+                    pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+                    title="Formato esperado: (xx) xxxxx-xxxx ou (xx) xxxx-xxxx"
+                  />
+                  <div class="redeSocial">
+                    <input
+                      type="checkbox"
+                      id="whatsapp1"
+                      class="redeSocialBox"
+                    /><label for="whatsapp1">WhatsApp</label>
+                    <input
+                      type="checkbox"
+                      id="telegram1"
+                      class="redeSocialBox"
+                    /><label for="telegram1">Telegram</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="apresentacao__pagina__dadoEndereco">
+              <div class="apresentacao__pagina__dadoPessoal__bloco vertical">
+                <label for="cep">CEP</label>
+                <input
+                  type="text"
+                  id="cep"
+                  name="cep"
+                  maxlength="10"
+                  placeholder="Digite seu CEP"
+                  oninput="formatarCep(this)"
+                  onkeydown="eventoEnterCep(event)"
+                  onblur="buscarEnderecoPorCep()"
+                  required
+                />
+              </div>
+              <div class="horizontal">
+                <div
+                  id="blocoEstado"
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical"
+                >
+                  <label for="estado">Estado</label>
+                  <input
+                    type="text"
+                    id="estado"
+                    class="estado"
+                    name="estadoInput"
+                    placeholder="UF"
+                    oninput="filtrarEstados()"
+                    required
+                  />
+                  <ul id="listaEstados" class="dropdown-list"></ul>
+                </div>
+                <div class="apresentacao__pagina__dadoPessoal__bloco vertical">
+                  <label for="cidade">Cidade</label>
+                  <input
+                    type="text"
+                    id="cidade"
+                    class="cidade"
+                    name="cidade"
+                    placeholder="Digite o nome da cidade"
+                    oninput="filtrarCidades()"
+                    required
+                  />
+                  <ul id="listaCidades" class="dropdown-list"></ul>
+                </div>
+                <div class="apresentacao__pagina__dadoPessoal__bloco vertical">
+                  <label for="bairro">Bairro</label>
+                  <input
+                    type="text"
+                    id="bairro"
+                    class=""
+                    name="bairro"
+                    placeholder="Digite o nome do bairro"
+                    required
+                  />
+                </div>
+                <div class="apresentacao__pagina__dadoPessoal__bloco vertical">
+                  <label for="logradouro">Logradouro:</label>
+                  <input
+                    type="text"
+                    id="logradouro"
+                    class=""
+                    name="logradouro"
+                    placeholder="Digite o logradouro"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="horizontal">
+                <div class="apresentacao__pagina__dadoPessoal__bloco vertical">
+                  <label for="numero_residencial">Número:</label>
+                  <input
+                    type="text"
+                    id="numero_residencial"
+                    name="numero_residencial"
+                    placeholder="Digite o nº da residencia"
+                    required
+                  />
+                </div>
+                <div
+                  id="blocoComplemento"
+                  class="apresentacao__pagina__dadoPessoal__bloco vertical"
+                >
+                  <label for="complemento">Complemento: </label>
+                  <input
+                    type="text"
+                    id="complemento"
+                    name="complemento"
+                    placeholder="Digite a referência"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="apresentacao__pagina__botao apresentacao__pagina__dadoPessoal__bloco"
+            >
+              <div class="botao horizontal">
+                <button type="button" id="botaoExcluir" class="">
+                  Excluir conta
+                </button>
+                <button type="submit">Salvar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="contaScript.js"></script>
+    <script src="../scripts/cepScript.js"></script>
+    <script src="../scripts/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+Layout em Estilo Dashboard
+
+Gêneros Binários
+  Masculino
+  Feminino
+Gêneros Não Binários
+  Não-binário
+  Gênero Fluido
+  Agênero
+  Bigênero
+  Demigênero
+    Demimenino
+    Demimenina
+  Pangênero
+  Andrógino
+  Neutrois
+  Intergênero
+  Gênero Queer
+  Poligênero
+  Gênero Vago
+  Gênero Inconformista
+  Gênero Expandido
+  Maverique
+  Apôrêne
+Identidades Transgêneras
+  Transgênero
+    Homem Trans
+    Mulher Trans
+  Transexual
+  Travesti
+Identidades Sem Gênero
+  Agênero
+  Neutrois
+  Gênero Nulo
+  Apogênero

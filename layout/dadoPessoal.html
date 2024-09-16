@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="testeStyle.css" />
+    <title>SER</title>
+  </head>
+  <body>
+    <main class="apresentacao">
+      <div class="progresso">
+        <div class="progresso-step active">1</div>
+        <div class="progresso-bar"></div>
+        <div class="progresso-step">2</div>
+        <div class="progresso-bar"></div>
+        <div class="progresso-step">3</div>
+        <div class="progresso-bar"></div>
+        <div class="progresso-step">4</div>
+        <div class="progresso-bar"></div>
+        <div class="progresso-step">5</div>
+      </div>
+      <form>
+        <h3>Dados Pessoais</h3>
+        <div class="apresentacao__formulario">
+          <label for="nome_completo">Nome Completo: </label>
+          <input
+            type="text"
+            id="nome_completo"
+            name="nome_completo"
+            placeholder="Digite o nome e o sobrenome"
+            required
+          />
+        </div>
+        <div
+          class="apresentacao__formulario apresentacao--formulario--linha--espacoNoGrupoDeDois apresentacao--formulario--espacoDireita"
+        >
+          <label for="nome_social">Nome Social:</label>
+          <input
+            type="text"
+            id="nome_social"
+            name="nome_social"
+            placeholder="Digite o nome social"
+          />
+        </div>
+        <div
+          class="apresentacao__formulario apresentacao--formulario--linha--espacoNoGrupoDeDois"
+        >
+          <label for="mail">E-mail: </label>
+          <input
+            type="email"
+            id="mail"
+            name="mail"
+            placeholder="Digite um e-mail"
+            required
+          />
+        </div>
+        <div
+          class="apresentacao__formulario apresentacao--formulario--linha apresentacao--formulario--espacoNoGrupoDeTres"
+        >
+          <label for="nascimento">Nascimento:</label>
+          <input type="date" id="nascimento" name="nascimento" required />
+        </div>
+        <div
+          class="apresentacao__formulario apresentacao--formulario--linha apresentacao--formulario--espacoNoGrupoDeTres"
+        >
+          <label for="sexo">Sexo:</label>
+          <select id="sexo" name="sexo" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Não informar">Não informar</option>
+          </select>
+        </div>
+        <div class="apresentacao__formulario apresentacao--formulario--linha">
+          <label for="genero">Gênero:</label>
+          <select id="genero" name="genero">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <!-- Gêneros Binários -->
+            <optgroup label="Gêneros Binários">
+              <option value="Masculino">Masculino</option>
+              <option value="Feminino">Feminino</option>
+            </optgroup>
+            <!-- Gêneros Não Binários -->
+            <optgroup label="Gêneros Não Binários">
+              <option value="Não-binário">Não-binário</option>
+              <option value="Gênero Fluido">Gênero Fluido</option>
+              <option value="Agênero">Agênero</option>
+              <option value="Bigênero">Bigênero</option>
+              <option value="Demigênero">Demigênero</option>
+              <option value="Demimenino">Demimenino</option>
+              <option value="Demimenina">Demimenina</option>
+              <option value="Pangênero">Pangênero</option>
+              <option value="Andrógino">Andrógino</option>
+              <option value="Neutrois">Neutrois</option>
+              <option value="Intergênero">Intergênero</option>
+              <option value="Gênero Queer">Gênero Queer</option>
+              <option value="Poligênero">Poligênero</option>
+              <option value="Gênero Vago">Gênero Vago</option>
+              <option value="Gênero Inconformista">Gênero Inconformista</option>
+              <option value="Gênero Expandido">Gênero Expandido</option>
+              <option value="Maverique">Maverique</option>
+              <option value="Apôrêne">Apôrêne</option>
+            </optgroup>
+            <!-- Identidades Transgêneras -->
+            <optgroup label="Identidades Transgêneras">
+              <option value="Transgênero">Transgênero</option>
+              <option value="Homem Trans">Homem Trans</option>
+              <option value="Mulher Trans">Mulher Trans</option>
+              <option value="Transexual">Transexual</option>
+              <option value="Travesti">Travesti</option>
+            </optgroup>
+            <!-- Identidades Sem Gênero -->
+            <optgroup label="Identidades Sem Gênero">
+              <option value="Agênero">Agênero</option>
+              <option value="Neutrois">Neutrois</option>
+              <option value="Gênero Nulo">Gênero Nulo</option>
+              <option value="Apogênero">Apogênero</option>
+            </optgroup>
+          </select>
+        </div>
+        <div
+          class="apresentacao__formulario apresentacao--formulario--linha--espacoNoGrupoDeDois apresentacao--formulario--espacoDireita"
+        >
+          <label for="telefone_principal">Telefone Principal:</label>
+          <input
+            type="tel"
+            id="telefone_principal"
+            class="inputs-cel input-text"
+            name="telefone_principal"
+            placeholder="Insira o número pra contato"
+            pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+            title="Formato esperado: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX"
+            required
+          />
+          <div class="apresentacao__formulario__marcarEscolhido">
+            <input
+              type="checkbox"
+              id="whatsapp"
+              name="comunicacao"
+              value="whatsapp"
+            />
+            <label class="primeiroCampo" for="whatsapp">WhatsApp</label>
+            <input
+              type="checkbox"
+              id="telegram"
+              name="comunicacao"
+              value="telegram"
+            />
+            <label for="telegram">Telegram</label>
+          </div>
+        </div>
+        <div
+          class="apresentacao__formulario apresentacao--formulario--linha--espacoNoGrupoDeDois"
+        >
+          <label for="telefone_principal_emergencia"
+            >Contato de Emergência:</label
+          >
+          <input
+            type="tel"
+            id="telefone_principal_emergencia"
+            class="inputs-cel input-text"
+            name="telefone_principal_emergencia"
+            placeholder="Insira o número pra emergência"
+            pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+            title="Formato esperado: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX"
+          />
+          <div class="apresentacao__formulario__marcarEscolhido">
+            <input
+              type="checkbox"
+              id="whatsapp1"
+              name="comunicacao_emergencia"
+              value="whatsapp"
+            />
+            <label class="primeiroCampo" for="whatsapp1">WhatsApp</label>
+            <input
+              type="checkbox"
+              id="telegram1"
+              name="comunicacao_emergencia"
+              value="telegram"
+            />
+            <label for="telegram1">Telegram</label>
+          </div>
+        </div>
+
+        <div class="apresentacao__botao">
+          <button
+            type="button"
+            id="previous-button"
+            onclick="window.location.href='login.html'"
+          >
+            Voltar
+          </button>
+          <button type="submit" onclick="window.location.href='endereco.html'">
+            Continuar
+          </button>
+        </div>
+      </form>
+    </main>
+    <script src="../scripts/script.js"></script>
+    <script src="testeScript.js"></script>
+  </body>
+</html>

@@ -2,11 +2,15 @@
 
 :root {
   --fonte-primaria: 'Montserrat', sans-serif;
+  --cor-bg: rgb(167, 228, 248);
+  --cor-border: rgb(167, 228, 248);
+  --cor-input-border: black;
 }
 
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* Inicialmente oculta o campo de texto */
@@ -16,12 +20,11 @@
 #campoAlergia,
 #campoTratamentoPsiquiatrico {
   display: none;
-  box-sizing: border-box;
+  /*box-sizing: border-box;*/
 }
 
 body {
-  box-sizing: border-box;
-  background-color: rgb(167, 228, 248);
+  background-color: var(--cor-bg);
 }
 
 .cabecalho {
@@ -44,7 +47,6 @@ body {
 .apresentacao__conteudo,
 .apresentacao__conteudo2 {
   width: 49%;
-  box-sizing: border-box; /* Garante que padding e border não aumentem a largura */
 }
 
 .apresentacao__conteudo {
@@ -60,7 +62,7 @@ body {
 .apresentacao__conteudo__texto,
 .apresentacao__conteudo3__texto {
   padding-bottom: 2%;
-  border-bottom: 1.5px solid rgb(167, 228, 248);
+  border-bottom: 1.5px solid var(--cor-border);
   font-family: var(--fonte-primaria);
 }
 
@@ -94,7 +96,12 @@ input {
 
 textarea {
   margin-top: 1%;
-  padding: 1%;
+  padding: 0.5rem;
+}
+
+input,
+textarea {
+  border: 1px solid var(--cor-input-border);
 }
 
 #nome {
@@ -103,6 +110,28 @@ textarea {
 
 .apresentacao__conteudo__div {
   margin-top: 3%;
+}
+
+#campo__sexo {
+  margin-right: 3%; /* Espaço entre os dois campos */
+  width: 40%;
+}
+
+#campo__genero {
+  width: 56%;
+}
+
+#campo__sexo,
+#campo__genero {
+  display: inline-block; /* Faz com que os elementos fiquem lado a lado */
+  vertical-align: top; /* Alinha verticalmente o topo dos elementos */
+}
+
+#cep,
+#data {
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .primeiroCampo {
@@ -117,16 +146,60 @@ textarea {
   width: 100%;
 }
 
-.apresentacao__conteudo__div__separa {
-  display: block;
-}
-
-.apresentacao__conteudo3__div__separa {
-  display: block;
-}
-
+.apresentacao__conteudo__div__separa,
+.apresentacao__conteudo3__div__separa,
 .apresentacao__conteudo3__div__campoOculto__separa {
   display: block;
+}
+
+.iconTooltip {
+  width: 80%;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 220px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -110px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Alterações CSS */
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.checkbox-group input {
+  margin-right: 5px;
+}
+
+.input-text {
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
+  width: 100%;
 }
 
 @media (max-width: 1200px) {
@@ -136,8 +209,7 @@ textarea {
   }
 
   .apresentacao {
-    margin: 0;
-    padding: 0%;
+    padding: 5% 0% 0% 0%;
   }
 
   .apresentacao__conteudo {
@@ -145,7 +217,13 @@ textarea {
     width: 100%;
   }
 
+  .apresentacao__conteudo,
   .apresentacao__conteudo2 {
+    width: 100%;
+  }
+
+  #campo__sexo,
+  #campo__genero {
     width: 100%;
   }
 
@@ -157,25 +235,4 @@ textarea {
     margin-top: 15%;
     padding: 0.7rem 5rem;
   }
-}
-
-/* Alterações CSS */
-
-.checkbox-group{
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.checkbox-group input{
-  margin-right: 5px;
-}
-
-
-
-.input-text {
-  border: 1px solid black;
-  padding: 5px;
-  border-radius: 5px;
-  width: 100%;
 }

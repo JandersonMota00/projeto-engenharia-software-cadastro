@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página de Conta</title>
+    <link rel="stylesheet" href="contaStyle.css" />
+  </head>
+  <body>
+    <div class="menu">
+      <nav class="barraLateral">
+        <h1><a href="conta.html">SER</a></h1>
+        <ul>
+          <li class="submenu">
+            <a href="#">Conta</a>
+            <ul>
+              <li><a href="#">Mensagens</a></li>
+              <li><a href="contaEditarPerfil.html">Editar perfil</a></li>
+              <li><a href="#">Alterar senha</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Admin</a></li>
+          <li><a href="login.html">Logoff</a></li>
+        </ul>
+      </nav>
+      <main class="apresentacao">
+        <div class="apresentacao__titulo">
+          <h1>Bem-vindo!</h1>
+          <div class="grid">
+            <div class="grid-item">
+              <i class="fas fa-envelope"></i>
+              <h3>Mensagens</h3>
+              <img
+                class="grid--item--atalho"
+                src="../assets/e-mail.png"
+                alt="Ícone de e-mail"
+              />
+            </div>
+            <div
+              class="grid-item"
+              onclick="window.location.href='contaEditarPerfil.html'"
+            >
+              <i class="fas fa-user"></i>
+              <h3>Editar perfil</h3>
+              <img
+                class="grid--item--atalho"
+                src="../assets/editar-perfil.png"
+                alt="Ícone de editar perfil"
+              />
+            </div>
+            <div class="grid-item">
+              <i class="fas fa-lock"></i>
+              <h3>Alterar minha senha</h3>
+              <img
+                class="grid--item--atalho"
+                src="../assets/senha.png"
+                alt="Ícone de senha"
+              />
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="contaScript.js"></script>
+  </body>
+</html>

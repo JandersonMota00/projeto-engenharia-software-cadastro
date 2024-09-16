@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SER - SOCIEDADE ESPÍRITA RAFAEL LÍRIO</title>
     <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/lista.css" />
+    <link rel="stylesheet" href="./styles/informa.css" />
   </head>
   <body>
     <header class="cabecalho">
@@ -35,55 +37,174 @@
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa"
-            >Nome completo:*</label>
-          <input type="text" id="nome" name="nome" class="input-text" required />
+          <label for="nome" class="apresentacao__conteudo__div__separa">
+            Nome completo:*
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Digite o nome completo conforme consta em documentos
+                oficiais.</span
+              >
+            </span>
+          </label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            class="input-text"
+            pattern="[A-Za-zÀ-ÿ\s]{2,}"
+            title="Somente letras e espaços são permitidos. Mínimo 2 caracteres."
+            required
+          />
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa"
-            >Nome Social:*</label>
-          <input type="text" id="nome-social" name="nome=social"  class="input-text" required />
+          <label for="nome-social" class="apresentacao__conteudo__div__separa">
+            Nome Social:*
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Digite o nome social pelo qual você é conhecido(a).</span
+              >
+            </span>
+          </label>
+          <input
+            type="text"
+            id="nome-social"
+            name="nome_social"
+            class="input-text"
+            pattern="[A-Za-zÀ-ÿ\s]{2,}"
+            title="Somente letras e espaços são permitidos. Mínimo 2 caracteres."
+            required
+          />
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa"
-            >Data de nascimento:*</label
-          >
-          <input type="date" name="nascimento" class="" required />
+          <label for="data" class="apresentacao__conteudo__div__separa">
+            Data de nascimento:*
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Escolha a sua data de nascimento no calendário.</span
+              >
+            </span>
+          </label>
+          <input type="date" id="data" name="nascimento" required />
         </div>
 
-        
         <div class="apresentacao__conteudo__div" id="campo__sexo">
-          <label class="apresentacao__conteudo__div__separa">Sexo:</label>
+          <label for="sexo" class="apresentacao__conteudo__div__separa">
+            Sexo:*
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Selecione o seu sexo conforme opção disponível.</span
+              >
+            </span>
+          </label>
+          <select id="sexo" name="sexo" class="input-text" required>
+            <option value="" disabled selected>Escolha um sexo</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Não informar">Não informar</option>
+          </select>
+        </div>
 
-      
-          <div class="checkbox-group">
-            <input type="checkbox" id="masculino" name="sexo" value="masculino" />
-            <label class="primeiroCampo" for="masculino">Masculino</label>
-          </div>
-          
-          <div class="checkbox-group">
-            <input type="checkbox" id="feminino" name="sexo" value="feminino" />
-            <label for="feminino">Feminino</label>
-          </div>
-
-          <div class="checkbox-group">  
-            <input type="checkbox" name="sexo" id="outrosgeneros">
-            <label for="outrosgeneros">Outros Gêneros</label>
-          </div>
-
-        
+        <div class="apresentacao__conteudo__div" id="campo__genero">
+          <label for="genero" class="apresentacao__conteudo__div__separa">
+            Gênero:
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Escolha o gênero que melhor descreve a sua identidade.</span
+              >
+            </span>
+          </label>
+          <select id="genero" name="genero" class="input-text">
+            <option value="" disabled selected>Escolha um gênero</option>
+            <!-- Gêneros Binários -->
+            <optgroup label="Gêneros Binários">
+              <option value="Masculino">Masculino</option>
+              <option value="Feminino">Feminino</option>
+            </optgroup>
+            <!-- Gêneros Não Binários -->
+            <optgroup label="Gêneros Não Binários">
+              <option value="Não-binário">Não-binário</option>
+              <option value="Gênero Fluido">Gênero Fluido</option>
+              <option value="Agênero">Agênero</option>
+              <option value="Bigênero">Bigênero</option>
+              <option value="Demigênero">Demigênero</option>
+              <option value="Demimenino">Demimenino</option>
+              <option value="Demimenina">Demimenina</option>
+              <option value="Pangênero">Pangênero</option>
+              <option value="Andrógino">Andrógino</option>
+              <option value="Neutrois">Neutrois</option>
+              <option value="Intergênero">Intergênero</option>
+              <option value="Gênero Queer">Gênero Queer</option>
+              <option value="Poligênero">Poligênero</option>
+              <option value="Gênero Vago">Gênero Vago</option>
+              <option value="Gênero Inconformista">Gênero Inconformista</option>
+              <option value="Gênero Expandido">Gênero Expandido</option>
+              <option value="Maverique">Maverique</option>
+              <option value="Apôrêne">Apôrêne</option>
+            </optgroup>
+            <!-- Identidades Transgêneras -->
+            <optgroup label="Identidades Transgêneras">
+              <option value="Transgênero">Transgênero</option>
+              <option value="Homem Trans">Homem Trans</option>
+              <option value="Mulher Trans">Mulher Trans</option>
+              <option value="Transexual">Transexual</option>
+              <option value="Travesti">Travesti</option>
+            </optgroup>
+            <!-- Identidades Sem Gênero -->
+            <optgroup label="Identidades Sem Gênero">
+              <option value="Agênero">Agênero</option>
+              <option value="Neutrois">Neutrois</option>
+              <option value="Gênero Nulo">Gênero Nulo</option>
+              <option value="Apogênero">Apogênero</option>
+            </optgroup>
+          </select>
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">E-mail: *</label>
-          <input type="text" id="mail" name="mail" class="input-text" required />
+          <label for="mail" class="apresentacao__conteudo__div__separa">
+            E-mail: *
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Digite um e-mail válido para contato.</span
+              >
+            </span>
+          </label>
+          <input
+            type="email"
+            id="mail"
+            name="mail"
+            class="input-text"
+            required
+          />
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">Telefone Principal:*</label>
-          <input type="tel" name="contato" class="inputs-cel input-text" required />
+          <label for="contato" class="apresentacao__conteudo__div__separa">
+            Telefone Principal:*
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Digite o número de telefone no formato (XX) XXXXX-XXXX ou (XX)
+                XXXX-XXXX.</span
+              >
+            </span>
+          </label>
+          <input
+            type="tel"
+            id="contato"
+            class="inputs-cel input-text"
+            name="contato"
+            pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+            title="Formato esperado: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX"
+            required
+          />
           <br />
           <input
             type="checkbox"
@@ -102,20 +223,39 @@
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">Telefone Secundário: <span>(Opcional)</span></label> 
-          <input type="tel" name="contato" class="inputs-cel input-text"/>
+          <label
+            for="contatoEmergencia"
+            class="apresentacao__conteudo__div__separa"
+          >
+            Contato de emergência: <span>(Opcional)</span>
+            <span class="tooltip"
+              ><img class="iconTooltip" src="./assets/tooltip.png" />
+              <span class="tooltiptext"
+                >Digite o número de telefone para contato em caso de emergência,
+                se desejar.</span
+              >
+            </span>
+          </label>
+          <input
+            type="tel"
+            id="contatoEmergencia"
+            name="contatoEmergencia"
+            class="inputs-cel input-text"
+            pattern="\(\d{2}\)\s?\d{4,5}-\d{4}"
+            title="Formato esperado: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX"
+          />
           <br />
           <input
             type="checkbox"
             id="whatsapp1"
-            name="comunicacao"
+            name="comunicacao_emergencia"
             value="whatsapp"
           />
           <label class="primeiroCampo" for="whatsapp1">WhatsApp</label>
           <input
             type="checkbox"
             id="telegram1"
-            name="comunicacao"
+            name="comunicacao_emergencia"
             value="telegram"
           />
           <label for="telegram1">Telegram</label>
@@ -128,34 +268,183 @@
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">Estado:*</label>
+          <label class="apresentacao__conteudo__div__separa">
+            CEP:
+            <span class="tooltip">
+              <img
+                class="iconTooltip"
+                src="./assets/tooltip.png"
+                alt="Tooltip"
+              />
+              <span class="tooltiptext"
+                >Informe o CEP (Código de Endereçamento Postal) do seu
+                endereço.</span
+              >
+            </span>
+          </label>
+          <input
+            type="text"
+            id="cep"
+            name="cep"
+            maxlength="10"
+            placeholder="Digite seu CEP"
+            oninput="formatarCep(this)"
+            onkeydown="eventoEnterCep(event)"
+            onblur="buscarEnderecoPorCep()"
+            required
+          />
+
+          <button type="submit" id="enterCep">Pesquisar</button>
+          <br />
+
+          <div class="checkbox-group">
+            <input
+              type="checkbox"
+              id="semCep"
+              name="semCep"
+              value=""
+              onclick="alternarCamposEndereco()"
+            />
+            <label for="semCep">Não tem CEP</label>
+            <a
+              href="https://www2.correios.com.br/sistemas/buscacep/buscacep.cfm"
+              >Não sei meu CEP</a
+            >
+          </div>
+        </div>
+
+        <div class="apresentacao__conteudo__div">
+          <label class="apresentacao__conteudo__div__separa">
+            Estado:*
+            <span class="tooltip">
+              <img
+                class="iconTooltip"
+                src="./assets/tooltip.png"
+                alt="Tooltip"
+              />
+              <span class="tooltiptext"
+                >(* Obrigatório) Informe o estado onde você reside.</span
+              >
+            </span>
+          </label>
+          <input
+            type="text"
+            id="estado"
+            class="input-text"
+            name="estadoInput"
+            placeholder="Digite o estado"
+            oninput="filtrarEstados()"
+            required
+          />
+          <ul id="listaEstados" class="dropdown-list"></ul>
+        </div>
+
+        <div class="apresentacao__conteudo__div">
+          <label class="apresentacao__conteudo__div__separa">
+            Cidade:*
+            <span class="tooltip">
+              <img
+                class="iconTooltip"
+                src="./assets/tooltip.png"
+                alt="Tooltip"
+              />
+              <span class="tooltiptext"
+                >(* Obrigatório) Informe a cidade onde você reside.</span
+              >
+            </span>
+          </label>
+          <input
+            type="text"
+            id="cidade"
+            class="input-text"
+            name="cidadeInput"
+            placeholder="Digite a cidade"
+            oninput="filtrarCidades()"
+            required
+          />
+          <ul id="listaCidades" class="dropdown-list"></ul>
+        </div>
+
+        <div class="apresentacao__conteudo__div">
+          <label class="apresentacao__conteudo__div__separa">
+            Bairro:*
+            <span class="tooltip">
+              <img
+                class="iconTooltip"
+                src="./assets/tooltip.png"
+                alt="Tooltip"
+              />
+              <span class="tooltiptext"
+                >(* Obrigatório) Informe o bairro onde você reside.</span
+              >
+            </span>
+          </label>
+          <input
+            type="text"
+            id="bairro"
+            class="input-text"
+            name="bairro"
+            required
+          />
+        </div>
+
+        <div class="apresentacao__conteudo__div">
+          <label class="apresentacao__conteudo__div__separa">
+            Logradouro:*
+            <span class="tooltip">
+              <img
+                class="iconTooltip"
+                src="./assets/tooltip.png"
+                alt="Tooltip"
+              />
+              <span class="tooltiptext"
+                >(* Obrigatório) Informe o logradouro (rua, avenida, etc.) do
+                seu endereço.</span
+              >
+            </span>
+          </label>
+          <input
+            type="text"
+            id="logradouro"
+            class="input-text"
+            name="logradouro"
+            required
+          />
+        </div>
+
+        <div class="apresentacao__conteudo__div">
+          <label class="apresentacao__conteudo__div__separa">
+            Número:*
+            <span class="tooltip">
+              <img
+                class="iconTooltip"
+                src="./assets/tooltip.png"
+                alt="Tooltip"
+              />
+              <span class="tooltiptext"
+                >(* Obrigatório) Informe o número da sua residência. Se não
+                tiver, digite: S/N</span
+              >
+            </span>
+          </label>
           <input type="text" class="input-text" required />
         </div>
 
         <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">Cidade:*</label>
-          <input type="text" class="input-text" required />
-        </div>
-
-        <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">Bairro:*</label>
-          <input type="text" class="input-text" required />
-        </div>
-
-        <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">Endereço:*</label>
-          <input type="text" class="input-text" required />
-        </div>
-
-        <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa">Número:*</label>
-          <input type="number" class="input-text" required />
-        </div>
-
-        <div class="apresentacao__conteudo__div">
-          <label class="apresentacao__conteudo__div__separa"
-            >Complemento:</label
-          >
+          <label class="apresentacao__conteudo__div__separa">
+            Complemento:
+            <span class="tooltip">
+              <img
+                class="iconTooltip"
+                src="./assets/tooltip.png"
+                alt="Tooltip"
+              />
+              <span class="tooltiptext"
+                >Informe o complemento do endereço, se houver (ex: apto, bloco,
+                etc.).</span
+              >
+            </span>
+          </label>
           <input type="text" class="input-text" />
         </div>
       </section>
@@ -181,20 +470,21 @@
         <div class="apresentacao__conteudo3__div">
           <label>Possui religião?*</label>
           <input
-            type="checkbox"
+            type="radio"
             id="religiao_sim"
             class="primeiroCampoSim"
             name="religiao"
             value="sim"
-            onchange="toggleCampoTexto()"
+            onchange="alternarCampoTexto()"
             required
           />
           <label class="primeiroCampo" for="religiao_sim">Sim</label>
           <input
-            type="checkbox"
+            type="radio"
             id="religiao_nao"
             name="religiao"
             value="nao"
+            onchange="alternarCampoTexto()"
           />
           <label for="religiao_nao">Não</label>
 
@@ -221,20 +511,21 @@
         <div class="apresentacao__conteudo3__div">
           <label>Está fazendo algum tratamento médico?*</label>
           <input
-            type="checkbox"
+            type="radio"
             id="tratamento_medico_sim"
             class="primeiroCampoSim"
             name="tratamento_medico"
             value="sim"
-            onchange="toggleCampoTramentoMedico()"
+            onchange="alternarCampoTramentoMedico()"
             required
           />
           <label class="primeiroCampo" for="tratamento_medico_sim">Sim</label>
           <input
-            type="checkbox"
+            type="radio"
             id="tratamento_medico_nao"
             name="tratamento_medico"
             value="nao"
+            onchange="alternarCampoTramentoMedico()"
           />
           <label for="tratamento_medico_nao">Não</label>
 
@@ -257,20 +548,21 @@
         <div class="apresentacao__conteudo3__div">
           <label>Faz uso de algum medicamento?*</label>
           <input
-            type="checkbox"
+            type="radio"
             id="medicamento_sim"
             class="primeiroCampoSim"
             name="medicamento"
             value="sim"
-            onchange="toggleCampoMedicamento()"
+            onchange="alternarCampoMedicamento()"
             required
           />
           <label class="primeiroCampo" for="medicamento_sim">Sim</label>
           <input
-            type="checkbox"
+            type="radio"
             id="medicamento_nao"
             name="medicamento"
             value="nao"
+            onchange="alternarCampoMedicamento()"
           />
           <label for="medicamento_nao">Não</label>
 
@@ -294,15 +586,15 @@
           <label>Tem desmaios sem causa aparente?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="desmaios_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="desmaio"
             value="sim"
             required
           />
           <label class="primeiroCampo" for="desmaios_sim">Sim</label>
-          <input type="checkbox" id="desmaios_nao" name="não" value="nao" />
+          <input type="radio" id="desmaios_nao" name="desmaio" value="nao" />
           <label for="desmaios_nao">Não</label>
         </div>
 
@@ -310,15 +602,15 @@
           <label>Vê vultos?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="vultos_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="vultos"
             value="sim"
             required
           />
           <label class="primeiroCampo" for="vultos_sim">Sim</label>
-          <input type="checkbox" id="vultos_nao" name="nao" value="nao" />
+          <input type="radio" id="vultos_nao" name="vultos" value="nao" />
           <label for="vultos_nao">Não</label>
         </div>
 
@@ -326,15 +618,15 @@
           <label>Escuta vozes?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="vozes_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="vozes"
             value="sim"
             required
           />
           <label class="primeiroCampo" for="vozes_sim">Sim</label>
-          <input type="checkbox" id="vozes_nao" name="não" value="nao" />
+          <input type="radio" id="vozes_nao" name="vozes" value="nao" />
           <label for="vozes_nao">Não</label>
         </div>
 
@@ -342,15 +634,20 @@
           <label>Tem pensamentos negativos e/ou ideias suicidas?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="pensamentos_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="pensamentos_negativos"
             value="sim"
             required
           />
           <label class="primeiroCampo" for="pensamentos_sim">Sim</label>
-          <input type="checkbox" id="pensamentos_nao" name="não" value="nao" />
+          <input
+            type="radio"
+            id="pensamentos_nao"
+            name="pensamentos_negativos"
+            value="nao"
+          />
           <label for="pensamentos_nao">Não</label>
         </div>
 
@@ -358,36 +655,43 @@
           <label>Houve algum desencarne na família no último ano?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="desencarne_familia_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="problemaFamiliar"
             value="sim"
             required
           />
           <label class="primeiroCampo" for="desencarne_familia_sim">Sim</label>
           <input
-            type="checkbox"
+            type="radio"
             id="desencarne_familia_nao"
-            name="não"
+            name="problemaFamiliar"
             value="nao"
           />
           <label for="desencarne_familia_nao">Não</label>
         </div>
 
         <div class="apresentacao__conteudo3__div">
-          <label>Tem alergia?</label>
+          <label>Tem alergia?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="alergia_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="alergia"
             value="sim"
-            onchange="toggleCampoAlergia()"
+            onchange="alternarCampoAlergia()"
+            required
           />
           <label class="primeiroCampo" for="alergia_sim">Sim</label>
-          <input type="checkbox" id="alergia_nao" name="não" value="nao" />
+          <input
+            type="radio"
+            id="alergia_nao"
+            name="alergia"
+            value="nao"
+            onchange="alternarCampoAlergia()"
+          />
           <label for="alergia_nao">Não</label>
 
           <div id="campoAlergia">
@@ -407,15 +711,20 @@
           <label>Faz psicoterapia?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="psicoterapia_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="psicoterapia"
             value="sim"
             required
           />
           <label class="primeiroCampo" for="psicoterapia_sim">Sim</label>
-          <input type="checkbox" id="psicoterapia_nao" name="não" value="nao" />
+          <input
+            type="radio"
+            id="psicoterapia_nao"
+            name="psicoterapia"
+            value="nao"
+          />
           <label for="psicoterapia_nao">Não</label>
         </div>
 
@@ -423,22 +732,23 @@
           <label>Faz ou já fez algum tratamento psiquiátrico?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="tratamento_psiquiatrico_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="tratamentoPsiquiatrico"
             value="sim"
-            onchange="toggleCampoTratamentoPsiquiatrico()"
+            onchange="alternarCampoTratamentoPsiquiatrico()"
             required
           />
           <label class="primeiroCampo" for="tratamento_psiquiatrico_sim"
             >Sim</label
           >
           <input
-            type="checkbox"
+            type="radio"
             id="tratamento_psiquiatrico_nao"
-            name="não"
+            name="tratamentoPsiquiatrico"
             value="nao"
+            onchange="alternarCampoTratamentoPsiquiatrico()"
           />
           <label for="tratamento_psiquiatrico_nao">Não</label>
 
@@ -461,10 +771,10 @@
           <label>Já fez algum tratamento espiritual em centro espírita?*</label>
 
           <input
-            type="checkbox"
+            type="radio"
             id="tratamento_espiritual_sim"
             class="primeiroCampoSim"
-            name="sim"
+            name="tratamentoEspiritual"
             value="sim"
             required
           />
@@ -472,9 +782,9 @@
             >Sim</label
           >
           <input
-            type="checkbox"
+            type="radio"
             id="tratamento_espiritual_nao"
-            name="não"
+            name="tratamentoEspiritual"
             value="nao"
           />
           <label for="tratamento_espiritual_nao">Não</label>
@@ -499,6 +809,7 @@
         <button type="submit" id="enviar">Enviar</button>
       </section>
     </main>
-    <script src="./scripts/script.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/cepScript.js"></script>
   </body>
 </html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="testeStyle.css" />
+    <title>SER</title>
+  </head>
+  <body>
+    <main class="apresentacao apresentacao--login">
+      <form>
+        <h2 id="apresentacao--titulo">
+          Bem-vindo(a) ao <span class="instituicao--SER">SER</span>
+        </h2>
+        <h5 id="subtitulo">Conecte-se para ter acesso</h5>
+        <div class="apresentacao__formulario">
+          <label for="login">Login: </label>
+          <input
+            type="email"
+            id="login"
+            name="login"
+            placeholder="Seu e-mail"
+            required
+          />
+        </div>
+        <div class="apresentacao__formulario">
+          <label for="senha">Senha:</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Sua senha"
+            required
+          />
+        </div>
+        <h5>
+          <a class="link--palavra" href="esqueciSenha.html">Esqueci a senha</a>
+        </h5>
+        <h5>
+          Não tem conta?
+          <a class="link--palavra" href="dadoPessoal.html">Cadastre-se</a>
+        </h5>
+        <div class="apresentacao__botao">
+          <button
+            type="button"
+            id="previous-button"
+            onclick="window.location.href='index.html'"
+          >
+            Voltar
+          </button>
+          <button type="submit" onclick="window.location.href='conta.html'">
+            Acessar
+          </button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
