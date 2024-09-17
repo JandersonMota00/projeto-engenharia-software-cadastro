@@ -102,7 +102,7 @@ a:active {
 }
 
 .frame-body {
-    overflow-y: scroll;
+    overflow-y: scroll !important;
 }
 
 .frame-footer {
@@ -169,6 +169,10 @@ a:active {
 	color: var(--blue);
 }
 
+.blue {
+    color: var(--blue);
+}
+
 .darker-grey {
     color: var(--darker-grey);
 }
@@ -181,6 +185,56 @@ a:active {
     width: 99%;
 }
 
+.form-area {
+	background-color: var(--super-light-grey);
+	height: 5rem;
+	width: 40rem;
+	border-radius: 5px;
+	border: 2px solid var(--grey);
+	text-decoration: none;
+	outline: none;
+}
+
+.form-area.success {
+	border: 2px solid greenyellow;
+}
+
+.form-area.error {
+	border: 2px solid red;
+}
+
+.checkboxes .form-area {
+	width: 19rem;
+	margin-right: 2rem;
+}
+
+.form-area input {
+	user-select: none;
+	cursor: pointer;
+}
+
+.input {
+	color: var(--black);
+	font-family: var(--text-font-family);
+	font-weight: 500;
+	background-color: transparent;
+	border: none;
+	height: 100%;
+	cursor: pointer;
+	outline: none;
+}
+
+.line {
+    height: 3px;
+    width: 90%;
+    background-color: var(--grey);
+    border-radius: 2px;
+}
+
+input::placeholder {
+    color: var(--darker-grey);
+    opacity: 1;
+}
 
 @media (max-width: 768px) {
   html {
@@ -207,6 +261,10 @@ a:active {
   .frame-footer {
     height: 5%;
   }
+
+  .form-area {
+    width: 99%;
+}
 }
 
 @media (min-width: 768px) {
@@ -235,4 +293,8 @@ a:active {
   .frame-footer {
     height: 7%;
   }
+
+  .form-area {
+    width: 40rem;
+}
 }
