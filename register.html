@@ -10,51 +10,42 @@
     <link rel="stylesheet" href="style.css" />
     <script defer src="assets/js/jquery.min.js"></script>
     <script defer src="assets/js/bootstrap.min.js"></script>
-    <script defer src="assets/js/login.js"></script>
+    <script defer src="assets/js/register.js"></script>
     <script src="assets/js/feather.min.js"></script>
   </head>
   <body>
     <!--Structure-->
     <div class="frame">
-        <div class="frame-header d-flex align-items-center px-4 py-2"><a href="index.html" class="button secondary d-flex align-items-center justify-content-md-start justify-content-center"><h4 class="me-3">Voltar</h4><i data-feather="arrow-left"></i></a></div>
+        <div class="frame-header d-flex align-items-center px-4 py-2"><a href="login.html" class="button secondary d-flex align-items-center justify-content-md-start justify-content-center"><h4 class="me-3">Voltar</h4><i data-feather="arrow-left"></i></a></div>
         <div class="frame-body d-flex justify-content-center align-items-md-center align-items-start px-md-5 px-5">
             <div class="d-flex justify-content-center fit-w my-auto">
-                <img src="assets/img/login_background.svg" class="fit-half-w d-md-block d-none">
+                <img src="assets/img/register_background.svg" class="fit-half-w d-md-block d-none">
                 <div class="d-flex flex-column align-items-center justify-content-center">
-                    <img src="assets/img/login_background_2.svg" class="fit-w d-md-none d-block mb-4">
+                    <img src="assets/img/register_background.svg" class="fit-w d-md-none d-block mb-4">
                     <span class="d-flex">
-                        <h2 class="mb-3 me-3">Bem-vindo(a) ao</h2>
-                        <h2 class="mb-3 blue fw-bold">SER</h2>
+                        <h2 class="mb-3 me-3">Registre-se</h2>
+                        <h2 class="mb-3 blue fw-bold">AGORA</h2>
                     </span>
-                    <h4 class="px-md-0 px-4 text-center">Conecte-se agora para que possa</h4>
-                    <h4 class="px-md-0 px-4 text-center mb-5">acessar nosso suporte gratuito</h4>
+                    <h4 class="px-md-0 px-4 text-center">Tenha um registro disponível para</h4>
+                    <h4 class="px-md-0 px-4 text-center mb-2">manter suas consultas acessíveis</h4>
+                    <h4 class="px-md-0 px-4 text-center blue mb-5 fw-bold">Faça parte de nosso ecosistema!</h4>
                     <div id="formEmail" class="form-area d-flex align-items-center px-3 mt-6">
                         <i data-feather="user" class="me-3"></i>
                         <input id="email" class="input fit-w me-3" type="email" placeholder="Seu E-mail" />
                     </div>
-                    <div id="formPassword" class="form-area mt-4 mb-3 d-flex align-items-center px-3">
+                    <div id="formPassword" class="form-area mt-4 d-flex align-items-center px-3">
                         <i data-feather="lock" class="me-3"></i>
                         <input id="password" class="input fit-w me-3" type="password" placeholder="Sua Senha" />
                         <i data-feather="eye" class="icon-button ms-auto"></i>
                     </div>
-                    <div id="login" class="button mt-4 d-flex fit-w align-items-center justify-content-center">
-                        <h4 class="me-3">Acessar</h4>
-                        <i data-feather="user"></i>
+                    <div id="formConfirm" class="form-area mt-4 mb-3 d-flex align-items-center px-3">
+                        <i data-feather="lock" class="me-3"></i>
+                        <input id="confirm" class="input fit-w me-3" type="password" placeholder="Confirmar Senha" />
+                        <i data-feather="eye" class="icon-button ms-auto"></i>
                     </div>
-                    <div class="line my-4"></div>
-                    <div class="row fit-w">
-                        <div class="col-md-6 col-12 p-0 mb-md-0 mb-3 pe-md-2">
-                            <a href="register.html" class="button d-flex fit-w align-items-center justify-content-center">
-                                <h4 class="me-3">Registrar</h4>
-                                <i data-feather="user-plus"></i>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-12 p-0 ps-md-2">
-                            <a href="#" class="button secondary fit-w d-flex align-items-center justify-content-center">
-                                <h4 class="me-3">Recuperar</h4>
-                                <i data-feather="rotate-cw"></i>
-                            </a>
-                        </div>
+                    <div id="login" class="button mt-4 d-flex fit-w align-items-center justify-content-center mb-md-0 mb-5">
+                        <h4 class="me-3">Criar Conta</h4>
+                        <i data-feather="user-plus"></i>
                     </div>
                 </div>
             </div>

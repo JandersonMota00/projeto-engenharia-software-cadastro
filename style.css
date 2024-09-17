@@ -1,6 +1,8 @@
 :root {
   --blue: #1582c5;
   --cyan: #00a3d4;
+  --red: #d25057;
+  --green: #128f3a;
   --black: #231f20;
   --super-light-grey: #e9f3fa;
   --light-grey: #E2EDF4;
@@ -196,11 +198,11 @@ a:active {
 }
 
 .form-area.success {
-	border: 2px solid greenyellow;
+	border: 2px solid var(--green);
 }
 
 .form-area.error {
-	border: 2px solid red;
+	border: 2px solid var(--red);
 }
 
 .checkboxes .form-area {
@@ -234,6 +236,20 @@ a:active {
 input::placeholder {
     color: var(--darker-grey);
     opacity: 1;
+}
+
+.error-bubble {
+    display: none;
+    position: absolute; 
+    background-color: var(--red);
+    color: var(--white);
+    border-radius: 5px;
+    padding: 10px 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1050;
+    max-width: 300px;
+    text-align: center;
+    pointer-events: none;
 }
 
 @media (max-width: 768px) {
