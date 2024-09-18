@@ -5,34 +5,34 @@ from .models import (
     ReligiaoValue, GeneroValue, OrientacaoSexualValue, TratamentoValue,
     SintomaValue, DoencaValue, AlergiaValue, MedicamentoValue, BaseSelectValue
 )
-from .select_values_serializers import (
+from .serializers import (
     ReligiaoValueSerializer, GeneroValueSerializer, OrientacaoSexualValueSerializer,
     TratamentoValueSerializer, SintomaValueSerializer, DoencaValueSerializer,
     AlergiaValueSerializer, MedicamentoValueSerializer
 )
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
-from .permissions import IsStaff
 
 from django.db.models import Model
 
 class BaseSelectValueViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, IsStaff]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         """
         Filtra os objetos com base no estado ou outras condições.
         """
         
-        queryset = self.get_model_class.objects.all()
+        queryset = self.get_model_class().objects.all()
         
         if self.action == 'list':
             
             search_term = self.request.query_params.get('search', '')
             
+            print(search_term)
+            
             normalized_search_term = self.model_class.normalize(search_term)
             
             queryset = queryset.filter(normalized_value__icontains=normalized_search_term, state='ENA')[:10]
+            
             
             
         if self.request.user.has_perm('role-Paciente'):

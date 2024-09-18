@@ -2,10 +2,10 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    SolicitacaoAtendimentoViewSet, LoginView, PacienteViewSet, SelectValueViewSet, UserView
+    SolicitacaoAtendimentoViewSet, LoginView, PacienteViewSet, UserView
     # EnderecoViewSet, NumeroDeTelefoneViewSet, EmailViewSet
 )
-from .select_values_urls import router as select_router
+from knox import views as knox_views
 
 # Criando um roteador padrão
 router = DefaultRouter()
@@ -32,7 +32,14 @@ router.register(r'solicitacoes', SolicitacaoAtendimentoViewSet, 'solicitacoes')
 # Incluindo as rotas no urlpatterns
 urlpatterns = [
     # path('register/', RegisterView.as_view(), name='register'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('select/', include(select_router.urls)),
     path('', include(router.urls)),
 ]
+
+
+urlpatterns += [
+     path(r'auth/login/', LoginView.as_view(), name='knox_login'),
+     path(r'auth/logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
+     path(r'auth/logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
+]
+
+

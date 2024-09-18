@@ -1,7 +1,7 @@
 meta {
   name: paciente
   type: http
-  seq: 4
+  seq: 5
 }
 
 post {
@@ -12,54 +12,36 @@ post {
 
 body:json {
   {
-      "nome": "João da Silva",
-      "pseudonimo": "Joãozinho",
-      "data_nascimento": "1980-05-15",
-      "generos": [
-          {
-              "value": "Masculino"
-          }
-      ],
-      "orientacoes_sexuais": [
-          {
-              "value": "Heterossexual"
-          }
-      ],
-      "religioes": [
-          {
-              "value": "Católica"
-          }
-      ],
-      "alergias": [
-          {
-              "value": "Penicilina"
-          }
-      ],
-      "endereco": {
-          "logradouro": "Rua das Flores",
-          "numero": "123",
-          "bairro": "Jardim das Acácias",
-          "cidade": "São Paulo",
-          "estado": "SP",
-          "cep": "01234567"
-      },
-      "emails": [
-          {
-              "email": "joao.silva@example.com"
-          }
-      ],
-      "telefones": [
-          {
-              "rotulo": "Celular",
-              "ddd": "015",
-              "telefone": "912345678",
-              "whatssap": true
-          }
-      ],
-      "ja_fez_psicoterapia": true,
-      "ja_fez_psiquiatrico": false,
-      "ja_fez_tratamento_espirita": true,
-      "user_id": 1
+    "user_id": 2,
+    "nome": "João da Silva",
+    "pseudonimo": "Joãozinho",
+    "data_nascimento": "1985-05-15",
+    "generos": 1,
+    "orientacoes_sexuais": 1,
+    "religioes": 1,
+    "alergias": [1],
+    "endereco": {
+      "cep": "12345678", // Ajuste para ter até 8 caracteres
+      "logradouro": "Rua Exemplo", // Inclua o logradouro
+      "numero": "123",
+      "bairro": "Bairro Exemplo",
+      "cidade": "Cidade Exemplo",
+      "estado": "EX"
+    },
+    "emails": [
+      {
+        "email": "joao@example.com"
+      }
+    ],
+    "telefones": [
+      {
+        "rotulo": "Celular", // Inclua um valor para o rótulo
+        "ddd": "12", // Inclua um valor para o DDD
+        "telefone": "1234567890" // Inclua um valor para o telefone
+      }
+    ],
+    "ja_fez_psicoterapia": false,
+    "ja_fez_psiquiatrico": false,
+    "ja_fez_tratamento_espirita": false
   }
-  
 }

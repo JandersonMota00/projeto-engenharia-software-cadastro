@@ -1,6 +1,6 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
-from .select_values_views import (
+from .views import (
     ReligiaoValueViewSet, GeneroValueViewSet, OrientacaoSexualValueViewSet,
     TratamentoValueViewSet, SintomaValueViewSet, DoencaValueViewSet,
     AlergiaValueViewSet, MedicamentoValueViewSet
@@ -16,3 +16,7 @@ router.register(r'sintoma', SintomaValueViewSet, basename='sintoma')
 router.register(r'doenca', DoencaValueViewSet, basename='doenca')
 router.register(r'alergia', AlergiaValueViewSet, basename='alergia')
 router.register(r'medicamento', MedicamentoValueViewSet, basename='medicamento')
+
+urlpatterns = [
+    path('', include(router.urls)),
+]

@@ -13,18 +13,23 @@ class Command(BaseCommand):
 
         # Executa comandos de reinicialização e configuração
         
-        self.stdout.write(f'=============================================================================================')
-        call_command('flush', interactive=False)
+        call_command('clean_pyc')
+        call_command('clear_cache')        
+        self.stdout.write(self.style.SUCCESS(f'Cache apagado'))
+        
+        
+        
+        call_command('delete_db')
         self.stdout.write(self.style.SUCCESS(f'Banco de dados apagado'))
-        
-        
         self.stdout.write(f'=============================================================================================')
-        call_command('removemigrations')
         
+        
+        call_command('removemigrations')
         self.stdout.write(f'=============================================================================================')
 
         self.stdout.write('Criando novas migrações...')
 
+        call_command('makemigrations', 'selectvalues')
         call_command('makemigrations', 'api')
 
         self.stdout.write(f'=============================================================================================')

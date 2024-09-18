@@ -22,7 +22,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('rest_framework.urls')),  # Inclui rotas para login e logout padrão do DRF
+    # path('auth/', include('rest_framework.urls')),  # Inclui rotas para login e logout padrão do DRF
+    path('select/', include('selectvalues.urls')),
     path('', include('api.urls')),  # Incluindo as rotas do app
 ]
 
@@ -32,3 +33,5 @@ if settings.DEBUG:
         path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
         path('schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     ]
+    
+

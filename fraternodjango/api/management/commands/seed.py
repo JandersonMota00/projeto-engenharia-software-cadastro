@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import (
+from selectvalues.models import (
     ReligiaoValue, GeneroValue, OrientacaoSexualValue,
     TratamentoValue, SintomaValue, DoencaValue,
     AlergiaValue, MedicamentoValue, BaseSelectValue
