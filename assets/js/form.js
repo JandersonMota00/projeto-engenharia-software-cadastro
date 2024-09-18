@@ -9,7 +9,7 @@ let forms = [
         [["dropdown", "smile", "Ciente", 0]],
 ];
 
-const dropdownValues = [["Masculino", "Feminino", "Outro", "Prefiro Não Informar"], ["Homem", "Mulher", "Outro", "Prefiro Não Informar"], ["Whatsapp", "Telegram", "Ambos", "Nenhum"], ["Catolicismo", "Budismo", "Ateísmo", "Outro"], ["Sim", "Não", "Prefiro Não Informar"], ["Sim", "Não"]];
+const dropdownValues = [["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"], ["Homem", "Mulher", "Outro", "Prefiro Não Informar"], ["Whatsapp", "Telegram", "Ambos", "Nenhum"], ["Catolicismo", "Budismo", "Ateísmo", "Outro"], ["Sim", "Não", "Prefiro Não Informar"], ["Sim", "Não"]];
 
 let pageIndex = 0;
 
