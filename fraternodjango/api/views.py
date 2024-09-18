@@ -89,12 +89,17 @@ class SolicitacaoAtendimentoViewSet(viewsets.GenericViewSet, mixins.CreateModelM
         user = self.request.user
         
         # Atendentes e diretores podem visualizar todas as solicitações
-        if user.has_perm('can_list_solicitacoes_all'):
+        if user.has_perm('api.can_list_solicitacoes_all'):
             return apiModels.SolicitacaoAtendimento.objects.all()
         
+        print(user.has_perm('api.can_list_solicitacoes_self'))
+        
         # Pacientes só podem visualizar suas próprias solicitações
-        if user.has_perm('can_list_solicitacoes_self'):
-            return apiModels.SolicitacaoAtendimento.objects.filter(paciente=user.paciente)
+        if user.has_perm('api.can_list_solicitacoes_self'):
+            print('has perm')
+            print(apiModels.SolicitacaoAtendimento.objects.filter(paciente=apiModels.Paciente.objects.get(user=user)))
+    
+            return apiModels.SolicitacaoAtendimento.objects.filter(paciente=apiModels.Paciente.objects.get(user=user))
         
         # Se não tiver permissão, retorna uma queryset vazia
         return apiModels.SolicitacaoAtendimento.objects.none()

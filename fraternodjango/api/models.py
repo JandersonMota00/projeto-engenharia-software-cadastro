@@ -106,6 +106,9 @@ class Email(models.Model):
 # Modelo SolicitacaoAtendimento atualizado
 class SolicitacaoAtendimento(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    
+    motivo = models.TextField(blank=True, null=True)
+    
     descricao = models.TextField()
 
     # Relacionando com SintomaValue e TratamentoValue
@@ -129,3 +132,7 @@ class SolicitacaoAtendimento(models.Model):
     # vozes = models.BooleanField()
     # pensamentos_suicidas = models.BooleanField()
     # desencarne_ultimo_ano = models.BooleanField()
+
+
+class PermissionContentType(models.Model):
+    keep = models.BooleanField(null=True)

@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from api.models import PermissionContentType
 
 class Command(BaseCommand):
     help = 'Cria grupos e permissões para o aplicativo'
@@ -36,7 +37,6 @@ class Command(BaseCommand):
             'can_create_solicitacoes_for_any': ['Atendente', 'Diretor'],
             'can_create_solicitacoes_for_self': ['Paciente'],
             
-            
             'can_list_solicitacoes_all': ['Atendente', 'Diretor'],
             'can_list_solicitacoes_self': ['Paciente']
         }
@@ -48,7 +48,7 @@ class Command(BaseCommand):
             'Atendente': None,
             'Diretor': None,
         }
-        User_content_type = ContentType.objects.get_for_model(User)
+        User_content_type = ContentType.objects.get_for_model(PermissionContentType)
         
         
         for group_name, _ in groups.items():

@@ -4,8 +4,6 @@ vars:pre-request {
 
 script:pre-request {
   if (bru.getEnvVar('auth-token')) {
-    req.setHeader('Authorization', 'Token ' + bru.getEnvVar('auth-token')) 
+    req.setHeader('Authorization', 'Token '+ bru.getEnvVar('auth-token'))
   }
-  
-  console.log(!bru.getEnvVar('auth-token'))
 }

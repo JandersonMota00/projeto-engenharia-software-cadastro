@@ -36,10 +36,10 @@ class Command(BaseCommand):
                 'Terapia Cognitivo-Comportamental', 'Tratamento com Medicamentos', 'Terapia de Casal', 'Terapia Familiar', 'Terapia Floral'
             ],
             'sintoma': [
+                'Desmaio', 'Vultos', 'Vozes', 'Pensamentos suicidas', 'Desencarne familiar',
                 'Ansiedade', 'Depressão', 'Pânico', 'Insônia', 'Stress',
                 'Tristeza', 'Irritabilidade', 'Medo', 'Agitação', 'Euforia',
                 'Fadiga', 'Apatia', 'Desesperança', 'Dúvida', 'Dificuldade de Concentração',
-                'Desmaio', 'Vultos', 'Vozes', 'Pensamentos suicidas', 'Desencarne familiar'
             ],
             'doenca': [
                 'Diabetes', 'Hipertensão', 'Asma', 'Gastrite', 'Artrite',

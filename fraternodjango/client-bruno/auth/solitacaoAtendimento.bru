@@ -15,62 +15,11 @@ headers {
 }
 
 body:json {
-  { 
-    "nome": "Nome do Paciente",
-    "pseudonimo": "Pseudônimo do Paciente",
-    "data_nascimento": "2003-11-05",
-    "descricao": "dawfdawfwa",
-    "generos": [
-      {
-        "id": "id-do-genero", 
-        "name": "Nome do Gênero"
-      }
-    ],
-    "orientacoes_sexuais": [
-      {
-        "id": "id-da-orientacao",
-        "name": "Nome da Orientação Sexual"
-      }
-    ],
-    "religioes": [
-      {
-        "id": "id-da-religiao",
-        "name": "Nome da Religião"
-      }
-    ],
-    "alergias": [
-      {
-        "id": "id-da-alergia",
-        "name": "Nome da Alergia"
-      }
-    ],
-    "endereco": {
-      "cep": "00000-000",
-      "estado": "Estado",
-      "cidade": "Cidade",
-      "bairro": "Bairro",
-      "tipo_logradouro": "Tipo de Logradouro",
-      "logradouro": "Logradouro",
-      "numero": "Número",
-      "complemento": "Complemento"
-    },
-    "emails": [
-      {
-        "email": "exemplo@dominio.com"
-      }
-    ],
-    "telefones": [
-      {
-        "rotulo": "Rotulo",
-        "ddd": "DDD",
-        "telefone": "Telefone",
-        "whatsapp": true,
-        "telegram": false,
-        "ligacao": true
-      }
-    ],
-    "ja_fez_psicoterapia": true,
-    "ja_fez_psiquiatrico": false,
-    "ja_fez_tratamento_espirita": true
+  {
+      "motivo": "Consulta de rotina",  // opcional
+      "descricao": "Paciente com dores nas costas persistentes.",
+      "sintomas": [1, 2],  // IDs dos sintomas relacionados
+      "tratamentos_em_andamento": [3, 4]  // IDs dos tratamentos relacionados
   }
+  
 }
