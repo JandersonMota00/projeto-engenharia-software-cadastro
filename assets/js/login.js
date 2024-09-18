@@ -23,7 +23,12 @@ document.getElementById("login").addEventListener("click", async function() {
         return;
     }
 
+    passwordForm.classList.add("success");
+    passwordForm.classList.remove("error");
+
     console.log("output: " + email.value + " " + await hashSHA256(password.value));
+    window.location.replace("home.html");
+
 })
 
 function checkEmail(email) {
