@@ -9,7 +9,7 @@ let forms = [
         [["dropdown", "smile", "Ciente", 0]],
 ];
 
-const dropdownValues = [["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"], ["Homem", "Mulher", "Outro", "Prefiro Não Informar"], ["Whatsapp", "Telegram", "Ambos", "Nenhum"], ["Catolicismo", "Budismo", "Ateísmo", "Outro"], ["Sim", "Não", "Prefiro Não Informar"], ["Sim", "Não"]];
+const dropdownValues = [["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"], ["Agênero", "Agênero", "Andrógino", "Apogênero", "Apôrêne", "Bigênero", "Demigênero", "Demimenina", "Demimenino", "Gênero Binário Feminino", "Gênero Binário Masculino", "Gênero Expandido", "Gênero Fluido", "Gênero Inconformista", "Gênero Nulo", "Gênero Queer", "Gênero Vago", "Homem Trans", "Intergênero", "Maverique", "Mulher Trans", "Neutrois", "Neutrois", "Não-binário", "Pangênero", "Poligênero", "Transgênero", "Transexual", "Travesti", "Outro", "Prefiro Não Informar"], ["Whatsapp", "Telegram", "Ambos", "Nenhum"], ["Agnosticismo", "Ateísmo", "Bahá'í", "Budismo", "Candomblé", "Catolicismo", "Confucionismo", "Cristianismo", "Espiritismo", "Hare Krishna", "Hinduísmo", "Islamismo", "Jainismo", "Judaísmo", "Mormonismo", "Ortodoxia Oriental", "Protestantismo", "Rastafarianismo", "Santo Daime", "Sikhismo", "Taoísmo", "Testemunhas de Jeová", "Umbanda", "Xintoísmo", "Zoroastrismo", "Outro"], ["Sim", "Não", "Prefiro Não Informar"], ["Sim", "Não"]];
 
 let pageIndex = 0;
 
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	buildForms(pageIndex);
 });
 
-function changeValue(pindex, index, value, type) {
+async function changeValue(pindex, index, value, type) {
 	forms[pindex][index][3] = value;
 	let passed = false;
 
@@ -40,6 +40,36 @@ function changeValue(pindex, index, value, type) {
 	const element = document.getElementById(`input-${pindex}-${index}`);
 	if (!element) return;
 
+    if(pindex == 2) {
+        if(index == 0) {
+            if(value.length >= 9) value = value.replace(/[^0-9-]/g, '');
+            
+            if(value.length == 8) {
+                value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
+                forms[pindex][index][3] = value;
+            }
+
+            if(forms[pindex][index][3].length == 9) {
+                console.log(`Buscando por ${value}`);
+                await fetch(`https://viacep.com.br/ws/${forms[pindex][index][3]}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    element.querySelector('input').value = forms[pindex][index][3];
+                    console.log(document.getElementById('input-2-1'));
+                    document.getElementById('input-2-1').querySelector('input').value = data.uf;
+                    forms[2][1][3] = data.uf;
+                    document.getElementById('input-2-2').querySelector('input').value = data.localidade;
+                    forms[2][2][3] = data.localidade;
+                    document.getElementById('input-2-3').querySelector('input').value = data.bairro;
+                    forms[2][3][3] = data.bairro;
+                    document.getElementById('input-2-4').querySelector('input').value = data.logradouro;
+                    forms[2][4][3] = data.logradouro;
+                }).catch(() => {});
+                passed = true;
+            } else passed = false;
+        }
+    }
+
 	if (passed == true) {
 		element.classList.add("success");
 		element.classList.remove("error");
@@ -61,7 +91,7 @@ function buildContent(index){
         case 2: html = `<h2 class="mb-5">Endereço</h2>`; break;
         case 3: html = `<h2 class="mb-5">Dados Extras</h2>`; break;
         case 4: html = `<h2 class="mb-5">Sintomas</h2>`; break;
-        case 5: html = `<h2 class="mb-5">Termos de Uso</h2> <h4>EU ESTOU CIENTE SOBRE A OBRIGATORIEDADE DE ASSISTIR ÀS DOUTRINÁRIAS, ÀS QUARTAS FEIRAS, ÀS 19:00, PRESENCIALMENTE, NA RUA ALAGOAS, 121-MARIA PRETA - SAJ-BA, OU ON-LINE, ATRAVÉS DO CANAL SER - SOCIEDADE ESPÍRITA RAFAEL LÍRIO, NO YOUTUBE.</h4>`; break;
+        case 5: html = `<h2 class="mb-5">Termos de Uso</h2> <div class="box p-4 mb-4"><h4 class="text-justify">Estou ciente da obrigatoriedade de participar das doutrinárias, que ocorrem às quartas-feiras, às 19:00. A participação pode ser presencial, na Rua Alagoas, 121 - Maria Preta, SAJ-BA, ou online através do canal SER - Sociedade Espírita Rafael Lírio no YouTube.</h4> </div>`; break;
     }
 
     return html;
@@ -143,8 +173,8 @@ function buildForms(index) {
 	});
 
 	content += `</div> <div class="line my-5"></div> <div class="row mt-4">`;
-    content += `<div class="${pageIndex == 0? "d-none" : pageIndex == 5? "col-12" : "col-md-6 col-12 mb-md-0 mb-3"}">  <div class="button secondary d-flex align-items-center justify-content-center fit-w" onclick="buildForms('-')"><h4 class="me-3">Voltar</h4><i data-feather="chevron-left"></i></div>  </div>`;
-    content += `<div class="${pageIndex == 5? "d-none" : pageIndex == 0? "col-12" : "col-md-6 col-12"}">  <div class="button d-flex align-items-center justify-content-center fit-w" onclick="buildForms('+')"><h4 class="me-3">Continuar</h4><i data-feather="chevron-right"></i></div>  </div>`;
+    content += `<div class="${pageIndex == 0? "d-none" : pageIndex == 5? "col-12" : "col-md-6 col-12 mb-md-0 mb-3 p-0"}">  <div class="button secondary d-flex align-items-center justify-content-center fit-w" onclick="buildForms('-')"><h4 class="me-3">Voltar</h4><i data-feather="chevron-left"></i></div>  </div>`;
+    content += `<div class="${pageIndex == 5? "d-none" : pageIndex == 0? "col-12" : "col-md-6 col-12 p-0"}">  <div class="button d-flex align-items-center justify-content-center fit-w" onclick="buildForms('+')"><h4 class="me-3">Continuar</h4><i data-feather="chevron-right"></i></div>  </div>`;
     content += `</div>`
 
 	element.innerHTML = content;
