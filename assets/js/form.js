@@ -1,4 +1,4 @@
-// Icone | Tipo | Valor | Estado (Inconclusivo, Certo, Errado, Desativado)
+// TIPO | ICONE | PLACEHOLDER | VALOR | ESTADO
 
 let forms = [
 	    [["text", "user", "Nome completo", "", 0], ["text", "user", "Nome social", "", 0], ["date", "calendar", "Data de Nascimento", new Date(), 0], ["dropdown", "user", "Sexo", "", 0], ["dropdown", "user", "Gênero", "", 0]],
@@ -13,9 +13,6 @@ const dropdownValues = [["Masculino", "Feminino", "Intersexual", "Prefiro Não I
 
 let pageIndex = 0;
 
-document.addEventListener("DOMContentLoaded", () => {
-	buildForms(pageIndex);
-});
 
 async function changeValue(pindex, index, value, type) {
 	forms[pindex][index][3] = value;
@@ -101,41 +98,42 @@ function getDropdownValues(pindex, index) {
     let html = '';
     if(pindex == 0){
         if(index == 3) {
-            html += `<option value="", 0>${forms[pindex][index][2]}</option>`;
+            html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
             for(let i = 0; i < dropdownValues[0].length; i++){
                 html += `<option value="option${i}">${dropdownValues[0][i]}</option>'`;
             }
         } else if (index == 4) {
-            html += `<option value="", 0>${forms[pindex][index][2]}</option>`;
+            html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
             for(let i = 0; i < dropdownValues[1].length; i++){
                 html += `<option value="option${i}">${dropdownValues[1][i]}</option>'`;
             }
         }
     }
     if(pindex == 1) {
-        html += `<option value="", 0>${forms[pindex][index][2]}</option>`;
+        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[2].length; i++){
             html += `<option value="option${i}">${dropdownValues[2][i]}</option>'`;
         }
     }
     if(pindex == 3) {
-        html += `<option value="", 0>${forms[pindex][index][2]}</option>`;
+        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[3].length; i++){
             html += `<option value="option${i}">${dropdownValues[3][i]}</option>'`;
         }
     }
     if(pindex == 4) {
-        html += `<option value="", 0>${forms[pindex][index][2]}</option>`;
+        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[4].length; i++){
             html += `<option value="option${i}">${dropdownValues[4][i]}</option>'`;
         }
     }
     if (pindex == 5) {
-        html += `<option value="", 0>${forms[pindex][index][2]}</option>`;
+        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[5].length; i++){
             html += `<option value="option${i}">${dropdownValues[5][i]}</option>'`;
         }
     }
+
     return html;
 }
 
@@ -165,6 +163,7 @@ function buildForms(index) {
 	targetStepElement.classList.add("selected");
 
 	pageIndex = index;
+
 	content += buildContent(index) + `<div class="row fit-w m-0">`;
 
 	formData.forEach((data, index) => {
@@ -201,6 +200,8 @@ function showErrorBubble(string) {
 function hideErrorBubble() {
     document.getElementById('errorBubble').style.display = 'none';
 }
+
+buildForms(pageIndex);
 
 setInterval(() => {
     timer -= 1;
