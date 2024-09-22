@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import (Email, Endereco, NumeroDeTelefone, Paciente, SolicitacaoAtendimento)
+from .models import (Endereco, NumeroDeTelefone, Paciente, SolicitacaoAtendimento)
                     
 # Register your models here.
 
@@ -8,7 +8,6 @@ from .models import (Email, Endereco, NumeroDeTelefone, Paciente, SolicitacaoAte
 admin.site.register(Paciente)
 admin.site.register(Endereco)
 admin.site.register(NumeroDeTelefone)
-admin.site.register(Email)
 admin.site.register(SolicitacaoAtendimento)
 
 

@@ -1,5 +1,5 @@
 meta {
-  name: paciente
+  name: cadastrar paciente
   type: http
   seq: 5
 }
@@ -12,10 +12,11 @@ post {
 
 body:json {
   {
-    "user_id": 2,
     "nome": "João da Silva",
+    "nome_social": "Joãozinho2",
     "pseudonimo": "Joãozinho",
     "data_nascimento": "1985-05-15",
+    "sexo": "MASCULINO",
     "generos": 1,
     "orientacoes_sexuais": 1,
     "religioes": 1,
@@ -28,18 +29,13 @@ body:json {
       "cidade": "Cidade Exemplo",
       "estado": "EX"
     },
-    "emails": [
-      {
-        "email": "joao@example.com"
-      }
-    ],
-    "telefones": [
-      {
-        "rotulo": "Celular", // Inclua um valor para o rótulo
-        "ddd": "12", // Inclua um valor para o DDD
-        "telefone": "1234567890" // Inclua um valor para o telefone
-      }
-    ],
+    "email": "joão@gmail.com",
+    "telefone_principal": {
+      "ddd": "75",
+      "telefone": "987654321",
+      "whatssap": true,
+      "telegram": false
+    },
     "ja_fez_psicoterapia": false,
     "ja_fez_psiquiatrico": false,
     "ja_fez_tratamento_espirita": false

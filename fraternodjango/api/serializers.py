@@ -6,20 +6,22 @@ from django.contrib.auth import authenticate
 
 from . import models
 
+
 class UserSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = User
         fields = ['email', 'username', 'password', 'id']
-        extra_kwargs = {'password': {'write_only': True}, 'id': {'read_only': True}}
-    
+        extra_kwargs = {'password': {'write_only': True},
+                        'id': {'read_only': True}}
+
     def create(self, validated_data):
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email']
         )
         user.set_password(validated_data['password'])
-        user.save();
+        user.save()
 
         user_type = self.context.get('user_type', 'Paciente')
 
@@ -43,7 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    
+
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True, write_only=True)
 
@@ -66,69 +68,109 @@ class LoginSerializer(serializers.Serializer):
 # ==================================================================================
 
 
+class NumeroDeTelefoneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = apiModels.NumeroDeTelefone
+        fields = ['ddd', 'telefone', 'whatsapp', 'telegram', 'ligacao']
+
+
 class EnderecoSerializer(serializers.ModelSerializer):
     class Meta:
         model = apiModels.Endereco
         fields = ['cep', 'estado', 'cidade', 'bairro',
-                  'tipo_logradouro', 'logradouro', 'numero', 'complemento']
-
-    def create_or_update_endereco(self, validated_data):
-        # Verifica se o paciente já tem um endereço
-        paciente = self.context['patient']
-        endereco, created = apiModels.Endereco.objects.update_or_create(
-            paciente=paciente,
-            defaults=validated_data
-        )
-        return endereco
-
-
-class NumeroDeTelefoneSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = apiModels.NumeroDeTelefone
-        fields = ['rotulo', 'ddd', 'telefone',
-                  'whatsapp', 'telegram', 'ligacao']
-
-    def create_or_update_telefone(self, validated_data):
-        paciente = self.context['patient']
-        telefone, created = apiModels.NumeroDeTelefone.objects.update_or_create(
-            paciente=paciente,
-            rotulo=validated_data['rotulo'],
-            defaults=validated_data
-        )
-        return telefone
-
-
-class EmailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = apiModels.Email
-        fields = ['email']
-
-    def create_or_update_email(self, validated_data):
-        
-        paciente = self.context['patient']
-        
-        email, created = apiModels.Email.objects.update_or_create(
-            paciente=paciente,
-            email=validated_data['email'],
-            defaults=validated_data
-        )
-        return email
-
+                  'logradouro', 'numero', 'complemento']
 
 
 class PacienteSerializer(serializers.ModelSerializer):
+    endereco = EnderecoSerializer()  # Nested field for endereco
+
+    # Nested field for telefone principal
+    telefone_principal = NumeroDeTelefoneSerializer()
+    telefone_secundario = NumeroDeTelefoneSerializer(
+        required=False)  # Nested field for telefone secundario
+
     class Meta:
         model = apiModels.Paciente
-        exclude = ['user']
+        fields = [
+            'nome', 'nome_social', 'pseudonimo', 'data_nascimento',
+            'sexo', 'genero', 'religiao', 'alergias', 'ja_fez_psicoterapia',
+            'ja_fez_psiquiatrico', 'ja_fez_tratamento_espirita',
+            'endereco', 'telefone_principal', 'telefone_secundario'
+        ]
+
+    def create(self, validated_data):
+
+        # Extraindo dados dos relacionamentos aninhados]
+        endereco_data = validated_data.pop('endereco', None)
+
+        telefone_principal_data = validated_data.pop(
+            'telefone_principal', None)
+        telefone_secundario_data = validated_data.pop(
+            'telefone_secundario', None)
+
+        alergias_data = validated_data.pop('alergias', None)
+
+        # Criação de instâncias relacionadas se os dados estiverem presentes
+
+        endereco = apiModels.Endereco.objects.create(**endereco_data)
+        telefone_principal = apiModels.NumeroDeTelefone.objects.create(
+            **telefone_principal_data)
+
+        if telefone_secundario_data:
+            telefone_secundario = apiModels.NumeroDeTelefone.objects.create(
+                **telefone_secundario_data)
+        else:
+            telefone_secundario = None
+
+        # Criação do paciente com os campos opcionais
+        paciente_data = {**validated_data,
+                         'endereco': endereco,
+                         'telefone_principal': telefone_principal}  # Inicia com os dados validados
+
+        if telefone_secundario:
+            # Adiciona o telefone secundário se existe
+            paciente_data['telefone_secundario'] = telefone_secundario
+
+        paciente = apiModels.Paciente.objects.create(**paciente_data)
+
+        if alergias_data:
+            paciente.alergias.set(alergias_data)  # Adicionando as alergias
+
+        return paciente
+
+    def update(self, instance, validated_data):
+        endereco_data = validated_data.pop('endereco', None)
+
+        telefone_principal_data = validated_data.pop(
+            'telefone_principal', None)
+        telefone_secundario_data = validated_data.pop(
+            'telefone_secundario', None)
+
+        alergias_data = validated_data.pop('alergias', None)
+
+        apiModels.Endereco.objects.filter(
+            id=instance.endereco.id).update(**endereco_data)
+
+        apiModels.NumeroDeTelefone.objects.filter(
+            id=instance.telefone_principal.id).update(**telefone_principal_data)
+
         
+        if telefone_secundario_data:
+            apiModels.NumeroDeTelefone.objects.filter(
+                id=instance.telefone_secundario.id).update(**telefone_secundario_data)
 
+        # Atualizando o próprio paciente
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
 
+        # Usar o método set() para o campo ManyToMany
+        instance.alergias.set(alergias_data)
 
-
+        instance.save()
+        return instance
 
 
 class SolicitacaoAtendimentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = apiModels.SolicitacaoAtendimento
         exclude = ['paciente']
-
