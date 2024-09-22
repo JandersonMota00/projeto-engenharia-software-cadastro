@@ -11,27 +11,27 @@
   <tr>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/115894997?v=4" width="100px;" alt="Foto do Integrante Adriano"/><br />
-      <sub><b>Adriano Ribeiro</b></sub>
+      <sub><b><a href="https://github.com/adrianovictorn">Adriano Ribeiro</a></b></sub>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/122604522?v=4" width="100px;" alt="Foto do Integrante Antônio"/><br />
-      <sub><b>Antônio Fernandes</b></sub>
+      <sub><b><a href="https://github.com/AntonioSFernandes">Antônio Fernandes</a></b></sub>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/47748436?v=4" width="100px;" alt="Foto do Integrante Filipe"/><br />
-      <sub><b>Filipe Silva</b></sub>
+      <sub><b><a href="https://github.com/KerusMighos">Filipe Silva</a></b></sub>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/129909472?v=4" width="100px;" alt="Foto do Integrante Franklin"/><br />
-      <sub><b>Franklin Felix</b></sub>
+      <sub><b><a href="https://github.com/FranklinFelixADS">Franklin Felix</a></b></sub>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/80362674?v=4" width="100px;" alt="Foto do Integrante Janderson"/><br />
-      <sub><b>Janderson Mota</b></sub>
+      <sub><b><a href="https://github.com/JandersonMota">Janderson Mota</a></b></sub>
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/50783223?v=4" width="100px;" alt="Foto do Integrante Pedro Ipolito"/><br />
-      <sub><b>Pedro Ipolito</b></sub>
+      <sub><b><a href="https://github.com/nectaroads">Pedro Ipolito</a></b></sub>
     </td>
   </tr>
 </table>
