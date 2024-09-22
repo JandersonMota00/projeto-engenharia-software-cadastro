@@ -11,21 +11,52 @@ class Command(BaseCommand):
         # Define as permissões e os grupos associados
         permissions = {
             
+            # User
+
             'can_manage_user_self': ['Paciente', 'Atendente', 'Diretor'],
-            # can_manager_user_all'
+            'can_manager_user_all': ['Diretor'],
             
-            'can_create_paciente_self':      ['Paciente'],
-            'can_create_paciente_any': ['Atendente', 'Diretor'],
-            'can_manage_paciente_all':  ['Atendente'],
+            # Paciente+Solicitacao
             
-            'can_create_atendente': ['Atendente', 'Diretor'],
-            'can_manage_atendente_all': ['Diretor'],
+            # 'can_create_paciente_with_solicitacao'
             
-            'can_create_diretor': ['Diretor'],
-            'can_manage_diretor_all': [],
+                  
+            # Paciente
+                        
+            'can_create_paciente': ['Paciente'],
             
+            'can_list_paciente_all': ['Atendente', 'Diretor'],
+            
+            'can_manage_paciente_self': ['Paciente'],
+            'can_manage_paciente_all':  ['Atendente', 'Diretor'],
             
             'can_view_realname_and_pseudonym': ['Diretor'],
+            'can_create_solicitacoes_for_self': ['Paciente'],
+            
+            # Atendente
+            
+            'can_create_atendente': ['Diretor'],
+                        
+            'can_manage_atendente_self': ['Atendente'],
+            'can_manage_atendente_all': ['Diretor'],
+            
+            # Diretor
+            
+            'can_create_diretor': ['Diretor'],
+            
+            'can_manage_diretor_self': ['Diretor'],
+            'can_manage_diretor_all': [],
+                          
+            # Solicitacao model
+            
+            'can_create_solicitacao': ['Paciente'],
+            
+            'can_list_solicitacao_self': ['Paciente'],
+            
+            'can_list_solicitacao_all': ['Atendente', 'Diretor'],
+            
+            'can_manage_solicitacao_self': [],
+            'can_manage_solicitacao_all': ['Atendente', 'Diretor'],
             
             'can_view_only_enableds_selects': ['Paciente'],
             'can_view_all_states_selects': ['Atendente', 'Diretor'],
@@ -35,7 +66,6 @@ class Command(BaseCommand):
             'can_view_selfs': ['Paciente'],
             
             'can_create_solicitacoes_for_any': ['Atendente', 'Diretor'],
-            'can_create_solicitacoes_for_self': ['Paciente'],
             
             'can_list_solicitacoes_all': ['Atendente', 'Diretor'],
             'can_list_solicitacoes_self': ['Paciente']

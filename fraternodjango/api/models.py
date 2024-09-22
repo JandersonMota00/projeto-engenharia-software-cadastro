@@ -85,9 +85,6 @@ class Paciente(models.Model):
         return self.nome
 
 
-# Modelo SolicitacaoAtendimento atualizado
-
-
 class SolicitacaoAtendimento(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
     
@@ -101,10 +98,10 @@ class SolicitacaoAtendimento(models.Model):
 
     class Meta:
         permissions = [
-            ('can_view_all', 'Pode ver todas as solicitações de atendimento'),
-            ('can_view_only_owns',
-             'Pode ver apenas suas próprias solicitações de atendimento')
-        ]
+            ('list_all', 'Pode listar todas as solicitações'),
+            ('list_self', 'Pode listar suas propias solicitações'),
+            
+            ]
 
     def __str__(self) -> str:
         return f"Solicitação de {self.paciente.nome} - {self.id}"

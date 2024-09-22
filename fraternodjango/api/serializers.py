@@ -43,7 +43,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
-
 class LoginSerializer(serializers.Serializer):
 
     username = serializers.CharField(required=True)
@@ -81,7 +80,7 @@ class EnderecoSerializer(serializers.ModelSerializer):
                   'logradouro', 'numero', 'complemento']
 
 
-class PacienteSerializer(serializers.ModelSerializer):
+class PacienteSerializer(serializers.ModelSerializer):    
     endereco = EnderecoSerializer()  # Nested field for endereco
 
     # Nested field for telefone principal
@@ -99,7 +98,7 @@ class PacienteSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-
+        
         # Extraindo dados dos relacionamentos aninhados]
         endereco_data = validated_data.pop('endereco', None)
 

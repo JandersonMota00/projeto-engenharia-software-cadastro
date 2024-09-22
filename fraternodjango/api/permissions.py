@@ -88,3 +88,48 @@ class IsStaff(permissions.BasePermission):
         else:
             return False
 
+
+
+class PacientePermissions(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        match self.action:
+            case 'list':
+                return 
+            case 'retrieve':
+                return 
+            case 'create':
+                return 
+            case 'update':
+                return 
+            case 'partial_update':
+                return 
+            case 'destroy':
+                return 
+            case _:
+                return false
+
+
+
+class SolitacaoPermissons(permissions.BasePermission):
+    
+    def has_permission(self, request, view):
+        match self.action:
+            case 'list':
+                return 
+            case 'retrieve':
+                return 
+            case 'create':
+                return 
+            case 'update':
+                return 
+            case 'partial_update':
+                return 
+            case 'destroy':
+                return 
+            case _:
+                return false
+    
+    
+    
+    
