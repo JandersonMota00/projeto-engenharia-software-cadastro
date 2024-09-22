@@ -2,10 +2,10 @@
 
 let forms = [
 	    [["text", "user", "Nome completo", "", 0], ["text", "user", "Nome social", "", 0], ["date", "calendar", "Data de Nascimento", new Date(), 0], ["dropdown", "user", "Sexo", "", 0], ["dropdown", "user", "Gênero", "", 0]],
-        [["email", "at-sign", "E-mail", "", 0], ["text", "phone", "Telefone", "", 0], ["dropdown", "star", "Aplicativos", 0], ["text", "phone", "Telefone Emergencial", "", 0], ["dropdown", "star", "Aplicativos", 0]],
+        [["email", "at-sign", "E-mail", "", 0], ["tel", "phone", "Telefone", "", 0], ["dropdown", "star", "Aplicativos", 0], ["tel", "phone", "Telefone Emergencial", "", 0], ["dropdown", "star", "Aplicativos", 0]],
 	    [["text", "map", "CEP", "", 0], ["text", "map", "Estado", "", 0], ["text", "map", "Cidade", "", 0], ["text", "map", "Bairro", "", 0], ["text", "map-pin", "Logradouro", "", 0], ["text", "map-pin", "Número", "", 0], ["text", "map-pin", "Complemento", "", 0]],
         [["text", "smile", "Qual é o motivo da solicitação?", "", 0], ["dropdown", "tablet", "Religião", "", 0]],
-        [["dropdown", "tablet", "Estou fazendo algum tratamento médico", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Faço uso de medicamentos", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Eu desmaio sem causa aparente", 0],["dropdown", "tablet", "Eu vejo vultos", 0],["dropdown", "tablet", "Eu escuto vozes", 0],["dropdown", "tablet", "Tenho pensamentos negativos / suicidas", 0],["dropdown", "tablet", "Perdi um membro da família recentemente", 0],["dropdown", "tablet", "Eu tenho alergias", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Faço psicoterapia", 0],["dropdown", "tablet", "Fiz / Faço tratamento psiquiátrico", 0],["dropdown", "tablet", "Eu já fiz tratamento espiritual", 0]],
+        [["dropdown", "tablet", "Estou fazendo algum tratamento médico", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Faço uso de medicamentos", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Eu tenho alergias", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Eu desmaio sem causa aparente", 0],["dropdown", "tablet", "Eu vejo vultos", 0],["dropdown", "tablet", "Eu escuto vozes", 0],["dropdown", "tablet", "Tenho pensamentos negativos / suicidas", 0],["dropdown", "tablet", "Perdi um membro da família recentemente", 0],["dropdown", "tablet", "Faço psicoterapia", 0],["dropdown", "tablet", "Fiz / Faço tratamento psiquiátrico", 0],["dropdown", "tablet", "Eu já fiz tratamento espiritual", 0]],
         [["dropdown", "smile", "Ciente", 0]],
 ];
 
@@ -32,6 +32,28 @@ async function changeValue(pindex, index, value, type) {
 			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 			passed = emailRegex.test(value);
 			break;
+        // FEITO POR JANDERSON
+        case "tel":
+            // Remove qualquer caractere que não seja número
+            value = value.replace(/\D/g, '');
+
+            // Limita o input a 11 dígitos
+            if (value.length > 11) {
+                value = value.slice(0, 11);
+            }
+
+            // Verifica se o campo de telefone está corretamente preenchido
+            passed = value.length === 11;
+
+            // Formata o telefone como (XX) XXXXX-XXXX
+            if (passed) {
+                value = value
+                    .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona os parênteses no DDD
+                    .replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona o hífen após os 5 primeiros números
+            }
+
+            forms[pindex][index][3] = value;
+            break;
 	}
 
 	const element = document.getElementById(`input-${pindex}-${index}`);
@@ -100,37 +122,37 @@ function getDropdownValues(pindex, index) {
         if(index == 3) {
             html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
             for(let i = 0; i < dropdownValues[0].length; i++){
-                html += `<option value="option${i}">${dropdownValues[0][i]}</option>'`;
+                html += `<option value="option${i}">${dropdownValues[0][i]}</option>`;
             }
         } else if (index == 4) {
             html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
             for(let i = 0; i < dropdownValues[1].length; i++){
-                html += `<option value="option${i}">${dropdownValues[1][i]}</option>'`;
+                html += `<option value="option${i}">${dropdownValues[1][i]}</option>`;
             }
         }
     }
     if(pindex == 1) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[2].length; i++){
-            html += `<option value="option${i}">${dropdownValues[2][i]}</option>'`;
+            html += `<option value="option${i}">${dropdownValues[2][i]}</option>`;
         }
     }
     if(pindex == 3) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[3].length; i++){
-            html += `<option value="option${i}">${dropdownValues[3][i]}</option>'`;
+            html += `<option value="option${i}">${dropdownValues[3][i]}</option>`;
         }
     }
     if(pindex == 4) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[4].length; i++){
-            html += `<option value="option${i}">${dropdownValues[4][i]}</option>'`;
+            html += `<option value="option${i}">${dropdownValues[4][i]}</option>`;
         }
     }
     if (pindex == 5) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[5].length; i++){
-            html += `<option value="option${i}">${dropdownValues[5][i]}</option>'`;
+            html += `<option value="option${i}">${dropdownValues[5][i]}</option>`;
         }
     }
 
@@ -141,6 +163,8 @@ function buildInput(type, icon, placeholder, value, flag, pindex, index) {
 	let html = "";
     switch(type){
         case "text": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div>`; break;
+        // FEITO POR JANDERSON
+        case "tel": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div>`; break;
         case "dropdown": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <select class="input fit-w" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')">${getDropdownValues(pindex, index)}</select></div> </div>`; break;
         case "date": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div>`; break;
         case "email": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div> <div></div>`; break;
