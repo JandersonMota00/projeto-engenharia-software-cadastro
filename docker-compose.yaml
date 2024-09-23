@@ -5,8 +5,8 @@ services:
     build:
       context: ./fraternodjango
       dockerfile: Dockerfile
-    # command: gunicorn fraternodjango.wsgi:application --bind 0.0.0.0:8000
-    command: /app/entrypoint.sh
+    command: gunicorn fraternodjango.wsgi:application --bind 0.0.0.0:8000
+    # command: /app/entrypoint.sh
 
     volumes:
       - ./fraternodjango:/app

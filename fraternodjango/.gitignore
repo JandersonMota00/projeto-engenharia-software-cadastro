@@ -11,8 +11,8 @@ venv/
 db.sqlite3
 
 # Ignorar arquivos de migrações do Django
-/api/migrations/*.py
-!mainApp/migrations/__init__.py
+/*/migrations/*.py
+!./*/migrations/__init__.py
 
 # Ignorar caches compilados do Python
 **/__pycache__/
@@ -28,3 +28,5 @@ db.sqlite3
 Thumbs.db
 
 staticfiles/
+
+schema.yml
