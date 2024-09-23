@@ -1,12 +1,16 @@
 version: '3.8'
 
 services:
-  web:
-    build: .
-    command: gunicorn fraternodjango.wsgi:application --bind 0.0.0.0:8000
+  api:
+    build:
+      context: ./fraternodjango
+      dockerfile: Dockerfile
+    # command: gunicorn fraternodjango.wsgi:application --bind 0.0.0.0:8000
+    command: /app/entrypoint.sh
+
     volumes:
-      - .:/app
-      - static_volume:/app/staticfiles
+      - ./fraternodjango:/app
+      # - static_volume:/app/staticfiles
     expose:
       - "8000"
     environment:
@@ -21,24 +25,11 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./frontend:/usr/share/nginx/html/static
-      - ./staticfiles:/usr/share/nginx/html/static/staticfiles
+      - ./deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html/frontend
+      - ./fraternodjango/staticfiles:/usr/share/nginx/html/backend/staticfiles
     ports:
       - "80:80"
     depends_on:
-      - web
-      - swagger-ui
+      - api
 
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    ports:
-      - "8080:8001"
-    volumes:
-      - ./schema.yml:/schema.yml
-    environment:
-      - SWAGGER_JSON=/schema.yml
-
-volumes:
-  postgres_data:
-  static_volume:
