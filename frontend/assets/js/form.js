@@ -161,12 +161,6 @@ function getDropdownValues(pindex, index) {
                 html += `</optgroup>`;
             }
         }
-    } else if (pindex == 1 || pindex == 3 || pindex == 4 || pindex == 5) {
-        // Outros campos de dropdown (sem optgroup)
-        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
-        for (let i = 0; i < dropdownValues[pindex].length; i++) {
-            html += `<option value="${dropdownValues[pindex][i]}">${dropdownValues[pindex][i]}</option>`;
-        }
     }
 
     /*if(pindex == 0){
@@ -181,7 +175,7 @@ function getDropdownValues(pindex, index) {
                 html += `<option value="option${i}">${dropdownValues[1][i]}</option>`;
             }
         }
-    }
+    }*/
     if(pindex == 1) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[2].length; i++){
@@ -205,7 +199,7 @@ function getDropdownValues(pindex, index) {
         for(let i = 0; i < dropdownValues[5].length; i++){
             html += `<option value="option${i}">${dropdownValues[5][i]}</option>`;
         }
-    }*/
+    }
 
     return html;
 }
