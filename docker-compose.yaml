@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn fraternodjango.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+    expose:
+      - "8000"
+    environment:
+      - DEBUG=True
+      - DJANGO_SETTINGS_MODULE=fraternodjango.settings
+
+  # db:
+  #   image: postgres:13
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend:/usr/share/nginx/html/static
+      - ./staticfiles:/usr/share/nginx/html/static/staticfiles
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+      - swagger-ui
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8080:8001"
+    volumes:
+      - ./schema.yml:/schema.yml
+    environment:
+      - SWAGGER_JSON=/schema.yml
+
+volumes:
+  postgres_data:
+  static_volume:

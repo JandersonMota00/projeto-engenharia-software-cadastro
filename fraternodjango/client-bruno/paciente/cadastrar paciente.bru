@@ -1,0 +1,43 @@
+meta {
+  name: cadastrar paciente
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{host}}/pacientes/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "João da Silva",
+    "nome_social": "Joãozinho2",
+    "pseudonimo": "Joãozinho",
+    "data_nascimento": "1985-05-15",
+    "sexo": "MASCULINO",
+    "generos": 1,
+    "orientacoes_sexuais": 1,
+    "religioes": 1,
+    "alergias": [1],
+    "endereco": {
+      "cep": "12345678", // Ajuste para ter até 8 caracteres
+      "logradouro": "Rua Exemplo", // Inclua o logradouro
+      "numero": "123",
+      "bairro": "Bairro Exemplo",
+      "cidade": "Cidade Exemplo",
+      "estado": "EX"
+    },
+    "email": "joão@gmail.com",
+    "telefone_principal": {
+      "ddd": "75",
+      "telefone": "987654321",
+      "whatssap": true,
+      "telegram": false
+    },
+    "ja_fez_psicoterapia": false,
+    "ja_fez_psiquiatrico": false,
+    "ja_fez_tratamento_espirita": false
+  }
+}

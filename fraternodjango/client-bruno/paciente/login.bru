@@ -1,0 +1,32 @@
+meta {
+  name: login
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/auth/login/
+  body: json
+  auth: none
+}
+
+script:pre-request {
+  // {
+  //   "username": "pacienteuser",
+  //   "password": "pacientepw"
+  // }
+  
+  data = {
+    username: 'paciente' + bru.getEnvVar('prandom'),
+    password: 'paciente',
+  }
+  req.setBody(data)
+    
+}
+
+script:post-response {
+  bru.setEnvVar("auth-token",res.body.token)
+  
+  
+  console.log(res.body)
+}

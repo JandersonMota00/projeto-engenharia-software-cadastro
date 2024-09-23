@@ -1,0 +1,25 @@
+meta {
+  name: solitacaoAtendimento
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{host}}/solicitacoes/
+  body: json
+  auth: none
+}
+
+headers {
+  : 
+}
+
+body:json {
+  {
+      "motivo": "Consulta de rotina",  // opcional
+      "descricao": "Paciente com dores nas costas persistentes.",
+      "sintomas": [1, 2],  // IDs dos sintomas relacionados
+      "tratamentos_em_andamento": [3, 4]  // IDs dos tratamentos relacionados
+  }
+  
+}
