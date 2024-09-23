@@ -9,7 +9,29 @@ let forms = [
         [["dropdown", "smile", "Ciente", 0]],
 ];
 
-const dropdownValues = [["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"], ["Agênero", "Agênero", "Andrógino", "Apogênero", "Apôrêne", "Bigênero", "Demigênero", "Demimenina", "Demimenino", "Gênero Binário Feminino", "Gênero Binário Masculino", "Gênero Expandido", "Gênero Fluido", "Gênero Inconformista", "Gênero Nulo", "Gênero Queer", "Gênero Vago", "Homem Trans", "Intergênero", "Maverique", "Mulher Trans", "Neutrois", "Neutrois", "Não-binário", "Pangênero", "Poligênero", "Transgênero", "Transexual", "Travesti", "Outro", "Prefiro Não Informar"], ["Whatsapp", "Telegram", "Ambos", "Nenhum"], ["Agnosticismo", "Ateísmo", "Bahá'í", "Budismo", "Candomblé", "Catolicismo", "Confucionismo", "Cristianismo", "Espiritismo", "Hare Krishna", "Hinduísmo", "Islamismo", "Jainismo", "Judaísmo", "Mormonismo", "Ortodoxia Oriental", "Protestantismo", "Rastafarianismo", "Santo Daime", "Sikhismo", "Taoísmo", "Testemunhas de Jeová", "Umbanda", "Xintoísmo", "Zoroastrismo", "Outro"], ["Sim", "Não", "Prefiro Não Informar"], ["Sim", "Não"]];
+//const dropdownValues = [["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"], ["Agênero", "Agênero", "Andrógino", "Apogênero", "Apôrêne", "Bigênero", "Demigênero", "Demimenina", "Demimenino", "Gênero Binário Feminino", "Gênero Binário Masculino", "Gênero Expandido", "Gênero Fluido", "Gênero Inconformista", "Gênero Nulo", "Gênero Queer", "Gênero Vago", "Homem Trans", "Intergênero", "Maverique", "Mulher Trans", "Neutrois", "Neutrois", "Não-binário", "Pangênero", "Poligênero", "Transgênero", "Transexual", "Travesti", "Outro", "Prefiro Não Informar"], ["Whatsapp", "Telegram", "Ambos", "Nenhum"], ["Agnosticismo", "Ateísmo", "Bahá'í", "Budismo", "Candomblé", "Catolicismo", "Confucionismo", "Cristianismo", "Espiritismo", "Hare Krishna", "Hinduísmo", "Islamismo", "Jainismo", "Judaísmo", "Mormonismo", "Ortodoxia Oriental", "Protestantismo", "Rastafarianismo", "Santo Daime", "Sikhismo", "Taoísmo", "Testemunhas de Jeová", "Umbanda", "Xintoísmo", "Zoroastrismo", "Outro"], ["Sim", "Não", "Prefiro Não Informar"], ["Sim", "Não"]];
+
+const dropdownValues = [
+    ["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"],
+    // Gêneros com grupos
+    {
+        "Gêneros Binários": ["Masculino", "Feminino"],
+        "Gêneros Não Binários": ["Não-binário", "Gênero Fluido", "Agênero", "Bigênero", "Demigênero", "Demimenino", "Demimenina", "Pangênero", "Andrógino", "Neutrois", "Intergênero", "Gênero Queer", "Poligênero", "Gênero Vago", "Gênero Inconformista", "Gênero Expandido", "Maverique", "Apôrêne"],
+        "Identidades Transgêneras": ["Transgênero", "Homem Trans", "Mulher Trans", "Transexual", "Travesti"],
+        "Identidades Sem Gênero": ["Agênero", "Neutrois", "Gênero Nulo", "Apogênero"]
+    },
+    ["Whatsapp", "Telegram", "Ambos", "Nenhum"], 
+    [
+        "Agnosticismo", "Ateísmo", "Bahá'í", "Budismo", "Candomblé", "Catolicismo",
+        "Confucionismo", "Cristianismo", "Espiritismo", "Hare Krishna", "Hinduísmo", 
+        "Islamismo", "Jainismo", "Judaísmo", "Mormonismo", "Ortodoxia Oriental", 
+        "Protestantismo", "Rastafarianismo", "Santo Daime", "Sikhismo", "Taoísmo", 
+        "Testemunhas de Jeová", "Umbanda", "Xintoísmo", "Zoroastrismo", "Outro"
+    ], 
+    ["Sim", "Não", "Prefiro Não Informar"], 
+    ["Sim", "Não"]
+];
+
 
 let pageIndex = 0;
 
@@ -118,7 +140,36 @@ function buildContent(index){
 
 function getDropdownValues(pindex, index) {
     let html = '';
-    if(pindex == 0){
+
+    //FEITO POR JANDERSON
+    if (pindex === 0 && index === 3) {
+        // Campo de Sexo
+        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
+        for (let i = 0; i < dropdownValues[0].length; i++) {
+            html += `<option value="${dropdownValues[0][i]}">${dropdownValues[0][i]}</option>`;
+        }
+    } else if (pindex === 0 && index === 4) {
+        // Campo de Gênero com Optgroups
+        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
+        const genderGroups = dropdownValues[1];  // Grupos de Gêneros
+        for (const group in genderGroups) {
+            if (genderGroups.hasOwnProperty(group)) {
+                html += `<optgroup label="${group}">`;
+                for (let i = 0; i < genderGroups[group].length; i++) {
+                    html += `<option value="${genderGroups[group][i]}">${genderGroups[group][i]}</option>`;
+                }
+                html += `</optgroup>`;
+            }
+        }
+    } else if (pindex == 1 || pindex == 3 || pindex == 4 || pindex == 5) {
+        // Outros campos de dropdown (sem optgroup)
+        html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
+        for (let i = 0; i < dropdownValues[pindex].length; i++) {
+            html += `<option value="${dropdownValues[pindex][i]}">${dropdownValues[pindex][i]}</option>`;
+        }
+    }
+
+    /*if(pindex == 0){
         if(index == 3) {
             html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
             for(let i = 0; i < dropdownValues[0].length; i++){
@@ -154,7 +205,7 @@ function getDropdownValues(pindex, index) {
         for(let i = 0; i < dropdownValues[5].length; i++){
             html += `<option value="option${i}">${dropdownValues[5][i]}</option>`;
         }
-    }
+    }*/
 
     return html;
 }
