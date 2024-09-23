@@ -65,13 +65,22 @@ async function changeValue(pindex, index, value, type) {
             }
 
             // Verifica se o campo de telefone está corretamente preenchido
-            passed = value.length === 11;
+            // Se for telefone fixo (10 dígitos) ou celular (11 dígitos), a validação passa
+            passed = (value.length === 10 || value.length === 11);
 
-            // Formata o telefone como (XX) XXXXX-XXXX
+            // Formata o telefone de acordo com o tamanho
             if (passed) {
-                value = value
-                    .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona os parênteses no DDD
-                    .replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona o hífen após os 5 primeiros números
+                if (value.length === 11) {
+                    // Formato para celular (XX) XXXXX-XXXX
+                    value = value
+                        .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona os parênteses no DDD
+                        .replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona o hífen após os 5 primeiros números
+                } else if (value.length === 10) {
+                    // Formato para telefone fixo (XX) XXXX-XXXX
+                    value = value
+                        .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona os parênteses no DDD
+                        .replace(/(\d{4})(\d)/, '$1-$2'); // Adiciona o hífen após os 4 primeiros números
+                }
             }
 
             forms[pindex][index][3] = value;
@@ -214,13 +223,65 @@ function buildInput(type, icon, placeholder, value, flag, pindex, index) {
 	let html = "";
     switch(type){
         case "text": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div>`; break;
-        // FEITO POR JANDERSON
-        case "tel": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div>`; break;
         case "dropdown": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <select class="input fit-w" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')">${getDropdownValues(pindex, index)}</select></div> </div>`; break;
         case "date": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div>`; break;
         case "email": html += `<div class="col-md-6 col-12"> <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> <i data-feather="${icon}" class="me-3"></i> <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> </div> </div> <div></div>`; break;
+        // FEITO POR JANDERSON
+        case "tel":
+            html += `<div class="col-md-6 col-12"> 
+                <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> 
+                    <i data-feather="${icon}" class="me-3"></i> 
+                    <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> 
+                </div> 
+            </div>`;
+            setTimeout(() => formatPhoneInput(pindex, index), 0); // Chama a função para formatar o campo
+            break;
+        // Outros casos para outros tipos de inputs
+        default:
+            html += `<div class="col-md-6 col-12"> 
+                <div id="input-${pindex}-${index}" class="form-area d-flex align-items-center mb-3 px-3"> 
+                    <i data-feather="${icon}" class="me-3"></i> 
+                    <input class="input fit-w" type="${type}" value="${value}" placeholder="${placeholder}" onchange="changeValue(${pindex}, ${index}, this.value, '${type}')"/> 
+                </div> 
+            </div>`;
     }
 	return html;
+}
+
+function formatPhoneInput(pindex, index) {
+    const inputElement = document.getElementById(`input-${pindex}-${index}`).querySelector('input');
+
+    inputElement.addEventListener('input', function () {
+        let value = inputElement.value;
+
+        // Remove qualquer caractere que não seja número
+        value = value.replace(/\D/g, '');
+
+        // Verifica o terceiro dígito para determinar se é celular ou fixo
+        const isCellPhone = value.length >= 3 && value[2] === '9';
+
+        // Limita o input a 11 dígitos se for celular, e a 10 se for fixo
+        if (isCellPhone) {
+            value = value.slice(0, 11); // Celular tem até 11 dígitos
+        } else {
+            value = value.slice(0, 10); // Fixo tem até 10 dígitos
+        }
+
+        // Formata o telefone com DDD
+        if (value.length > 0) {
+            value = value.replace(/(\d{2})(\d)/, '($1) $2'); // Adiciona os parênteses no DDD
+        }
+
+        // Se for celular, formata como (XX) XXXXX-XXXX
+        if (isCellPhone && value.length >= 10) {
+            value = value.replace(/(\d{5})(\d)/, '$1-$2'); // Formata celular com 5 dígitos no início
+        } else if (!isCellPhone && value.length >= 9) { 
+            // Se for fixo, formata como (XX) XXXX-XXXX
+            value = value.replace(/(\d{4})(\d)/, '$1-$2'); // Formata fixo com 4 dígitos no início
+        }
+
+        inputElement.value = value;
+    });
 }
 
 function buildForms(index) {
