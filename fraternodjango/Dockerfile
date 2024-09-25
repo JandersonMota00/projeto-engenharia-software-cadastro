@@ -20,10 +20,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie o restante do código da aplicação para o contêiner
 COPY . /app/
 
+RUN mkdir /data
+ENV SQLITE_PATH=/data/db.sqlite3
+
 RUN python manage.py collectstatic --noinput
 RUN python manage.py spectacular --color --file schema.yml
 RUN python manage.py devseed
-
 
 # Exponha a porta que o Django usará
 EXPOSE 8000
