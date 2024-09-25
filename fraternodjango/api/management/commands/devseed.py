@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from api import models
 from django.core.management import call_command
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
@@ -55,4 +55,20 @@ class Command(BaseCommand):
             password='adminpassword'
 
         )
+        
+        atendente = User.objects.create(
+            
+            username='atendente',
+            email='atendente@example.com',
+            password='atendentepassword'
+        )
+        
+        atendente.groups.add(Group.objects.get(name='Paciente'))
 
+        diretor = User.objects.create(
+            username='diretor',
+            email='diretor@example.com',
+            password='diretorpassword'
+        )
+        
+        diretor.groups.add(Group.objects.get(name='Diretor'))
