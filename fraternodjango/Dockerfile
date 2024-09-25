@@ -22,6 +22,8 @@ COPY . /app/
 
 RUN mkdir /data
 ENV SQLITE_PATH=/data/db.sqlite3
+RUN mkdir /data/staticfiles
+ENV STATICFILES_PATH=/data/staticfiles
 
 RUN python manage.py collectstatic --noinput
 RUN python manage.py spectacular --color --file schema.yml
