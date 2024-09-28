@@ -1,39 +1,46 @@
-document.getElementById("login").addEventListener("click", async function() {
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const emailForm = document.getElementById(`formEmail`);
+const pb = new PocketBase('https://atendimento-fraterno.pockethost.io');
+
+document.getElementById("buttonLogin").addEventListener("click", async function() {
+    const login = document.getElementById("inputLogin");
+    const password = document.getElementById("inputPassword");
+    const loginForm = document.getElementById(`formLogin`);
     const passwordForm = document.getElementById(`formPassword`);
 
-    if(!(checkEmail(email.value))){
+    if(!(checkLogin(login.value))){
         console.log("E-mail inválido!");
-        emailForm.classList.add("error");
-        emailForm.classList.remove("success");
-        showErrorBubble("E-mail inválido,  exemplo: exemplo@gmail.com");
+        loginForm.classList.add("error");
+        loginForm.classList.remove("success");
+        showErrorBubble("Login inválido! Exemplo: atendente1");
         return;
     }
 
-    emailForm.classList.add("success");
-    emailForm.classList.remove("error");
+    loginForm.classList.add("success");
+    loginForm.classList.remove("error");
 
     if(!(checkPassword(password.value))){
         console.log("Senha inválida!");
         passwordForm.classList.add("error");
         passwordForm.classList.remove("success");
-        showErrorBubble("Senha inválida, experimente usar ao menos 8 caracteres.");
+        showErrorBubble("Senha inválida!");
         return;
     }
 
     passwordForm.classList.add("success");
     passwordForm.classList.remove("error");
 
-    console.log("output: " + email.value + " " + await hashSHA256(password.value));
-    window.location.replace("home.html");
+    const authData = await pb.collection('staff').authWithPassword(
+        login.value,
+        password.value,
+    );
 
+    console.log(authData);
+    console.log(pb.authStore.isValid);
+    console.log(pb.authStore.token);
+    console.log(pb.authStore.model.id);
 })
 
-function checkEmail(email) {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailPattern.test(email);
+function checkLogin(login) {
+    return login.includes("atendimentofraterno.saj");
 }
 
 function checkPassword(password) {

@@ -1,21 +1,23 @@
+const pb = new PocketBase('https://atendimento-fraterno.pockethost.io');
+
 // TIPO | ICONE | PLACEHOLDER | VALOR | ESTADO
 
 let forms = [
-	    [["text", "user", "Nome completo", "", 0], ["text", "user", "Nome social", "", 0], ["date", "calendar", "Data de Nascimento", new Date(), 0], ["dropdown", "user", "Sexo", "", 0], ["dropdown", "user", "Gênero", "", 0]],
-        [["email", "at-sign", "E-mail", "", 0], ["tel", "phone", "Telefone", "", 0], ["dropdown", "star", "Aplicativos", 0], ["tel", "phone", "Telefone Emergencial", "", 0], ["dropdown", "star", "Aplicativos", 0]],
-	    [["text", "map", "CEP", "", 0], ["text", "map", "Estado", "", 0], ["text", "map", "Cidade", "", 0], ["text", "map", "Bairro", "", 0], ["text", "map-pin", "Logradouro", "", 0], ["text", "map-pin", "Número", "", 0], ["text", "map-pin", "Complemento", "", 0]],
-        [["text", "smile", "Qual é o motivo da solicitação?", "", 0], ["dropdown", "tablet", "Religião", "", 0]],
-        [["dropdown", "tablet", "Estou fazendo algum tratamento médico", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Faço uso de medicamentos", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Eu tenho alergias", 0],["text", "tablet", "Quais?", "", 0],["dropdown", "tablet", "Eu desmaio sem causa aparente", 0],["dropdown", "tablet", "Eu vejo vultos", 0],["dropdown", "tablet", "Eu escuto vozes", 0],["dropdown", "tablet", "Tenho pensamentos negativos / suicidas", 0],["dropdown", "tablet", "Perdi um membro da família recentemente", 0],["dropdown", "tablet", "Faço psicoterapia", 0],["dropdown", "tablet", "Fiz / Faço tratamento psiquiátrico", 0],["dropdown", "tablet", "Eu já fiz tratamento espiritual", 0]],
-        [["dropdown", "smile", "Ciente", 0]],
+	    [["text", "user", "Nome completo", "", ""], ["text", "user", "Nome social", "", ""], ["date", "calendar", "Data de Nascimento", new Date(), ""], ["dropdown", "user", "Sexo", "", ""], ["dropdown", "user", "Gênero", "", ""]],
+        [["email", "at-sign", "E-mail", "", ""], ["tel", "phone", "Telefone", "", ""], ["dropdown", "star", "Aplicativos", ""], ["tel", "phone", "Telefone Emergencial", "", ""], ["dropdown", "star", "Aplicativos", ""]],
+	    [["text", "map", "CEP", "", ""], ["text", "map", "Estado", "", ""], ["text", "map", "Cidade", "", ""], ["text", "map", "Bairro", "", ""], ["text", "map-pin", "Logradouro", "", ""], ["text", "map-pin", "Número", "", ""], ["text", "map-pin", "Complemento", "", ""]],
+        [["text", "smile", "Qual é o motivo da solicitação?", "", ""], ["dropdown", "tablet", "Religião", "", ""]],
+        [["dropdown", "tablet", "Estou fazendo algum tratamento médico", ""],["text", "tablet", "Quais?", "", ""],["dropdown", "tablet", "Faço uso de medicamentos", ""],["text", "tablet", "Quais?", "", ""],["dropdown", "tablet", "Eu tenho alergias", ""],["text", "tablet", "Quais?", "", ""],["dropdown", "tablet", "Eu desmaio sem causa aparente", ""],["dropdown", "tablet", "Eu vejo vultos", ""],["dropdown", "tablet", "Eu escuto vozes", ""],["dropdown", "tablet", "Tenho pensamentos negativos / suicidas", ""],["dropdown", "tablet", "Perdi um membro da família recentemente", ""],["dropdown", "tablet", "Faço psicoterapia", ""],["dropdown", "tablet", "Fiz / Faço tratamento psiquiátrico", ""],["dropdown", "tablet", "Eu já fiz tratamento espiritual", ""]],
+        [["dropdown", "smile", "Ciente", ""]],
 ];
 
 //const dropdownValues = [["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"], ["Agênero", "Agênero", "Andrógino", "Apogênero", "Apôrêne", "Bigênero", "Demigênero", "Demimenina", "Demimenino", "Gênero Binário Feminino", "Gênero Binário Masculino", "Gênero Expandido", "Gênero Fluido", "Gênero Inconformista", "Gênero Nulo", "Gênero Queer", "Gênero Vago", "Homem Trans", "Intergênero", "Maverique", "Mulher Trans", "Neutrois", "Neutrois", "Não-binário", "Pangênero", "Poligênero", "Transgênero", "Transexual", "Travesti", "Outro", "Prefiro Não Informar"], ["Whatsapp", "Telegram", "Ambos", "Nenhum"], ["Agnosticismo", "Ateísmo", "Bahá'í", "Budismo", "Candomblé", "Catolicismo", "Confucionismo", "Cristianismo", "Espiritismo", "Hare Krishna", "Hinduísmo", "Islamismo", "Jainismo", "Judaísmo", "Mormonismo", "Ortodoxia Oriental", "Protestantismo", "Rastafarianismo", "Santo Daime", "Sikhismo", "Taoísmo", "Testemunhas de Jeová", "Umbanda", "Xintoísmo", "Zoroastrismo", "Outro"], ["Sim", "Não", "Prefiro Não Informar"], ["Sim", "Não"]];
 
 const dropdownValues = [
-    ["Masculino", "Feminino", "Intersexual", "Prefiro Não Informar"],
+    ["masculino", "feminino", "intersexual", "prefiro_nao_informar"],
     // Gêneros com grupos
     {
-        "Gêneros Binários": ["Masculino", "Feminino"],
+        "Gêneros Binários": ["masculino", "Feminino"],
         "Gêneros Não Binários": ["Não-binário", "Gênero Fluido", "Agênero", "Bigênero", "Demigênero", "Demimenino", "Demimenina", "Pangênero", "Andrógino", "Neutrois", "Intergênero", "Gênero Queer", "Poligênero", "Gênero Vago", "Gênero Inconformista", "Gênero Expandido", "Maverique", "Apôrêne"],
         "Identidades Transgêneras": ["Transgênero", "Homem Trans", "Mulher Trans", "Transexual", "Travesti"],
         "Identidades Sem Gênero": ["Agênero", "Neutrois", "Gênero Nulo", "Apogênero"]
@@ -194,25 +196,25 @@ function getDropdownValues(pindex, index) {
     if(pindex == 1) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[2].length; i++){
-            html += `<option value="option${i}">${dropdownValues[2][i]}</option>`;
+            html += `<option value="${dropdownValues[2][i]}">${dropdownValues[2][i]}</option>`;
         }
     }
     if(pindex == 3) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[3].length; i++){
-            html += `<option value="option${i}">${dropdownValues[3][i]}</option>`;
+            html += `<option value="${dropdownValues[3][i]}">${dropdownValues[3][i]}</option>`;
         }
     }
     if(pindex == 4) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[4].length; i++){
-            html += `<option value="option${i}">${dropdownValues[4][i]}</option>`;
+            html += `<option value="${dropdownValues[4][i]}">${dropdownValues[4][i]}</option>`;
         }
     }
     if (pindex == 5) {
         html += `<option value="" disabled selected>${forms[pindex][index][2]}</option>`;
         for(let i = 0; i < dropdownValues[5].length; i++){
-            html += `<option value="option${i}">${dropdownValues[5][i]}</option>`;
+            html += `<option value="${dropdownValues[5][i]}">${dropdownValues[5][i]}</option>`;
         }
     }
 
@@ -284,6 +286,40 @@ function formatPhoneInput(pindex, index) {
     });
 }
 
+async function createForms() {
+    const data = {
+        "estadoSolicitacao": "criada",
+        "nome": forms[0][0][3],
+        "pseudonimo": forms[0][1][3],
+        "telefone": forms[1][1][3],
+        "data_nascimento": String(forms[0][2][3]),
+        "informacao_de_contato": forms[1][1][3],
+        "primeira_solicitacao": true,
+        "motivo": forms[3][0][3],
+        "sintomas": forms[4][6][3],
+        "doencas": forms[4][7][3],
+        "medicamentos": forms[4][3][3],
+        "tratamentos": forms[4][2][3],
+        "alergias": forms[4][4][3],
+        "religioes": forms[3][1][3],
+        "generos": forms[0][4][3],
+        "sexo": forms[0][3][3],
+        "endereco_cep": forms[2][0][3],
+        "endereco_estado": forms[2][1][3],
+        "endereco_cidade": forms[2][2][3],
+        "endereco_bairro": forms[2][3][3],
+        "endereco_logradouro": forms[2][4][3],
+        "endereco_numero": forms[2][5][3],
+        "endereco_complemento": forms[2][6][3],
+        "ja_fez_psicoterapia": forms[4][11][3] == "Sim"? true : false,
+        "ja_fez_pisiquiatrico": forms[4][12][3] == "Sim"? true : false,
+        "ja_fez_tratamento_espirita": forms[4][13][3] == "Sim"? true : false
+    };
+    
+    console.log(data);
+    const record = await pb.collection('solicitacoes').create(data);
+}
+
 function buildForms(index) {
     const element = document.getElementById("forms");
 	if (index == "+") index = pageIndex + 1;
@@ -308,10 +344,11 @@ function buildForms(index) {
 	});
 
 	content += `</div> <div class="line my-5"></div> <div class="row mt-4">`;
-    content += `<div class="${pageIndex == 0? "d-none" : pageIndex == 5? "col-12" : "col-md-6 col-12 mb-md-0 mb-3 p-0"}">  <div class="button secondary d-flex align-items-center justify-content-center fit-w" onclick="buildForms('-')"><h4 class="me-3">Voltar</h4><i data-feather="chevron-left"></i></div>  </div>`;
-    content += `<div class="${pageIndex == 5? "d-none" : pageIndex == 0? "col-12" : "col-md-6 col-12 p-0"}">  <div class="button d-flex align-items-center justify-content-center fit-w" onclick="buildForms('+')"><h4 class="me-3">Continuar</h4><i data-feather="chevron-right"></i></div>  </div>`;
+    content += `<div class="${pageIndex == 0? "d-none" :  "col-md-6 col-12 mb-md-0 mb-3 p-0"}">  <div class="button secondary d-flex align-items-center justify-content-center fit-w" onclick="buildForms('-')"><h4 class="me-3">Voltar</h4><i data-feather="chevron-left"></i></div>  </div>`;
+    content += `<div class="${pageIndex == 0? "col-12" : "col-md-6 col-12 p-0"}">  <div class="button d-flex align-items-center justify-content-center fit-w" ${pageIndex == 5? "onclick=createForms()" : "onclick=buildForms('+')"}><h4 class="me-3">${pageIndex == 5? "Concluir" : "Continuar"}</h4><i data-feather="chevron-right"></i></div>  </div>`;
     content += `</div>`
-
+    
+    console.log(pageIndex);
 	element.innerHTML = content;
 	feather.replace();
 }
