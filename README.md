@@ -1,5 +1,8 @@
 # IFBA - Engenharia de Software I
 
+- **Instituição:** IFBA - Instituto Federal da Bahia
+- **Curso:** Análise e Desenvolvimento de Sistemas (ADS)
+- **Disciplina:** Engenharia de Software I
 - **Projeto:** Criar um sistema para o SER - Sociedade Espírita Rafael Lírio
 - **Professor:** Antonio Mauricio da Silva Pitangueira
 - **Semestre:** 4
