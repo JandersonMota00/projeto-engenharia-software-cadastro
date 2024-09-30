@@ -1,84 +1,49 @@
 const pb = new PocketBase('https://atendimento-fraterno.pockethost.io');
 
-document.getElementById("buttonLogin").addEventListener("click", async function() {
-    const login = document.getElementById("inputLogin");
-    const password = document.getElementById("inputPassword");
-    const loginForm = document.getElementById(`formLogin`);
-    const passwordForm = document.getElementById(`formPassword`);
+let values = {};
 
-    if(!(checkLogin(login.value))){
-        console.log("E-mail inválido!");
-        loginForm.classList.add("error");
-        loginForm.classList.remove("success");
-        showErrorBubble("Login inválido! Exemplo: atendente1");
+async function changeValue(component) {
+    const key = component.id.slice(6);
+    let value = component.value;
+    values[key] = value;
+    console.log(values);
+}
+
+async function login() {
+    const authData = await pb.collection('Staff').authWithPassword(values.login, values.password);
+    if(!pb.authStore.isValid) return;
+    document.getElementById('loginScreen').classList.add('d-none');
+    document.getElementById('homeScreen').classList.remove('d-none');
+    loadRequests();
+}
+
+async function logout() {
+    await pb.authStore.clear();
+    document.getElementById('loginScreen').classList.remove('d-none');
+    document.getElementById('homeScreen').classList.add('d-none');
+}
+
+async function loadRequests() {
+    const records = await pb.collection('Requests').getFullList({sort: '-created'});
+    const component = document.getElementById('requests');
+    const headerComponent = document.getElementById('table-header');
+    if (records.length === 0) {
+        component.innerHTML = '<tr><td colspan="100%" class="text-center">Nenhum registro encontrado.</td></tr>';
         return;
     }
-
-    loginForm.classList.add("success");
-    loginForm.classList.remove("error");
-
-    if(!(checkPassword(password.value))){
-        console.log("Senha inválida!");
-        passwordForm.classList.add("error");
-        passwordForm.classList.remove("success");
-        showErrorBubble("Senha inválida!");
-        return;
-    }
-
-    passwordForm.classList.add("success");
-    passwordForm.classList.remove("error");
-
-    const authData = await pb.collection('staff').authWithPassword(
-        login.value,
-        password.value,
-    );
-
-    console.log(authData);
-    console.log(pb.authStore.isValid);
-    console.log(pb.authStore.token);
-    console.log(pb.authStore.model.id);
-})
-
-function checkLogin(login) {
-    return login.includes("atendimentofraterno.saj");
+    const keys = Object.keys(records[0]);
+    keys.forEach(key => {
+        const th = document.createElement('th');
+        th.innerText = key.charAt(0).toUpperCase() + key.slice(1); 
+        headerComponent.appendChild(th);
+    });
+    records.forEach(record => {
+        const tr = document.createElement('tr');
+        keys.forEach(key => {
+            const td = document.createElement('td');
+            td.innerText = record[key] || 'N/A'; 
+            tr.appendChild(td);
+        });
+        component.appendChild(tr);
+    }); 
 }
-
-function checkPassword(password) {
-    let test = true;
-    if(password.length < 8) test = false;
-    return test;
-}
-
-async function hashSHA256(input) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-}
-
-timer = 0;
-
-function showErrorBubble(string) {
-    const bubble = document.getElementById('errorBubble');
-
-    bubble.style.left = `auto`;
-    bubble.style.bottom = `90%`;
-    bubble.innerHTML = `<h4><strong>Hey!</strong> ${string}</h4>`;
-    bubble.style.display = 'block'
-
-    setTimeout(() => {
-        if(timer <= 0) hideErrorBubble()
-    }, 1000 * 5)
-
-    timer = 5;
-}
-
-function hideErrorBubble() {
-    document.getElementById('errorBubble').style.display = 'none';
-}
-
-setInterval(() => {
-    timer -= 1;
-}, 1000)
