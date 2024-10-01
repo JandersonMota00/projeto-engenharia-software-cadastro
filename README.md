@@ -34,7 +34,7 @@
     </td>
     <td align="center">
       <img src="https://avatars.githubusercontent.com/u/50783223?v=4" width="100px;" alt="Foto do Integrante Pedro Ipolito"/><br />
-      <sub><b><a href="https://github.com/nectaroads">Pedro Ipolito</a></b></sub>
+      <sub><b><a href="https://github.com/nectaroads">Pedro Hipólito</a></b></sub>
     </td>
   </tr>
 </table>

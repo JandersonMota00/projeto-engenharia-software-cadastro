@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SER - Funcionário</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script defer src="assets/js/jquery.min.js"></script>
+    <script defer src="assets/js/bootstrap.min.js"></script>
+    <script defer src="assets/js/pocketbase.umd.js"></script>
+    <script defer src="assets/js/home.js"></script>
+    <script src="assets/js/feather.min.js"></script>
+</head>
+<body>
+    <div id="loginScreen" class="frame m-auto">
+        <div class="header d-flex align-items-center px-4 py-2"><a href="index.html" class="button secondary d-flex align-items-center justify-content-md-start justify-content-center"><h4 class="me-3">Voltar</h4><i data-feather="arrow-left"></i></a></div>
+        <div class="body d-flex justify-content-center align-items-md-center align-items-start px-md-5 px-5">
+            <div class="d-flex justify-content-center fit-x my-auto">
+                <img src="assets/img/login_background.svg" class="fit-half-x d-md-block d-none">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                    <img src="assets/img/login_background_2.svg" class="fit-x d-md-none d-block mb-4">
+                    <span class="d-flex">
+                        <h2 class="mb-3 me-3">Controle de acesso</h2>
+                        <h2 class="mb-3 c-blue f-bold">SER</h2>
+                    </span>
+                    <h4 class="px-md-0 px-4 text-center">Conecte-se agora para que possa</h4>
+                    <h4 class="px-md-0 px-4 text-center mb-5">gerenciar os pedidos disponíveis</h4>
+                    <div id="form-login" class="form-area d-flex align-items-center px-3 mt-6">
+                        <i data-feather="user" class="me-3"></i>
+                        <input onchange="changeValue(this)" id="input-login" class="input fit-x me-3" type="text" placeholder="Usuário de acesso" />
+                    </div>
+                    <div id="form-password" class="form-area mt-4 mb-3 d-flex align-items-center px-3">
+                        <i data-feather="lock" class="me-3"></i>
+                        <input onchange="changeValue(this)" id="input-password" class="input fit-x me-3" type="password" placeholder="Senha de acesso" />
+                        <i data-feather="eye" class="icon-button ms-auto"></i>
+                    </div>
+                    <div id="buttonLogin" onclick="login()" class="button mt-4 d-flex fit-x align-items-center justify-content-center">
+                        <h4 class="me-3">Acessar</h4>
+                        <i data-feather="user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer d-flex align-items-center justify-content-md-start justify-content-center px-5">
+            <h5 class="darker-grey">© 2024 Sociedade Espírita Rafael Lírio</h5>
+        </div>
+    </div>
+
+    <div id="homeScreen" class="frame m-auto d-none">
+        <div class="header d-flex align-items-center px-4 py-2"><button onclick="logout()" class="button secondary d-flex align-items-center justify-content-md-start justify-content-center"><h4 class="me-3">Sair</h4><i data-feather="arrow-left"></i></button></div>
+        <div class="body d-flex justify-content-center align-items-md-center align-items-start px-md-5 px-5">
+            <h4>Consultas Disponíveis:</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr id="table-header"></tr>
+                </thead>
+                <tbody id="requests"></tbody>
+            </table>
+        </div>
+        <div class="footer d-flex align-items-center justify-content-md-start justify-content-center px-5">
+            <h5 class="darker-grey">© 2024 Sociedade Espírita Rafael Lírio</h5>
+        </div>
+    </div>
+</body>
+</html>
