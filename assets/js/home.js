@@ -24,20 +24,30 @@ async function logout() {
 }
 
 async function loadRequests() {
-    const records = await pb.collection('Requests').getFullList({sort: '-created'});
+    const records = await pb.collection('Requests').getFullList({sort: '-created' });
+    const fieldsToKeep = ['state', 'pseudonym', 'birth', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_cep', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'address_extra', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies' ];
+    const filteredRecords = records.map(record => {
+        const filteredRecord = {};
+        fieldsToKeep.forEach(field => {
+            if (record[field] !== undefined) {
+                filteredRecord[field] = record[field];
+            }
+        });
+        return filteredRecord;
+    });
     const component = document.getElementById('requests');
     const headerComponent = document.getElementById('table-header');
-    if (records.length === 0) {
+    if (filteredRecords.length === 0) {
         component.innerHTML = '<tr><td colspan="100%" class="text-center">Nenhum registro encontrado.</td></tr>';
         return;
     }
-    const keys = Object.keys(records[0]);
+    const keys = Object.keys(filteredRecords[0]);
     keys.forEach(key => {
         const th = document.createElement('th');
         th.innerText = key.charAt(0).toUpperCase() + key.slice(1); 
         headerComponent.appendChild(th);
     });
-    records.forEach(record => {
+    filteredRecords.forEach(record => {
         const tr = document.createElement('tr');
         keys.forEach(key => {
             const td = document.createElement('td');

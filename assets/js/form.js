@@ -13,26 +13,30 @@ function main() {
     }, 3000);
 }
 
-async function changePage(type) {
-    if(type == '+' && pageIndex == 5) {
-        if(!agreed) {
-            showPopup("Concorde com os termos!", false, document.getElementById('input-terms'))
-            return;
-        }
-        values.state = "Aguardando";
-        const json = JSON.stringify(values);
-        const record = await pb.collection('Requests').create(json).catch((error) => {console.log(error)});
-        if(!record) showPopup("Alguma informação está errada!", false, document.getElementById('input-terms'));
-        $('#conclusion').modal('show');
+async function conclude(){
+    if(!agreed) {
+        showPopup("Você precisa concordar com os nossos termos!", document.getElementById('input-terms'));
         return;
-    } 
+    }
 
+    values.state = "Aguardando";
+    const json = JSON.stringify(values);
+    const record = await pb.collection('Requests').create(json).catch((error) => { console.log(error)} );
+    if(!record) {
+        showPopup("Algum dos campos obrigatórios não foi preenchido corretamente!", document.getElementById('input-terms'));
+        return;
+    }
+    $('#conclusion').modal('show');
+}
+
+async function changePage(type) {
     let stepElement = document.getElementById(`step_${pageIndex}`);
     let pageElement = document.getElementById(`page_${pageIndex}`);
 	stepElement.classList.remove("selected");
     pageElement.classList.add("d-none");
     if (type == "+") pageIndex++;
-	if (type == "-") pageIndex--;
+	else if (type == "-") pageIndex--;
+    else pageIndex = type;
     stepElement = document.getElementById(`step_${pageIndex}`);
     pageElement = document.getElementById(`page_${pageIndex}`);
 	stepElement.classList.add("selected");
@@ -53,11 +57,10 @@ async function changeValue(component) {
         case "email": completed = validateEmail(value); break; 
         case "address_cep": completed = await validateCep(value); break;
         case "phone": value = validatePhone(value, 'phone'); break; 
-        case "phone_extra": value = validatePhone(value, 'phone-extra'); break; 
+        case "phone_extra": value = validatePhone(value, 'phone_extra'); break; 
     }
 
     if(completed == 0) {
-        showPopup("Valor incorreto!", false, component);
         return;
     }
     
@@ -71,26 +74,26 @@ async function changeValue(component) {
 
 function validatePhone(number, type) {
     let phone = number;
-    phone = phone.replace(/\D/g, '');
+    phone = phone.replace(/\D/g,'');
     const phoneWithDDDRegex = /^(\d{2})(\d{4,5})(\d{4})$/;
     const phoneWithoutDDDRegex = /^(\d{4,5})(\d{4})$/;
-    if (phone.length >= 10 && phoneWithDDDRegex.test(phone)) phone = phone.replace(phoneWithDDDRegex, '($1) $2-$3');
-    else if (phoneWithoutDDDRegex.test(phone)) phone = phone.replace(phoneWithoutDDDRegex, '$1-$2');
+    if(phone.length == 11 && phoneWithDDDRegex.test(phone)) phone = phone.replace(phoneWithDDDRegex,'($1) $2-$3');
+    else if(phone.length == 10 && phoneWithDDDRegex.test(phone)) phone = phone.replace(phoneWithDDDRegex,'($1) $2-$3');
+    else if(phoneWithoutDDDRegex.test(phone)) phone = phone.replace(phoneWithoutDDDRegex,'$1-$2');
     document.getElementById(`input-${type}`).value = phone;
     return phone;
 }
 
 async function validateCep(cep) {
-    console.log("Validating CEP...");
-    let value = cep;
-    if(value.length >= 9) value = value.replace(/[^0-9-]/g, '');
-    if(value.length == 8) value = value.replace(/(\d{5})(\d{3})/, '$1-$2');
-    if(value.length == 9) {
+    let value = cep.replace(/\D/g, '');
+    if (value.length === 8) {
+        value = value.replace(/(\d{5})(\d{3})/, '$1-$2'); 
+        document.getElementById('input-address_cep').value = value;
+        values.address_cep = value;
         const response = await fetch(`https://viacep.com.br/ws/${value}/json/`);
         if(!response.ok) return 0;
         const data = await response.json();
         if(!data.estado) return 0;
-        document.getElementById('input-address_cep').value = value;
         document.getElementById('input-address_state').value = data.estado;
         values.address_state = data.estado;
         document.getElementById('input-address_city').value = data.localidade;
@@ -99,7 +102,8 @@ async function validateCep(cep) {
         values.address_neighborhood = data.bairro;
         document.getElementById('input-address_location').value = data.logradouro;
         values.address_location = data.logradouro;
-    } else { return 0 }
+    }
+    document.getElementById('input-address_cep').value = value;
     return value;
 }
 
@@ -110,14 +114,14 @@ function validateEmail(email) {
     return result;
 }
 
-function showPopup(string, type, element) {
+function showPopup(string, element) {
     const popup = document.getElementById('popup');
     const rect = element.getBoundingClientRect();
-    popup.style.left = `${rect.left + window.scrollX - 44}px`;
-    popup.style.top = `${rect.top + window.scrollY - 54}px`;
-    popup.innerHTML = `<h4><strong>Hey!</strong> ${string}</h4>`;
+    popup.style.left = `${rect.left + window.scrollX}px`;
+    popup.style.top = `${rect.top + window.scrollY - 100}px`;
+    popup.innerHTML = `<h4>${string}</h4>`;
     popup.style.display = 'block'
-    popup.style.backgroundColor = type? '#128f3a' : '#d25057';
+    popup.style.backgroundColor = '#231f20';
     popupTimer = 5;
 }
 
