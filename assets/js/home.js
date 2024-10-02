@@ -5,6 +5,14 @@ let values = {};
 let filters = ['', '', ''];
 let role = '';
 let currentKey = null;
+let popupTimer = 0;
+
+function main() {
+    setInterval(()=> {
+        popupTimer -= 3;
+        if(popupTimer <= 0) hidePopup()
+    }, 3000);
+}
 
 async function changeValue(component) {
     const key = component.id.slice(6);
@@ -254,3 +262,20 @@ async function loadRequests() {
     }); 
     loadGraphs();
 }
+
+function showPopup(string, element) {
+    const popup = document.getElementById('popup');
+    const rect = element.getBoundingClientRect();
+    popup.style.left = `${rect.left + window.scrollX}px`;
+    popup.style.top = `${rect.top + window.scrollY - 100}px`;
+    popup.innerHTML = `<h4>${string}</h4>`;
+    popup.style.display = 'block'
+    popup.style.backgroundColor = '#231f20';
+    popupTimer = 5;
+}
+
+function hidePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+
+main();
