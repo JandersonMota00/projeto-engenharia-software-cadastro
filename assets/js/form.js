@@ -54,6 +54,8 @@ async function changeValue(component) {
 
     switch(key) {
         case "terms": agreed = true; return;
+        case 'name': value = sanitizeText(value, "name"); break;
+        case 'pseudonym': value = sanitizeText(value, "pseudonym"); break;
         case "email": completed = validateEmail(value); break; 
         case "address_cep": completed = await validateCep(value); break;
         case "phone": value = validatePhone(value, 'phone'); break; 
@@ -70,6 +72,12 @@ async function changeValue(component) {
     }
 
     console.log(values);
+}
+
+function sanitizeText(text, type) {
+    const result = text.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    document.getElementById(`input-${type}`).value = result;
+    return result;
 }
 
 function validatePhone(number, type) {
@@ -108,7 +116,6 @@ async function validateCep(cep) {
 }
 
 function validateEmail(email) {
-    console.log("Validating E-mail...");
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const result = emailRegex.test(email) === true? 1 : 0;
     return result;
