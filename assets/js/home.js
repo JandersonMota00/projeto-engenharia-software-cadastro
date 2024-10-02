@@ -40,14 +40,63 @@ async function saltedHashSHA256(value) {
 }
 
 async function generateCSV() {
-    const csvContent = "data:text/csv;charset=utf-8," + records.map(e => Object.values(e).join(",")).join("\n");
+    const fieldsToKeep = [
+        'state', 'pseudonym', 'sex', 'gender', 'email', 'phone', 
+        'phone_app', 'phone_extra', 'phone_extra_app', 'address_state', 
+        'address_city', 'address_neighborhood', 'address_location', 
+        'address_number', 'reason', 'religion', 'psychotherapy', 
+        'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 
+        'medicines', 'treatments', 'allergies', 'faint', 'shadows', 
+        'voices', 'suicide', 'death'
+    ];
+    
+    const headerTranslations = {
+        state: "Estado",
+        pseudonym: "Pseudônimo",
+        sex: "Sexo",
+        gender: "Gênero",
+        email: "E-mail",
+        phone: "Telefone",
+        phone_app: "Aplicativo",
+        phone_extra: "Telefone Extra",
+        phone_extra_app: "Aplicativo Extra",
+        address_state: "Estado do Endereço",
+        address_city: "Cidade do Endereço",
+        address_neighborhood: "Bairro do Endereço",
+        address_location: "Localização do Endereço",
+        address_number: "Número do Endereço",
+        reason: "Motivo",
+        religion: "Religião",
+        psychotherapy: "Fez Psicoterapia?",
+        psychiatry: "Fez Psiquiatria?",
+        spiritual_treatment: "Fez Tratamento Espiritual?",
+        illnesses: "Doenças",
+        symptoms: "Sintomas",
+        medicines: "Medicamentos",
+        treatments: "Tratamentos",
+        allergies: "Alergias",
+        faint: "Desmaios",
+        shadows: "Vê vultos",
+        voices: "Escuta vozes",
+        suicide: "Pensamentos Negativos",
+        death: "Entes faleceram"
+    };
+
+    const headers = fieldsToKeep.map(field => headerTranslations[field]).join(",") + "\n";
+    const csvContent = "data:text/csv;charset=utf-8," + headers + 
+        records.map(e => 
+            fieldsToKeep.map(field => e[field] || "").join(",")
+        ).join("\n");
+
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "data.csv");
+    link.setAttribute("download", "relatorio.csv");
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+        document.body.removeChild(link);
+    }, 500);
 }
 
 async function register() {
