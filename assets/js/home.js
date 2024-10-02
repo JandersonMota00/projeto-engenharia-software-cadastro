@@ -39,13 +39,25 @@ async function saltedHashSHA256(value) {
     return hashHex;
 }
 
+async function generateCSV() {
+    const csvContent = "data:text/csv;charset=utf-8," + records.map(e => Object.values(e).join(",")).join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 async function register() {
     let gate = true;
     const email = values.remail;
     const login = await saltedHashSHA256(values.rusername);
     const password = await saltedHashSHA256(values.rpassword);
     const confirm = await saltedHashSHA256(values.rconfirm);
-    if(!email || !login || !password || !confirm || password != confirm) gate = false;
+    const role = values.role;
+    if(!email || !login || !password || !confirm || password != confirm || !role) gate = false;
     if(gate === false) {
         showPopup('Informações de registro inválidas!', document.getElementById('input-remail'));
         return;
@@ -56,7 +68,8 @@ async function register() {
         "emailVisibility": true,
         "password": password,
         "passwordConfirm": confirm,
-        "role": "atendente"
+        "role": role,
+        "verified": true
     };
     console.log(data);
     const record = await pb.collection('Staff').create(data).catch(() => { gate = false; });
@@ -66,6 +79,10 @@ async function register() {
         return;
     }
     alert('Usuário registrado com sucesso!');
+    document.getElementById('input-remail').value = '';
+    document.getElementById('input-rusername').value = '';
+    document.getElementById('input-rpassword').value = '';
+    document.getElementById('input-rconfirm').value = '';
 }
 
 async function login() {
@@ -77,8 +94,11 @@ async function login() {
         showPopup('Informações de Login inválidas!', document.getElementById('input-login'))
         return;
     }
+    document.getElementById('input-login').value = '';
+    document.getElementById('input-password').value = '';
     document.getElementById('loginScreen').classList.add('d-none');
     document.getElementById('homeScreen').classList.remove('d-none');
+    document.getElementById('button-csv').classList.remove('d-none');
     role = capitalizeFirstLetter(pb.authStore.model.role);
     document.getElementById('role-text').innerHTML = role;
     loadRequests();
@@ -88,6 +108,11 @@ async function logout() {
     await pb.authStore.clear();
     document.getElementById('loginScreen').classList.remove('d-none');
     document.getElementById('homeScreen').classList.add('d-none');
+    document.getElementById('graph-zone').classList.add('d-none');
+    document.getElementById('graph-zone-line').classList.add('d-none');
+    document.getElementById('register-zone').classList.add('d-none');
+    document.getElementById('register-zone-line').classList.add('d-none');
+    document.getElementById('button-csv').classList.add('d-none');
 }
 
 function capitalizeFirstLetter(string) {
@@ -96,18 +121,19 @@ function capitalizeFirstLetter(string) {
 }
 
 function onTableClick(id) {
-    console.log(id);
     const record = records.find(record => record.id == id);
     if(!record) return;
-    console.log(record);
-
-    const fieldsToKeep = ['state', 'pseudonym', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies', "faint", "shadows", "voices", "suicide", "death"];
+    console.log(pb);
+    const fieldsToKeep = ['state', pb.authStore.model.role == 'diretor'? 'name': null ,'pseudonym', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies', "faint", "shadows", "voices", "suicide", "death"];
     const filteredRecord = {}; 
     fieldsToKeep.forEach(field => {
         if (record.hasOwnProperty(field)) {
             filteredRecord[field] = record[field];
         }
     });
+
+    const stateComponent = document.getElementById('input-state-change');
+    stateComponent.oninput = () => { changeState(stateComponent, record); }
 
     const component = document.getElementById('custom-request');
     const headerComponent = document.getElementById('custom-table-header');
@@ -121,6 +147,7 @@ function onTableClick(id) {
         let text = '';
         switch(key) {
             case 'state': text = "Estado"; break;
+            case 'name': text = "Nome Completo"; break;
             case 'pseudonym': text = "Pseudônimo"; break;
             case 'sex': text = "Sexo"; break;
             case 'gender': text = "Gênero"; break;
@@ -168,6 +195,9 @@ function onTableClick(id) {
 function loadGraphs() {
     if(role != 'Diretor') return;
     document.getElementById('graph-zone').classList.remove('d-none');
+    document.getElementById('graph-zone-line').classList.remove('d-none');
+    document.getElementById('register-zone').classList.remove('d-none');
+    document.getElementById('register-zone-line').classList.remove('d-none');
     let stateData = { Aguardando: 0, Análise: 0, Concluído: 0 };
     let genderData = { Homem: 0, Mulher: 0, Outro: 0, Segredo: 0 };
     let colors1 = ['#1582c5', '#D5E0E9', '#00a3d4'];
@@ -230,13 +260,13 @@ function loadGraphs() {
     genderChart.setOption(genderOption);
 }
 
-async function changeState(component) {
+async function changeState(component, targetRecord) {
     if(!component.value) return;
-    let record = records.find(record => record.id = currentKey);
-    if(!record) return;
+    let record = targetRecord;
     record.state = component.value;
-    const putRecord = await pb.collection('Requests').update(record.id, record);
+    const putRecord = await pb.collection('Requests').update(`${record.id}`, record);
     if(!putRecord) return;
+    component.value = ""; 
     $("#custom-table").modal('hide');
     loadRequests();
 }
@@ -286,9 +316,9 @@ async function loadRequests() {
         if(!(record.phone_app.includes(filters[2]))) return;
         const tr = document.createElement('tr');
         keys.forEach(key => {
-            if(key == "id") {
+            if(key === "id") {
                 currentKey = record[key];
-                tr.onclick = function() { onTableClick(record[key]) };
+                tr.onclick = () => { onTableClick(record[key]) };
                 return;
             }
             const td = document.createElement('td');

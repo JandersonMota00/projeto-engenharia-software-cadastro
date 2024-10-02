@@ -55,7 +55,8 @@
     <div id="homeScreen" class="frame m-auto d-none">
         <div class="header d-flex align-items-center px-4 py-2">
             <button onclick="logout()" class="button d-flex align-items-center justify-content-md-start justify-content-center"><h4 class="me-3 d-md-block d-none">Sair</h4><i data-feather="x-square"></i></button>
-            <button class="button hidden d-flex align-items-center justify-content-md-start justify-content-center ms-auto"><h4 id="role-text" class="me-3">Função</h4><i data-feather="award"></i></button>
+            <button id="button-csv" onclick="generateCSV()" class="button d-flex align-items-center justify-content-md-start justify-content-center p-4 ms-auto d-none me-4"><i data-feather="archive"></i></button>
+            <button class="button hidden d-flex align-items-center justify-content-md-start justify-content-center"><h4 id="role-text" class="me-3">Função</h4><i data-feather="award"></i></button>
         </div>
         <div class="body d-flex flex-column justify-content-start align-items-center">
             <div class="row fit-x">
@@ -73,22 +74,22 @@
                 </table>
             </div>
 
-            <div class="line my-5"></div>
+            <div id="graph-zone-line" class="line my-5 d-none"></div>
 
             <div id="graph-zone" class="row fit-x h-big d-none">
-                
                 <div class="col-md-6 col-12"><div id="graph-state" class="d-flex fit"></div></div>
                 <div class="col-md-6 col-12"><div id="graph-gender" class="d-flex fit"></div></div>
             </div>
 
-            <div class="line my-5"></div>
+            <div id="register-zone-line" class="line my-5 d-none"></div>
 
-            <div id="register-zone" class="row fit-half-md-x mx-auto">
+            <div id="register-zone" class="row fit-half-md-x mx-auto d-none">
                 <div class="col-12 d-flex justify-content-center"><h4 class="mb-5">Registro de Funcionários</h4></div>
                 <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="mail" class="icon me-3"></i><input id="input-remail" maxlength="64" class="input x-90" type="text" placeholder="E-mail" oninput="changeValue(this)"/></div></div>
                 <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rusername" maxlength="64" class="input x-90" type="text" placeholder="Usuário" oninput="changeValue(this)"/></div></div>
-                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rpassword" maxlength="64" class="input x-90" type="text" placeholder="Senha" oninput="changeValue(this)"/></div></div>
-                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rconfirm" maxlength="64" class="input x-90" type="text" placeholder="Confirmar Senha" oninput="changeValue(this)"/></div></div>
+                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rpassword" maxlength="64" class="input x-90" type="password" placeholder="Senha" oninput="changeValue(this)"/></div></div>
+                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rconfirm" maxlength="64" class="input x-90" type="password" placeholder="Confirmar Senha" oninput="changeValue(this)"/></div></div>
+                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="star" class="icon me-3"></i><select id="input-role" class="input x-90" onchange="changeValue(this)"><option disabled selected>Função</option><option value=atendente>Atendente</option><option value=diretor>Diretor</option></select></div></div>
                 <div class="col-12"><div class="button d-flex align-items-center justify-content-center" onclick="register()"><h4 class="f-bold me-3 d-md-block d-none">Registrar</h4><i data-feather="globe"></i></div></div>
             </div>
 
@@ -103,7 +104,7 @@
         <div class="modal-dialog large modal-dialog-centered" role="document">
             <div class="modal-content large">
                 <div class="modal-body large">
-                    <div class="fit-x"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="star" class="icon me-3"></i><select id="input-state-change" class="input x-90" onchange="changeState(this)"><option disabled selected>Definir Estado Para:</option><option value=Aguardando>Aguardando</option><option value=Análise>Análise</option><option value=Concluído>Concluído</option><option value=''>Não fazer nada</option></select></div></div>
+                    <div class="fit-x"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="star" class="icon me-3"></i><select id="input-state-change" class="input x-90"><option value="" disabled selected>Definir Estado Para:</option><option value=Aguardando>Aguardando</option><option value=Análise>Análise</option><option value=Concluído>Concluído</option><option value=''>Não fazer nada</option></select></div></div>
                     <div class="form-area secondary h-auto m-0">
                         <table class="table table-striped table-hover">
                             <thead class="thead-dark">
