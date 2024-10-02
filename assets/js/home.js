@@ -154,7 +154,7 @@ function loadGraphs() {
         color: colors1,
         tooltip: { trigger: 'item' },
         series: [{
-            name: 'State',
+            name: 'Estado da Consulta',
             type: 'pie',
             radius: '50%',
             minAngle: 36,
@@ -176,7 +176,7 @@ function loadGraphs() {
         color: colors2,
         tooltip: { trigger: 'item' },
         series: [{
-            name: 'Gender',
+            name: 'Gênero',
             type: 'pie',
             radius: '50%',
             minAngle: 36,
