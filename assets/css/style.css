@@ -46,6 +46,37 @@
 	  color: var(--white);
   }
 
+  table {
+    font-size: 14px;
+  }
+
+  .thead-dark {
+    border-bottom: 2px solid var(--blue);
+    background-color: var(--blue); 
+    color: var(--white);
+  }
+
+  tbody {
+    background-color: var(--super-light-grey);
+  }
+
+  td {
+    border-bottom: 2px solid var(--grey); 
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: var(--super-light-grey); 
+  }
+
+  .table-hover tbody tr {
+    cursor: pointer;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: var(--blue);
+    color: var(--white); 
+  }
+
   .frame {
     background-color: #EFFAFF;
     border-radius: 10px;
@@ -56,6 +87,8 @@
   }
 
   .header {
+    border: 0px solid transparent;
+    border-bottom: 2px solid var(--light-grey);
     background-color: var(--super-light-grey);
     width: 100%;
   }
@@ -81,14 +114,26 @@
   }
 
   .footer {
+    border: 0px solid transparent;
+    border-top: 2px solid var(--light-grey);
     background-color: var(--super-light-grey);
     width: 100%;
+  }
+
+  .media {
+    width: 56px;
+    cursor: pointer;
+	  transition: transform 0.3s ease-in-out;
+  }
+
+  .media:hover {
+    transform: scale(1.05);
   }
 
   .button, .empty-button, .icon-button {
     max-height: 100%;
     height: 55px;
-	  border-radius: 4px;
+	  border-radius: 10px;
 	  cursor: pointer;
 	  transition: transform 0.3s ease-in-out;
   }
@@ -97,13 +142,20 @@
 	  color: var(--white);
 	  background-color: var(--blue);
 	  padding: 1.5em 2.5em 1.5em 2.5em;
+    border: 0px solid transparent;
   }
   
   .button.secondary {
     border: 0px solid transparent;
     color: var(--blue);
-    background-color: var(--white);
+    background-color: var(--light-grey);
     box-shadow: inset 0 0 0 3px var(--blue); 
+  }
+
+  .button.hidden {
+    border: 0px solid transparent;
+    color: var(--darker-grey);
+    background-color: var(--grey);
   }
 
   .button:hover, .empty-button:hover, .icon-button:hover {
@@ -117,6 +169,12 @@
   .button.secondary:hover {
     color: var(--white);
     background-color: var(--blue);
+  }
+
+  .button.hidden:hover {
+    border: 0px solid transparent;
+    color: var(--white);
+    background-color: var(--darker-grey);
   }
 
   .empty-button:hover {
@@ -148,6 +206,29 @@
     color: var(--darker-grey);
   }
 
+  .fit {
+    min-height: 100%;
+    min-width: 100%;
+    height: 100%;
+    width: 100%;
+  }
+
+  .modal-dialog.large {
+    min-width: 80% !important;
+  }
+
+  .modal-content.large, .modal-body.large {
+    height: 25vh;
+  }
+
+  .modal-content, .modal-body {
+    border-radius: 10px;
+  }
+
+  .modal-body {
+    background-color: var(--super-light-grey); 
+  }
+
   .fit-half-x {
     width: 49%;
   }
@@ -170,14 +251,14 @@
   	border: 2px solid var(--grey);
 	  color: var(--darker-grey);
 	  font-weight: 600;
-    padding: .3rem;
+    padding: .4rem;
   }
 
   .step-circle.selected {
 	  background-color: var(--blue);
-	  border: 2px solid var(--black);
+	  border: 2px solid #105d8d;
 	  color: var(--black);
-	  transform: scale(1.3);
+	  transform: scale(1.4);
   }  
 
   .step-circle.selected:hover {
@@ -222,6 +303,40 @@
 	  text-decoration: none;
 	  outline: none;
     overflow: hidden;
+    transition: 500ms ease-in-out;
+  }
+
+  .form-area.secondary {
+    background-color: var(--light-grey);
+    margin-left: 12px;
+    width: calc(100% - 13px);
+    overflow-y: scroll; 
+    overflow-x: scroll;
+  }
+
+  .h-big {
+    min-height: 80%;
+  }
+
+  .h-small {
+    min-height: 30%;
+  }
+
+  .form-area.secondary::-webkit-scrollbar {
+    width: 12px; 
+  }
+
+  .form-area.secondary::-webkit-scrollbar-thumb {
+    background-color: var(--grey); 
+    border-radius: 5px; 
+  }
+
+  .form-area.secondary::-webkit-scrollbar-track {
+    background-color: var(--super-light-grey);
+  }
+
+  .form-area:hover {
+	  border: 2px solid var(--grey);
   }
 
   .form-area.success {
@@ -277,7 +392,7 @@
 
   @media (max-width: 992px) {
     h1 {
-        font-size: 3.0em;
+        font-size: 2.7em;
     }
     
     h2 {
@@ -315,11 +430,15 @@
         height: 10%;
         padding: 1em;
     }
+
+    .fit-half-md-x-2 {
+      width: 100%;
+    }
   }
 
   @media (min-width: 992px) {
     h1 {
-        font-size: 4.6em;
+        font-size: 4.4em;
     }
     
     h2 {
@@ -339,10 +458,10 @@
     }
 
     .frame {
-        width: 90%;
-        height: 90%;
+        width: 95%;
+        height: 95%;
         max-width: 1200px;
-        max-height: 700px;
+        max-height: 800px;
     }
 
     .header {
@@ -362,5 +481,9 @@
 
     .fit-half-md-x {
         width: 79%;
-      }
+    }
+
+    .fit-half-md-x-2 {
+      width: 60%;
+    }
   }

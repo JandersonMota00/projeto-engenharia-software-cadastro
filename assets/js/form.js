@@ -60,6 +60,7 @@ async function changeValue(component) {
         case "address_cep": completed = await validateCep(value); break;
         case "phone": value = validatePhone(value, 'phone'); break; 
         case "phone_extra": value = validatePhone(value, 'phone_extra'); break; 
+        case 'address_number': value = sanitizeNumber(value, 'address_number'); break;
     }
 
     if(completed == 0) {
@@ -76,6 +77,12 @@ async function changeValue(component) {
 
 function sanitizeText(text, type) {
     const result = text.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    document.getElementById(`input-${type}`).value = result;
+    return result;
+}
+
+function sanitizeNumber(text, type) {
+    const result = text.replace(/\D/g,'');
     document.getElementById(`input-${type}`).value = result;
     return result;
 }
