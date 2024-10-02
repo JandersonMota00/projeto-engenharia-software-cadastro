@@ -202,6 +202,10 @@
     color: var(--blue);
   }
 
+  .c-grey {
+    color: var(--grey);
+  }
+
   .c-darker-grey {
     color: var(--darker-grey);
   }
@@ -218,7 +222,11 @@
   }
 
   .modal-content.large, .modal-body.large {
-    height: 25vh;
+    height: 35vh;
+  }
+
+  .h-auto {
+    height: auto;
   }
 
   .modal-content, .modal-body {

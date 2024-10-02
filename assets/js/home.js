@@ -3,6 +3,8 @@ const pb = new PocketBase('https://atendimento-fraterno.pockethost.io');
 let records = null;
 let values = {};
 let filters = ['', '', ''];
+let role = '';
+let currentKey = null;
 
 async function changeValue(component) {
     const key = component.id.slice(6);
@@ -20,11 +22,25 @@ function changeFilter(component) {
     loadRequests();
 }
 
+async function saltedHashSHA256(value) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode("S" + value);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}
+
 async function login() {
-    const authData = await pb.collection('Staff').authWithPassword(values.login, values.password);
+    const login = await saltedHashSHA256(values.login);
+    const password = await saltedHashSHA256(values.password);
+    console.log(`login: ${login}\npassword: ${password}`);
+    const authData = await pb.collection('Staff').authWithPassword(login, password);
     if(!pb.authStore.isValid) return;
     document.getElementById('loginScreen').classList.add('d-none');
     document.getElementById('homeScreen').classList.remove('d-none');
+    role = capitalizeFirstLetter(pb.authStore.model.role);
+    document.getElementById('role-text').innerHTML = role;
     loadRequests();
 }
 
@@ -32,6 +48,11 @@ async function logout() {
     await pb.authStore.clear();
     document.getElementById('loginScreen').classList.remove('d-none');
     document.getElementById('homeScreen').classList.add('d-none');
+}
+
+function capitalizeFirstLetter(string) {
+    if (!string) return '';
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function onTableClick(id) {
@@ -100,6 +121,8 @@ function onTableClick(id) {
 }
 
 function loadGraphs() {
+    if(role != 'Diretor') return;
+    document.getElementById('graph-zone').classList.remove('d-none');
     let stateData = { Aguardando: 0, Análise: 0, Concluído: 0 };
     let genderData = { Homem: 0, Mulher: 0, Outro: 0, Segredo: 0 };
     let colors1 = ['#1582c5', '#D5E0E9', '#00a3d4'];
@@ -162,6 +185,17 @@ function loadGraphs() {
     genderChart.setOption(genderOption);
 }
 
+async function changeState(component) {
+    if(!component.value) return;
+    let record = records.find(record => record.id = currentKey);
+    if(!record) return;
+    record.state = component.value;
+    const putRecord = await pb.collection('Requests').update(record.id, record);
+    if(!putRecord) return;
+    $("#custom-table").modal('hide');
+    loadRequests();
+}
+
 async function loadRequests() {
     const component = document.getElementById('requests');
     const headerComponent = document.getElementById('table-header');
@@ -169,7 +203,7 @@ async function loadRequests() {
     headerComponent.innerHTML = '';
     records = await pb.collection('Requests').getFullList({sort: 'created' });
     //const fieldsToKeep = ['state', 'pseudonym', 'birth', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_cep', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'address_extra', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies' ];
-    const fieldsToKeep = ['state', 'pseudonym', 'gender', 'email', 'phone', 'phone_app', 'reason', 'id'];
+    const fieldsToKeep = ['state', 'pseudonym', 'gender', 'email', 'phone', 'phone_app', 'id'];
     const filteredRecords = records.map(record => {
         const filteredRecord = {};
         fieldsToKeep.forEach(field => {
@@ -196,7 +230,6 @@ async function loadRequests() {
             case 'email': text = "E-mail"; break;
             case 'phone': text = "Telefone"; break;
             case 'phone_app': text = "Aplicativo"; break;
-            case 'reason': text = "Motivo"; break;
             case "id": text = "Código"; break;
         }
         th.innerText = text;
@@ -209,6 +242,7 @@ async function loadRequests() {
         const tr = document.createElement('tr');
         keys.forEach(key => {
             if(key == "id") {
+                currentKey = record[key];
                 tr.onclick = function() { onTableClick(record[key]) };
                 return;
             }
