@@ -16,7 +16,7 @@ function main() {
 }
 
 async function conclude(){
-    if(!agreed || agreed === false) {
+    if(!agreed) {
         showPopup("Você precisa concordar com os nossos termos!", document.getElementById('input-terms'));
         return;
     }
@@ -65,7 +65,7 @@ async function changeValue(component) {
     if(value == "false") value = false;
 
     switch(key) {
-        case "terms": agreed = true; return;
+        case "terms": agreed = value; return;
         case 'name': value = sanitizeText(value, "name"); break;
         case 'pseudonym': value = sanitizeText(value, "pseudonym"); break;
         case "email": completed = validateEmail(value); break; 
