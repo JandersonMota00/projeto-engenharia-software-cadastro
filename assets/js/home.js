@@ -25,7 +25,8 @@ async function logout() {
 
 async function loadRequests() {
     const records = await pb.collection('Requests').getFullList({sort: '-created' });
-    const fieldsToKeep = ['state', 'pseudonym', 'birth', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_cep', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'address_extra', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies' ];
+    //const fieldsToKeep = ['state', 'pseudonym', 'birth', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_cep', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'address_extra', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies' ];
+    const fieldsToKeep = ['state', 'pseudonym', 'gender', 'email', 'phone', 'phone_app', 'reason'];
     const filteredRecords = records.map(record => {
         const filteredRecord = {};
         fieldsToKeep.forEach(field => {
