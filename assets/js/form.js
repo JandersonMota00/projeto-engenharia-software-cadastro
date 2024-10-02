@@ -16,7 +16,7 @@ function main() {
 }
 
 async function conclude(){
-    if(!agreed || !agreed === false) {
+    if(!agreed || agreed === false) {
         showPopup("Você precisa concordar com os nossos termos!", document.getElementById('input-terms'));
         return;
     }
