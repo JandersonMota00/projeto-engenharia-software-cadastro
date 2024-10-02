@@ -16,7 +16,7 @@ function main() {
 }
 
 async function conclude(){
-    if(!agreed) {
+    if(!agreed || !agreed === false) {
         showPopup("Você precisa concordar com os nossos termos!", document.getElementById('input-terms'));
         return;
     }
@@ -28,6 +28,7 @@ async function conclude(){
 
     if(gate) {
         values.state = "Aguardando";
+        values.created_date = new Date();
         const json = JSON.stringify(values);
         const record = await pb.collection('Requests').create(json).catch((error) => { console.log(error)} );
         if(!record) gate = false;
