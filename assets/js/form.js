@@ -30,7 +30,7 @@ async function conclude(){
         values.state = "Aguardando";
         values.created_date = new Date();
         const json = JSON.stringify(values);
-        const record = await pb.collection('Requests').create(json).catch((error) => { console.log(error)} );
+        const record = await pb.collection('Requests').create(json).catch((error) => {});
         if(!record) gate = false;
     }
 
@@ -83,8 +83,6 @@ async function changeValue(component) {
         case "cep": values[key] = completed; break;
         default: values[key] = value; break;
     }
-
-    console.log(values);
 }
 
 function sanitizeText(text, type) {

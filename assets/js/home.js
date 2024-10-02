@@ -18,14 +18,11 @@ async function changeValue(component) {
     const key = component.id.slice(6);
     let value = component.value;
     values[key] = value;
-    console.log(values);
 }
 
 function changeFilter(component) {
     const type = component.id.slice(7);
-    console.log(type);
     const index = type == 'state' ? 0 : type == 'gender' ? 1 : 2;
-    console.log(index);
     filters[index] = component.value;
     loadRequests();
 }
@@ -120,7 +117,6 @@ async function register() {
         "role": role,
         "verified": true
     };
-    console.log(data);
     const record = await pb.collection('Staff').create(data).catch(() => { gate = false; });
     if(!record) gate = false;
     if(gate === false) {
@@ -137,7 +133,6 @@ async function register() {
 async function login() {
     const login = await saltedHashSHA256(values.login);
     const password = await saltedHashSHA256(values.password);
-    console.log(`login: ${login}\npassword: ${password}`);
     const authData = await pb.collection('Staff').authWithPassword(login, password).catch(() => {});
     if(!pb.authStore.isValid) {
         showPopup('Informações de Login inválidas!', document.getElementById('input-login'))
@@ -172,7 +167,6 @@ function capitalizeFirstLetter(string) {
 function onTableClick(id) {
     const record = records.find(record => record.id == id);
     if(!record) return;
-    console.log(pb);
     const fieldsToKeep = ['state', pb.authStore.model.role == 'diretor'? 'name': null ,'pseudonym', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies', "faint", "shadows", "voices", "suicide", "death"];
     const filteredRecord = {}; 
     fieldsToKeep.forEach(field => {
