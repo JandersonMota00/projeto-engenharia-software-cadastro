@@ -43,8 +43,11 @@ async function login() {
     const login = await saltedHashSHA256(values.login);
     const password = await saltedHashSHA256(values.password);
     console.log(`login: ${login}\npassword: ${password}`);
-    const authData = await pb.collection('Staff').authWithPassword(login, password);
-    if(!pb.authStore.isValid) return;
+    const authData = await pb.collection('Staff').authWithPassword(login, password).catch(() => {});
+    if(!pb.authStore.isValid) {
+        showPopup('Informações de Login inválidas!', document.getElementById('input-login'))
+        return;
+    }
     document.getElementById('loginScreen').classList.add('d-none');
     document.getElementById('homeScreen').classList.remove('d-none');
     role = capitalizeFirstLetter(pb.authStore.model.role);
@@ -69,7 +72,7 @@ function onTableClick(id) {
     if(!record) return;
     console.log(record);
 
-    const fieldsToKeep = ['state', 'pseudonym', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies'];
+    const fieldsToKeep = ['state', 'pseudonym', 'sex', 'gender', 'email', 'phone', 'phone_app', 'phone_extra', 'phone_extra_app', 'address_state', 'address_city', 'address_neighborhood', 'address_location', 'address_number', 'reason', 'religion', 'psychotherapy', 'psychiatry', 'spiritual_treatment', 'illnesses', 'symptoms', 'medicines', 'treatments', 'allergies', "faint", "shadows", "voices", "suicide", "death"];
     const filteredRecord = {}; 
     fieldsToKeep.forEach(field => {
         if (record.hasOwnProperty(field)) {
@@ -112,6 +115,11 @@ function onTableClick(id) {
             case 'medicines': text = "Medicamentos"; break;
             case 'treatments': text = "Tratamentos"; break;
             case 'allergies': text = "Alergias"; break;
+            case 'faint': text = "Desmaios"; break;
+            case 'shadows': text = "Vê vultos"; break;
+            case 'voices': text = "Escuta vozes"; break;
+            case 'suicide': text = "Pensamentos Negativos"; break;
+            case 'death': text = "Entes faleceram"; break;
         }
         th.innerText = text || key;
         headerComponent.appendChild(th);
@@ -256,6 +264,15 @@ async function loadRequests() {
             }
             const td = document.createElement('td');
             td.innerText = record[key] || 'N/A'; 
+            if(key == "state") {
+                let color = '';
+                switch(record[key]){
+                    case "Aguardando": color = '#128f3a'; break;
+                    case "Análise": color = '#FFC43D'; break;
+                    case "Concluído": color = '#1582c5'; break;
+                }
+                td.style.backgroundColor = color;
+            }
             tr.appendChild(td);
         });
         component.appendChild(tr);

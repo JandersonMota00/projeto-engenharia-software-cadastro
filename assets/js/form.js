@@ -6,6 +6,8 @@ let agreed = false;
 
 let values = {};
 
+let requirements = ['faint', 'shadows', 'voices', 'suicide', 'death'];
+
 function main() {
     setInterval(()=> {
         popupTimer -= 3;
@@ -19,10 +21,19 @@ async function conclude(){
         return;
     }
 
-    values.state = "Aguardando";
-    const json = JSON.stringify(values);
-    const record = await pb.collection('Requests').create(json).catch((error) => { console.log(error)} );
-    if(!record) {
+    let gate = true;
+    requirements.forEach(requirement => {
+        if(!(values[requirement] === true || values[requirement] === false)) gate = false;
+    });
+
+    if(gate) {
+        values.state = "Aguardando";
+        const json = JSON.stringify(values);
+        const record = await pb.collection('Requests').create(json).catch((error) => { console.log(error)} );
+        if(!record) gate = false;
+    }
+
+    if(!gate) {
         showPopup("Algum dos campos obrigatórios não foi preenchido corretamente!", document.getElementById('input-terms'));
         return;
     }

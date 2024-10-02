@@ -18,8 +18,14 @@
     <div class="frame d-flex flex-column m-auto">
         <div class="header d-flex align-items-center">
             <a href="index.html" class="button d-flex align-items-center p-4"><h4 class="f-bold d-md-block d-none me-3">Cancelar</h4><i data-feather="x-square"></i></a>
-            <a class="button d-flex d-flex align-items-center ms-auto me-3 p-4" href="mailto:ser.sociedadeespiritarafaellirio@gmail.com?subject=Quero uma consulta!"><i data-feather="mail"></i></a>
-            <a class="button d-flex d-flex align-items-center p-4" href="tel:+557199537894"><i data-feather="phone"></i></a>
+            <div class="tooltip-container ms-auto">
+                <a class="button d-flex d-flex align-items-center me-3 p-4" target="_blank" href="mailto:ser.sociedadeespiritarafaellirio@gmail.com?subject=Quero uma consulta!"><i data-feather="mail"></i></a>
+                <h5 class="tooltip-text">ser.sociedadeespiritarafaellirio@gmail.com</h5>
+            </div>
+            <div class="tooltip-container">
+                <a class="button d-flex d-flex align-items-center me-3 p-4" target="_blank" href="tel:+557199537894"><i data-feather="phone"></i></a>
+                <h5 class="tooltip-text">(71) 9953-7894</h5>
+            </div>
         </div>
         <div class="body d-flex flex-column align-items-center">
             <div class="d-flex align-items-center mt-4 mb-5">
@@ -79,6 +85,13 @@
                 <div class="col-md-6 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="smile" class="icon me-3"></i><select id="input-psychotherapy" class="input x-90" onchange="changeValue(this)"><option disabled selected>Fiz psicoterapia *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
                 <div class="col-md-6 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="smile" class="icon me-3"></i><select id="input-psychiatry" class="input x-90" onchange="changeValue(this)"><option disabled selected>Fiz tratamento Psiquiátrico *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
                 <div class="col-md-6 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="smile" class="icon me-3"></i><select id="input-spiritual_treatment" class="input x-90" onchange="changeValue(this)"><option disabled selected>Fiz tratamento Espiritual *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
+
+                <div class="col-md-6 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="meh" class="icon me-3"></i><select id="input-faint" class="input x-90" onchange="changeValue(this)"><option disabled selected>Desmaio sem motivo? *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
+                <div class="col-md-6 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="meh" class="icon me-3"></i><select id="input-shadows" class="input x-90" onchange="changeValue(this)"><option disabled selected>Vejo Vultos? *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
+                <div class="col-md-6 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="meh" class="icon me-3"></i><select id="input-voices" class="input x-90" onchange="changeValue(this)"><option disabled selected>Escuto Vozes? *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
+                <div class="col-md-6 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="meh" class="icon me-3"></i><select id="input-suicide" class="input x-90" onchange="changeValue(this)"><option disabled selected>Tenho pensamentos negativos / suicidas? *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
+                <div class="col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="meh" class="icon me-3"></i><select id="input-death" class="input x-90" onchange="changeValue(this)"><option disabled selected>Houve um desencarne na família recentemente? *</option><option value=true>Sim</option><option value=false>Não</option></select></div></div>
+
                 <div class="col-md-6 col-12 mt-4"><div class="button secondary d-flex align-items-center justify-content-center" onclick="changePage('-')"><h4 class="f-bold d-md-block d-none me-3">Voltar</h4><i data-feather="arrow-left-circle"></i></div></div>
                 <div class="col-md-6 col-12 mt-4"><div class="button d-flex align-items-center justify-content-center" onclick="changePage('+')"><h4 class="f-bold me-3 d-md-block d-none">Continuar</h4><i data-feather="arrow-right-circle"></i></div></div>
             </div>
@@ -113,10 +126,10 @@
         <div class="modal-dialog modal-dialog-centered"> 
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex flex-column justify-content-center align-items-center text-center p-2">
+                    <div class="d-flex flex-column justify-content-center align-items-center text-center p-4">
                         <h2>Parabéns!</h2>
                         <div class="line my-4"></div>
-                        <h4>Suas informações foram registradas com sucesso. Por favor, aguarde até que um de nossos guias entrem em contato. Aperte em "Retornar" para voltar a tela principal. Acompanhe nosso Instagram e canal no Youtube durante sua espera.</h4>
+                        <h4 class="text-justify">Suas informações foram registradas com sucesso. Por favor, aguarde até que um de nossos guias entrem em contato. Aperte em "Retornar" para voltar a tela principal. Acompanhe nosso Instagram e canal no Youtube durante sua espera.</h4>
                         <div class="line my-4"></div>
                         <a href="index.html" class="button d-flex align-items-center justify-content-center"><h4 class="f-bold me-3 d-md-block d-none">Retornar</h4><i data-feather="arrow-right-circle"></i></a>
                     </div>

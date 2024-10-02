@@ -222,12 +222,39 @@
   }
 
   .modal-content.large, .modal-body.large {
-    height: 35vh;
+    height: 50vh;
   }
 
   .h-auto {
     height: auto;
   }
+
+  .tooltip-container {
+    position: relative; 
+    display: inline-block; 
+  }
+
+.tooltip-text {
+    visibility: hidden; 
+    width: auto; 
+    min-width: 150px;
+    background-color: var(--black); 
+    color: var(--white); 
+    text-align: center; 
+    border-radius: 5px; 
+    padding: 10px; 
+    position: absolute;
+    top: 125%; 
+    right: 15%; 
+    opacity: 0; 
+    transition: opacity 0.3s; 
+    z-index: 100; 
+  }
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible; 
+    opacity: 1; 
+ }
 
   .modal-content, .modal-body {
     border-radius: 10px;
