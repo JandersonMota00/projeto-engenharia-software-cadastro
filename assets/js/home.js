@@ -39,6 +39,35 @@ async function saltedHashSHA256(value) {
     return hashHex;
 }
 
+async function register() {
+    let gate = true;
+    const email = values.remail;
+    const login = await saltedHashSHA256(values.rusername);
+    const password = await saltedHashSHA256(values.rpassword);
+    const confirm = await saltedHashSHA256(values.rconfirm);
+    if(!email || !login || !password || !confirm || password != confirm) gate = false;
+    if(gate === false) {
+        showPopup('Informações de registro inválidas!', document.getElementById('input-remail'));
+        return;
+    }
+    const data = {
+        "username": login,
+        "email": email,
+        "emailVisibility": true,
+        "password": password,
+        "passwordConfirm": confirm,
+        "role": "atendente"
+    };
+    console.log(data);
+    const record = await pb.collection('Staff').create(data).catch(() => { gate = false; });
+    if(!record) gate = false;
+    if(gate === false) {
+        showPopup('Informações de registro inválidas!', document.getElementById('input-remail'));
+        return;
+    }
+    alert('Usuário registrado com sucesso!');
+}
+
 async function login() {
     const login = await saltedHashSHA256(values.login);
     const password = await saltedHashSHA256(values.password);
@@ -267,9 +296,9 @@ async function loadRequests() {
             if(key == "state") {
                 let color = '';
                 switch(record[key]){
-                    case "Aguardando": color = '#128f3a'; break;
-                    case "Análise": color = '#FFC43D'; break;
-                    case "Concluído": color = '#1582c5'; break;
+                    case "Aguardando": color = '#FFC43D'; break;
+                    case "Análise": color = '#1582c5'; break;
+                    case "Concluído": color = '#128f3a'; break;
                 }
                 td.style.backgroundColor = color;
             }

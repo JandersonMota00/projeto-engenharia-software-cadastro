@@ -64,8 +64,6 @@
                 <div class="col-md-4 col-12"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="smile" class="icon me-3"></i><select id="filter-phone_app" class="input x-90" onchange="changeFilter(this)"><option disabled selected value="">Filtro: Aplicativo</option><option value=Whatsapp>Whatsapp</option><option value=Telegram>Telegram</option><option value=Ambos>Ambos</option><option value=Nenhum>Nenhum</option><option value=''>Sem Filtro</option></select></div></div>
             </div>
 
-            <div class="line my-5"></div>
-
             <div class="form-area secondary h-big">
                 <table class="table table-striped table-hover">
                     <thead class="thead-dark">
@@ -78,14 +76,20 @@
             <div class="line my-5"></div>
 
             <div id="graph-zone" class="row fit-x h-big d-none">
+                
                 <div class="col-md-6 col-12"><div id="graph-state" class="d-flex fit"></div></div>
                 <div class="col-md-6 col-12"><div id="graph-gender" class="d-flex fit"></div></div>
             </div>
 
             <div class="line my-5"></div>
 
-            <div id="register-zone" class="row">
-                
+            <div id="register-zone" class="row fit-half-md-x mx-auto">
+                <div class="col-12 d-flex justify-content-center"><h4 class="mb-5">Registro de Funcionários</h4></div>
+                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="mail" class="icon me-3"></i><input id="input-remail" maxlength="64" class="input x-90" type="text" placeholder="E-mail" oninput="changeValue(this)"/></div></div>
+                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rusername" maxlength="64" class="input x-90" type="text" placeholder="Usuário" oninput="changeValue(this)"/></div></div>
+                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rpassword" maxlength="64" class="input x-90" type="text" placeholder="Senha" oninput="changeValue(this)"/></div></div>
+                <div class="col-12 mb-3"><div class="form-area d-flex align-items-center mb-3 px-3 c-darker-grey"><i data-feather="user" class="icon me-3"></i><input id="input-rconfirm" maxlength="64" class="input x-90" type="text" placeholder="Confirmar Senha" oninput="changeValue(this)"/></div></div>
+                <div class="col-12"><div class="button d-flex align-items-center justify-content-center" onclick="register()"><h4 class="f-bold me-3 d-md-block d-none">Registrar</h4><i data-feather="globe"></i></div></div>
             </div>
 
         </div>
